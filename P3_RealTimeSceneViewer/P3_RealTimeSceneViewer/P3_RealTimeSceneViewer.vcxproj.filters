@@ -19,11 +19,14 @@
     <Filter Include="SceneLoader">
       <UniqueIdentifier>{912cf450-86df-456c-9bec-9ff4707e4167}</UniqueIdentifier>
     </Filter>
-    <Filter Include="proto">
-      <UniqueIdentifier>{3382af2e-eb5e-4785-9a95-050c7901c774}</UniqueIdentifier>
-    </Filter>
     <Filter Include="opengl-classes">
-      <UniqueIdentifier>{f83e44dc-8885-43f2-bbc2-5d86e7d924a3}</UniqueIdentifier>
+      <UniqueIdentifier>{bd1b7936-6c0a-44a1-aab2-2e8be4f65679}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{9d478c8b-da3d-4dcb-a7af-2ca3108aaf9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Threading\Tasks">
+      <UniqueIdentifier>{418a5f56-6c1d-4c8a-9acd-63d8a32d0cf5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -51,52 +54,61 @@
     <ClCompile Include="..\Libs\imgui\imgui_impl_glfw.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="IETThread.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="IETSemaphore.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
     <ClCompile Include="glad.c">
       <Filter>Dependencies</Filter>
     </ClCompile>
     <ClCompile Include="SceneLoader_main.cpp">
       <Filter>SceneLoader</Filter>
     </ClCompile>
-    <ClCompile Include="opengl-classes\Camera.cpp">
+    <ClCompile Include="..\common-classes\Utils.cpp" />
+    <ClCompile Include="..\common-classes\opengl\Camera.cpp">
       <Filter>opengl-classes</Filter>
     </ClCompile>
-    <ClCompile Include="opengl-classes\DirectionalLight.cpp">
+    <ClCompile Include="..\common-classes\opengl\DirectionalLight.cpp">
       <Filter>opengl-classes</Filter>
     </ClCompile>
-    <ClCompile Include="opengl-classes\Light.cpp">
+    <ClCompile Include="..\common-classes\opengl\Light.cpp">
       <Filter>opengl-classes</Filter>
     </ClCompile>
-    <ClCompile Include="opengl-classes\Model3D.cpp">
+    <ClCompile Include="..\common-classes\opengl\Model3D.cpp">
       <Filter>opengl-classes</Filter>
     </ClCompile>
-    <ClCompile Include="opengl-classes\ModelReference.cpp">
+    <ClCompile Include="..\common-classes\opengl\ModelReference.cpp">
       <Filter>opengl-classes</Filter>
     </ClCompile>
-    <ClCompile Include="opengl-classes\OrthoCamera.cpp">
+    <ClCompile Include="..\common-classes\opengl\OrthoCamera.cpp">
       <Filter>opengl-classes</Filter>
     </ClCompile>
-    <ClCompile Include="opengl-classes\PerspectiveCamera.cpp">
+    <ClCompile Include="..\common-classes\opengl\PerspectiveCamera.cpp">
       <Filter>opengl-classes</Filter>
     </ClCompile>
-    <ClCompile Include="opengl-classes\Shader.cpp">
+    <ClCompile Include="..\common-classes\opengl\Shader.cpp">
       <Filter>opengl-classes</Filter>
     </ClCompile>
-    <ClCompile Include="opengl-classes\Skybox.cpp">
+    <ClCompile Include="..\common-classes\opengl\Skybox.cpp">
       <Filter>opengl-classes</Filter>
     </ClCompile>
-    <ClCompile Include="opengl-classes\Texture.cpp">
+    <ClCompile Include="..\common-classes\opengl\Texture.cpp">
       <Filter>opengl-classes</Filter>
     </ClCompile>
-    <ClCompile Include="opengl-classes\Transform.cpp">
+    <ClCompile Include="..\common-classes\opengl\Transform.cpp">
       <Filter>opengl-classes</Filter>
     </ClCompile>
-    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="..\common-classes\multithreading\IETSemaphore.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\multithreading\IETThread.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\multithreading\PoolWorker.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\multithreading\ThreadPoolScheduler.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\multithreading\tasks\AWorkerTask.cpp">
+      <Filter>Threading\Tasks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Libs\imgui\imgui_impl_glfw.h">
@@ -123,55 +135,67 @@
     <ClInclude Include="..\Libs\imgui\imgui.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="IETThread.h">
-      <Filter>Threading</Filter>
+    <ClInclude Include="..\common-classes\Utils.h" />
+    <ClInclude Include="..\common-classes\opengl\Camera.h">
+      <Filter>opengl-classes</Filter>
     </ClInclude>
-    <ClInclude Include="IETSemaphore.h">
-      <Filter>Threading</Filter>
+    <ClInclude Include="..\common-classes\opengl\DirectionalLight.h">
+      <Filter>opengl-classes</Filter>
     </ClInclude>
-    <ClInclude Include="stb_image.h">
+    <ClInclude Include="..\common-classes\opengl\Light.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\Model3D.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\ModelReference.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\OrthoCamera.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\PerspectiveCamera.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\Shader.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\Skybox.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\Texture.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\Transform.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\stb_image.h">
       <Filter>Dependencies</Filter>
     </ClInclude>
-    <ClInclude Include="tiny_obj_loader.h">
+    <ClInclude Include="..\common-classes\tiny_obj_loader.h">
       <Filter>Dependencies</Filter>
     </ClInclude>
-    <ClInclude Include="opengl-classes\Camera.h">
-      <Filter>opengl-classes</Filter>
+    <ClInclude Include="..\common-classes\multithreading\IETSemaphore.h">
+      <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="opengl-classes\DirectionalLight.h">
-      <Filter>opengl-classes</Filter>
+    <ClInclude Include="..\common-classes\multithreading\IETThread.h">
+      <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="opengl-classes\Light.h">
-      <Filter>opengl-classes</Filter>
+    <ClInclude Include="..\common-classes\multithreading\IFinishedTaskListener.h">
+      <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="opengl-classes\Model3D.h">
-      <Filter>opengl-classes</Filter>
+    <ClInclude Include="..\common-classes\multithreading\PoolWorker.h">
+      <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="opengl-classes\ModelReference.h">
-      <Filter>opengl-classes</Filter>
+    <ClInclude Include="..\common-classes\multithreading\ThreadPoolScheduler.h">
+      <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="opengl-classes\OrthoCamera.h">
-      <Filter>opengl-classes</Filter>
+    <ClInclude Include="..\common-classes\multithreading\tasks\AWorkerTask.h">
+      <Filter>Threading\Tasks</Filter>
     </ClInclude>
-    <ClInclude Include="opengl-classes\PerspectiveCamera.h">
-      <Filter>opengl-classes</Filter>
-    </ClInclude>
-    <ClInclude Include="opengl-classes\Shader.h">
-      <Filter>opengl-classes</Filter>
-    </ClInclude>
-    <ClInclude Include="opengl-classes\Skybox.h">
-      <Filter>opengl-classes</Filter>
-    </ClInclude>
-    <ClInclude Include="opengl-classes\Texture.h">
-      <Filter>opengl-classes</Filter>
-    </ClInclude>
-    <ClInclude Include="opengl-classes\Transform.h">
-      <Filter>opengl-classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="proto\SceneLoader.proto">
+    <None Include="..\proto\SceneLoader.proto">
       <Filter>proto</Filter>
     </None>
   </ItemGroup>

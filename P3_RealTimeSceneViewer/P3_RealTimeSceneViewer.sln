@@ -5,6 +5,64 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "P3_RealTimeSceneViewer", "P3_RealTimeSceneViewer\P3_RealTimeSceneViewer.vcxproj", "{CB592FC1-0654-4E51-A054-7863BFE634E0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common-classes", "common-classes", "{565E85AC-C10A-47EE-AAB2-EF11DB9425F4}"
+	ProjectSection(SolutionItems) = preProject
+		common-classes\stb_image.h = common-classes\stb_image.h
+		common-classes\tiny_obj_loader.h = common-classes\tiny_obj_loader.h
+		common-classes\Utils.cpp = common-classes\Utils.cpp
+		common-classes\Utils.h = common-classes\Utils.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "proto", "proto", "{16E3A785-A503-4313-BD58-14B07D5B582A}"
+	ProjectSection(SolutionItems) = preProject
+		proto\SceneLoader.proto = proto\SceneLoader.proto
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "opengl", "opengl", "{36E56FF1-A61E-448A-B091-99DC898676B2}"
+	ProjectSection(SolutionItems) = preProject
+		common-classes\opengl\Camera.cpp = common-classes\opengl\Camera.cpp
+		common-classes\opengl\Camera.h = common-classes\opengl\Camera.h
+		common-classes\opengl\DirectionalLight.cpp = common-classes\opengl\DirectionalLight.cpp
+		common-classes\opengl\DirectionalLight.h = common-classes\opengl\DirectionalLight.h
+		common-classes\opengl\Light.cpp = common-classes\opengl\Light.cpp
+		common-classes\opengl\Light.h = common-classes\opengl\Light.h
+		common-classes\opengl\Model3D.cpp = common-classes\opengl\Model3D.cpp
+		common-classes\opengl\Model3D.h = common-classes\opengl\Model3D.h
+		common-classes\opengl\ModelReference.cpp = common-classes\opengl\ModelReference.cpp
+		common-classes\opengl\ModelReference.h = common-classes\opengl\ModelReference.h
+		common-classes\opengl\OrthoCamera.cpp = common-classes\opengl\OrthoCamera.cpp
+		common-classes\opengl\OrthoCamera.h = common-classes\opengl\OrthoCamera.h
+		common-classes\opengl\PerspectiveCamera.cpp = common-classes\opengl\PerspectiveCamera.cpp
+		common-classes\opengl\PerspectiveCamera.h = common-classes\opengl\PerspectiveCamera.h
+		common-classes\opengl\Shader.cpp = common-classes\opengl\Shader.cpp
+		common-classes\opengl\Shader.h = common-classes\opengl\Shader.h
+		common-classes\opengl\Skybox.cpp = common-classes\opengl\Skybox.cpp
+		common-classes\opengl\Skybox.h = common-classes\opengl\Skybox.h
+		common-classes\opengl\Texture.cpp = common-classes\opengl\Texture.cpp
+		common-classes\opengl\Texture.h = common-classes\opengl\Texture.h
+		common-classes\opengl\Transform.cpp = common-classes\opengl\Transform.cpp
+		common-classes\opengl\Transform.h = common-classes\opengl\Transform.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "multithreading", "multithreading", "{5EA495DE-DFD5-4311-907A-746237B6FDF7}"
+	ProjectSection(SolutionItems) = preProject
+		common-classes\multithreading\IETSemaphore.cpp = common-classes\multithreading\IETSemaphore.cpp
+		common-classes\multithreading\IETSemaphore.h = common-classes\multithreading\IETSemaphore.h
+		common-classes\multithreading\IETThread.cpp = common-classes\multithreading\IETThread.cpp
+		common-classes\multithreading\IETThread.h = common-classes\multithreading\IETThread.h
+		common-classes\multithreading\IFinishedTaskListener.h = common-classes\multithreading\IFinishedTaskListener.h
+		common-classes\multithreading\PoolWorker.cpp = common-classes\multithreading\PoolWorker.cpp
+		common-classes\multithreading\PoolWorker.h = common-classes\multithreading\PoolWorker.h
+		common-classes\multithreading\ThreadPoolScheduler.cpp = common-classes\multithreading\ThreadPoolScheduler.cpp
+		common-classes\multithreading\ThreadPoolScheduler.h = common-classes\multithreading\ThreadPoolScheduler.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tasks", "tasks", "{EF9502F1-5DA6-4CDE-88EC-A4864FEBD1BC}"
+	ProjectSection(SolutionItems) = preProject
+		common-classes\multithreading\tasks\AWorkerTask.cpp = common-classes\multithreading\tasks\AWorkerTask.cpp
+		common-classes\multithreading\tasks\AWorkerTask.h = common-classes\multithreading\tasks\AWorkerTask.h
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -24,6 +82,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{36E56FF1-A61E-448A-B091-99DC898676B2} = {565E85AC-C10A-47EE-AAB2-EF11DB9425F4}
+		{5EA495DE-DFD5-4311-907A-746237B6FDF7} = {565E85AC-C10A-47EE-AAB2-EF11DB9425F4}
+		{EF9502F1-5DA6-4CDE-88EC-A4864FEBD1BC} = {5EA495DE-DFD5-4311-907A-746237B6FDF7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0FF821D2-B9B1-4C02-8A3E-E032AD76891A}

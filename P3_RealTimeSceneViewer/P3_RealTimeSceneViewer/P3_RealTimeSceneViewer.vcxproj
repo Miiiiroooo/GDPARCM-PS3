@@ -131,6 +131,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\common-classes\multithreading\IETSemaphore.cpp" />
+    <ClCompile Include="..\common-classes\multithreading\IETThread.cpp" />
+    <ClCompile Include="..\common-classes\multithreading\PoolWorker.cpp" />
+    <ClCompile Include="..\common-classes\multithreading\tasks\AWorkerTask.cpp" />
+    <ClCompile Include="..\common-classes\multithreading\ThreadPoolScheduler.cpp" />
+    <ClCompile Include="..\common-classes\opengl\Camera.cpp" />
+    <ClCompile Include="..\common-classes\opengl\DirectionalLight.cpp" />
+    <ClCompile Include="..\common-classes\opengl\Light.cpp" />
+    <ClCompile Include="..\common-classes\opengl\Model3D.cpp" />
+    <ClCompile Include="..\common-classes\opengl\ModelReference.cpp" />
+    <ClCompile Include="..\common-classes\opengl\OrthoCamera.cpp" />
+    <ClCompile Include="..\common-classes\opengl\PerspectiveCamera.cpp" />
+    <ClCompile Include="..\common-classes\opengl\Shader.cpp" />
+    <ClCompile Include="..\common-classes\opengl\Skybox.cpp" />
+    <ClCompile Include="..\common-classes\opengl\Texture.cpp" />
+    <ClCompile Include="..\common-classes\opengl\Transform.cpp" />
+    <ClCompile Include="..\common-classes\Utils.cpp" />
     <ClCompile Include="..\Libs\imgui\imgui.cpp" />
     <ClCompile Include="..\Libs\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\Libs\imgui\imgui_draw.cpp" />
@@ -139,24 +156,30 @@
     <ClCompile Include="..\Libs\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\Libs\imgui\imgui_widgets.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="IETSemaphore.cpp" />
-    <ClCompile Include="IETThread.cpp" />
-    <ClCompile Include="opengl-classes\Camera.cpp" />
-    <ClCompile Include="opengl-classes\DirectionalLight.cpp" />
-    <ClCompile Include="opengl-classes\Light.cpp" />
-    <ClCompile Include="opengl-classes\Model3D.cpp" />
-    <ClCompile Include="opengl-classes\ModelReference.cpp" />
-    <ClCompile Include="opengl-classes\OrthoCamera.cpp" />
-    <ClCompile Include="opengl-classes\PerspectiveCamera.cpp" />
-    <ClCompile Include="opengl-classes\Shader.cpp" />
-    <ClCompile Include="opengl-classes\Skybox.cpp" />
-    <ClCompile Include="opengl-classes\Texture.cpp" />
-    <ClCompile Include="opengl-classes\Transform.cpp" />
     <ClCompile Include="P3_RealTimeSceneViewer.cpp" />
     <ClCompile Include="SceneLoader_main.cpp" />
-    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\common-classes\multithreading\IETSemaphore.h" />
+    <ClInclude Include="..\common-classes\multithreading\IETThread.h" />
+    <ClInclude Include="..\common-classes\multithreading\IFinishedTaskListener.h" />
+    <ClInclude Include="..\common-classes\multithreading\PoolWorker.h" />
+    <ClInclude Include="..\common-classes\multithreading\tasks\AWorkerTask.h" />
+    <ClInclude Include="..\common-classes\multithreading\ThreadPoolScheduler.h" />
+    <ClInclude Include="..\common-classes\opengl\Camera.h" />
+    <ClInclude Include="..\common-classes\opengl\DirectionalLight.h" />
+    <ClInclude Include="..\common-classes\opengl\Light.h" />
+    <ClInclude Include="..\common-classes\opengl\Model3D.h" />
+    <ClInclude Include="..\common-classes\opengl\ModelReference.h" />
+    <ClInclude Include="..\common-classes\opengl\OrthoCamera.h" />
+    <ClInclude Include="..\common-classes\opengl\PerspectiveCamera.h" />
+    <ClInclude Include="..\common-classes\opengl\Shader.h" />
+    <ClInclude Include="..\common-classes\opengl\Skybox.h" />
+    <ClInclude Include="..\common-classes\opengl\Texture.h" />
+    <ClInclude Include="..\common-classes\opengl\Transform.h" />
+    <ClInclude Include="..\common-classes\stb_image.h" />
+    <ClInclude Include="..\common-classes\tiny_obj_loader.h" />
+    <ClInclude Include="..\common-classes\Utils.h" />
     <ClInclude Include="..\Libs\imgui\imconfig.h" />
     <ClInclude Include="..\Libs\imgui\imgui.h" />
     <ClInclude Include="..\Libs\imgui\imgui_impl_glfw.h" />
@@ -165,25 +188,9 @@
     <ClInclude Include="..\Libs\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\Libs\imgui\imstb_textedit.h" />
     <ClInclude Include="..\Libs\imgui\imstb_truetype.h" />
-    <ClInclude Include="IETSemaphore.h" />
-    <ClInclude Include="IETThread.h" />
-    <ClInclude Include="opengl-classes\Camera.h" />
-    <ClInclude Include="opengl-classes\DirectionalLight.h" />
-    <ClInclude Include="opengl-classes\Light.h" />
-    <ClInclude Include="opengl-classes\Model3D.h" />
-    <ClInclude Include="opengl-classes\ModelReference.h" />
-    <ClInclude Include="opengl-classes\OrthoCamera.h" />
-    <ClInclude Include="opengl-classes\PerspectiveCamera.h" />
-    <ClInclude Include="opengl-classes\Shader.h" />
-    <ClInclude Include="opengl-classes\Skybox.h" />
-    <ClInclude Include="opengl-classes\Texture.h" />
-    <ClInclude Include="opengl-classes\Transform.h" />
-    <ClInclude Include="stb_image.h" />
-    <ClInclude Include="tiny_obj_loader.h" />
-    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="proto\SceneLoader.proto" />
+    <None Include="..\proto\SceneLoader.proto" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
