@@ -16,6 +16,15 @@
     <Filter Include="Dependencies">
       <UniqueIdentifier>{b3341937-9181-49c8-b490-86f513163899}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SceneLoader">
+      <UniqueIdentifier>{912cf450-86df-456c-9bec-9ff4707e4167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{3382af2e-eb5e-4785-9a95-050c7901c774}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="opengl-classes">
+      <UniqueIdentifier>{f83e44dc-8885-43f2-bbc2-5d86e7d924a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="P3_RealTimeSceneViewer.cpp">
@@ -51,6 +60,43 @@
     <ClCompile Include="glad.c">
       <Filter>Dependencies</Filter>
     </ClCompile>
+    <ClCompile Include="SceneLoader_main.cpp">
+      <Filter>SceneLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-classes\Camera.cpp">
+      <Filter>opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-classes\DirectionalLight.cpp">
+      <Filter>opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-classes\Light.cpp">
+      <Filter>opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-classes\Model3D.cpp">
+      <Filter>opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-classes\ModelReference.cpp">
+      <Filter>opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-classes\OrthoCamera.cpp">
+      <Filter>opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-classes\PerspectiveCamera.cpp">
+      <Filter>opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-classes\Shader.cpp">
+      <Filter>opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-classes\Skybox.cpp">
+      <Filter>opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-classes\Texture.cpp">
+      <Filter>opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-classes\Transform.cpp">
+      <Filter>opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Libs\imgui\imgui_impl_glfw.h">
@@ -89,5 +135,44 @@
     <ClInclude Include="tiny_obj_loader.h">
       <Filter>Dependencies</Filter>
     </ClInclude>
+    <ClInclude Include="opengl-classes\Camera.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-classes\DirectionalLight.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-classes\Light.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-classes\Model3D.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-classes\ModelReference.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-classes\OrthoCamera.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-classes\PerspectiveCamera.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-classes\Shader.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-classes\Skybox.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-classes\Texture.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-classes\Transform.h">
+      <Filter>opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="proto\SceneLoader.proto">
+      <Filter>proto</Filter>
+    </None>
   </ItemGroup>
 </Project>

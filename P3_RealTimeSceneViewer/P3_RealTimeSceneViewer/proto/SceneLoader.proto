@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+
+message VertexData
+{
+	float vX = 1;
+	float vY = 2;
+	float vZ = 3;
+	float nX = 4;
+	float nY = 5;
+	float nZ = 6;
+	float u = 7;
+	float v = 8;
+}
+
+message ObjectData
+{
+	string objName = 1;
+	int dataIndex = 2;
+	VertexData data = 3;
+}
+
+message IntValue
+{
+	int value = 1;
+}
+
+message FloatValue
+{
+	float value = 1;
+}
+
+message Empty
+{
+
+}
+
+
+service SceneLoader
+{
+	rpc LoadObjectsInScene(IntValue) returns (stream ObjectData);
+	rpc GetSceneProgress(IntValue) returns (FloatValue);
+}
