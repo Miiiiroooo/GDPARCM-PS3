@@ -11,7 +11,7 @@ ModelReference::~ModelReference()
 
 }
 
-bool ModelReference::LoadObject()
+bool ModelReference::LoadModel(bool willSetupBufferObjects)
 {
     std::string warning, error;
 
@@ -35,7 +35,10 @@ bool ModelReference::LoadObject()
             fullVertexData.push_back(attributes.texcoords[vData.texcoord_index * 2 + 1]); 
         }
 
-        SetupBufferObjects();
+        if (willSetupBufferObjects)
+        {
+            SetupBufferObjects();
+        }
 
         return true; 
     }

@@ -16,9 +16,6 @@
     <Filter Include="Dependencies">
       <UniqueIdentifier>{b3341937-9181-49c8-b490-86f513163899}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SceneLoader">
-      <UniqueIdentifier>{912cf450-86df-456c-9bec-9ff4707e4167}</UniqueIdentifier>
-    </Filter>
     <Filter Include="opengl-classes">
       <UniqueIdentifier>{bd1b7936-6c0a-44a1-aab2-2e8be4f65679}</UniqueIdentifier>
     </Filter>
@@ -53,12 +50,6 @@
     </ClCompile>
     <ClCompile Include="..\Libs\imgui\imgui_impl_glfw.cpp">
       <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="glad.c">
-      <Filter>Dependencies</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneLoader_main.cpp">
-      <Filter>SceneLoader</Filter>
     </ClCompile>
     <ClCompile Include="..\common-classes\Utils.cpp" />
     <ClCompile Include="..\common-classes\opengl\Camera.cpp">
@@ -108,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="..\common-classes\multithreading\tasks\AWorkerTask.cpp">
       <Filter>Threading\Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\glad.c">
+      <Filter>Dependencies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

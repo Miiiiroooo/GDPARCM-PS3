@@ -11,7 +11,7 @@ public:
 	ModelReference(std::string modelPath);
 	~ModelReference();
 
-    bool LoadObject();
+    bool LoadModel(bool willSetupBufferObjects);
     std::vector<GLfloat>& GetFullVertexData();
     GLuint GetVAO();
     void DeleteBufferObjects();

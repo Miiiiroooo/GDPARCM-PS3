@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\common-classes\glad.c" />
     <ClCompile Include="..\common-classes\multithreading\IETSemaphore.cpp" />
     <ClCompile Include="..\common-classes\multithreading\IETThread.cpp" />
     <ClCompile Include="..\common-classes\multithreading\PoolWorker.cpp" />
@@ -155,9 +156,7 @@
     <ClCompile Include="..\Libs\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Libs\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\Libs\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="glad.c" />
     <ClCompile Include="P3_RealTimeSceneViewer.cpp" />
-    <ClCompile Include="SceneLoader_main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common-classes\multithreading\IETSemaphore.h" />
