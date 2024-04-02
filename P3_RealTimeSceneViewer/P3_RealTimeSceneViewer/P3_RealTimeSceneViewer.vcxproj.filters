@@ -103,6 +103,12 @@
     <ClCompile Include="..\common-classes\glad.c">
       <Filter>Dependencies</Filter>
     </ClCompile>
+    <ClCompile Include="..\proto\SceneLoader.grpc.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\proto\SceneLoader.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Libs\imgui\imgui_impl_glfw.h">
@@ -186,6 +192,12 @@
     </ClInclude>
     <ClInclude Include="..\common-classes\multithreading\tasks\AWorkerTask.h">
       <Filter>Threading\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\proto\SceneLoader.grpc.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\proto\SceneLoader.pb.h">
+      <Filter>proto</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

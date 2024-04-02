@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common-classes", "common-cl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "proto", "proto", "{16E3A785-A503-4313-BD58-14B07D5B582A}"
 	ProjectSection(SolutionItems) = preProject
+		proto\SceneLoader.grpc.pb.cc = proto\SceneLoader.grpc.pb.cc
+		proto\SceneLoader.grpc.pb.h = proto\SceneLoader.grpc.pb.h
+		proto\SceneLoader.pb.cc = proto\SceneLoader.pb.cc
+		proto\SceneLoader.pb.h = proto\SceneLoader.pb.h
 		proto\SceneLoader.proto = proto\SceneLoader.proto
 	EndProjectSection
 EndProject
@@ -65,6 +69,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tasks", "tasks", "{EF9502F1
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "P3_SceneLoader", "P3_SceneLoader\P3_SceneLoader.vcxproj", "{1B33721B-4363-411A-975B-65C189DAAC8F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Temp_SceneViewer", "Temp_SceneViewer\Temp_SceneViewer.vcxproj", "{4F3FC17C-EEC3-4BFC-90AB-D317BB705F1C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -89,6 +95,14 @@ Global
 		{1B33721B-4363-411A-975B-65C189DAAC8F}.Release|x64.Build.0 = Release|x64
 		{1B33721B-4363-411A-975B-65C189DAAC8F}.Release|x86.ActiveCfg = Release|Win32
 		{1B33721B-4363-411A-975B-65C189DAAC8F}.Release|x86.Build.0 = Release|Win32
+		{4F3FC17C-EEC3-4BFC-90AB-D317BB705F1C}.Debug|x64.ActiveCfg = Debug|x64
+		{4F3FC17C-EEC3-4BFC-90AB-D317BB705F1C}.Debug|x64.Build.0 = Debug|x64
+		{4F3FC17C-EEC3-4BFC-90AB-D317BB705F1C}.Debug|x86.ActiveCfg = Debug|Win32
+		{4F3FC17C-EEC3-4BFC-90AB-D317BB705F1C}.Debug|x86.Build.0 = Debug|Win32
+		{4F3FC17C-EEC3-4BFC-90AB-D317BB705F1C}.Release|x64.ActiveCfg = Release|x64
+		{4F3FC17C-EEC3-4BFC-90AB-D317BB705F1C}.Release|x64.Build.0 = Release|x64
+		{4F3FC17C-EEC3-4BFC-90AB-D317BB705F1C}.Release|x86.ActiveCfg = Release|Win32
+		{4F3FC17C-EEC3-4BFC-90AB-D317BB705F1C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

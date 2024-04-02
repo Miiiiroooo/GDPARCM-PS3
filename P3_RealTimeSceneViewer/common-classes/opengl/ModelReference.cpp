@@ -11,7 +11,7 @@ ModelReference::~ModelReference()
 
 }
 
-bool ModelReference::LoadModel(bool willSetupBufferObjects)
+bool ModelReference::LoadModel()
 {
     std::string warning, error;
 
@@ -35,7 +35,8 @@ bool ModelReference::LoadModel(bool willSetupBufferObjects)
             fullVertexData.push_back(attributes.texcoords[vData.texcoord_index * 2 + 1]); 
         }
 
-        if (willSetupBufferObjects)
+        GLFWwindow* window = glfwGetCurrentContext();
+        if (window != NULL)
         {
             SetupBufferObjects();
         }
@@ -49,6 +50,16 @@ bool ModelReference::LoadModel(bool willSetupBufferObjects)
         std::cout << "Warning: " << warning << "\n";
         return false;
     }
+}
+
+void ModelReference::LoadModelData(std::vector<float> data)
+{
+    for (int i = 0; i < data.size(); i++)
+    {
+        fullVertexData[i] = (GLfloat)data[i];
+    }
+
+    SetupBufferObjects();
 }
 
 std::vector<GLfloat>& ModelReference::GetFullVertexData()

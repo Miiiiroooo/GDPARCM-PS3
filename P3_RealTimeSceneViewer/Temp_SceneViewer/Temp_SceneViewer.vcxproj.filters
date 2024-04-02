@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Dependencies">
+      <UniqueIdentifier>{c99df4b7-fccb-447a-b4b1-0aaaedd26dbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{252676a7-7a3f-4571-8ddf-79d90f3615b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MultiThreading">
+      <UniqueIdentifier>{268c912b-ceec-401e-88d8-d6bc2d288a00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\opengl-classes">
+      <UniqueIdentifier>{85e8509a-0736-4238-9981-ef99ef59e45d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MultiThreading">
+      <UniqueIdentifier>{b5dde1f3-bf66-461a-a17d-038f2756f357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\opengl-classes">
+      <UniqueIdentifier>{70c5ec46-8dc2-4bc3-916d-3e9e0533204c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MultiThreading\Tasks">
+      <UniqueIdentifier>{e6aa5ab8-8f4d-45b3-8d22-35227ffec735}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MultiThreading\Tasks">
+      <UniqueIdentifier>{5ac4a2b9-ba72-4580-81a2-977806cd1d5e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\common-classes\glad.c">
+      <Filter>Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\proto\SceneLoader.grpc.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\proto\SceneLoader.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\opengl\Camera.cpp">
+      <Filter>Source Files\opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\opengl\DirectionalLight.cpp">
+      <Filter>Source Files\opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\opengl\Light.cpp">
+      <Filter>Source Files\opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\opengl\Model3D.cpp">
+      <Filter>Source Files\opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\opengl\ModelReference.cpp">
+      <Filter>Source Files\opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\opengl\OrthoCamera.cpp">
+      <Filter>Source Files\opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\opengl\PerspectiveCamera.cpp">
+      <Filter>Source Files\opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\opengl\Shader.cpp">
+      <Filter>Source Files\opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\opengl\Skybox.cpp">
+      <Filter>Source Files\opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\opengl\Texture.cpp">
+      <Filter>Source Files\opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\opengl\Transform.cpp">
+      <Filter>Source Files\opengl-classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\multithreading\IETSemaphore.cpp">
+      <Filter>Source Files\MultiThreading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\multithreading\IETThread.cpp">
+      <Filter>Source Files\MultiThreading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\multithreading\PoolWorker.cpp">
+      <Filter>Source Files\MultiThreading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\multithreading\ThreadPoolScheduler.cpp">
+      <Filter>Source Files\MultiThreading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\multithreading\tasks\AWorkerTask.cpp">
+      <Filter>Source Files\MultiThreading\Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common-classes\Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="temp_main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\common-classes\stb_image.h">
+      <Filter>Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\tiny_obj_loader.h">
+      <Filter>Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\proto\SceneLoader.grpc.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\proto\SceneLoader.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\Camera.h">
+      <Filter>Header Files\opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\DirectionalLight.h">
+      <Filter>Header Files\opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\Light.h">
+      <Filter>Header Files\opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\Model3D.h">
+      <Filter>Header Files\opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\ModelReference.h">
+      <Filter>Header Files\opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\OrthoCamera.h">
+      <Filter>Header Files\opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\PerspectiveCamera.h">
+      <Filter>Header Files\opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\Shader.h">
+      <Filter>Header Files\opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\Skybox.h">
+      <Filter>Header Files\opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\Texture.h">
+      <Filter>Header Files\opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\opengl\Transform.h">
+      <Filter>Header Files\opengl-classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\multithreading\ThreadPoolScheduler.h">
+      <Filter>Header Files\MultiThreading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\multithreading\PoolWorker.h">
+      <Filter>Header Files\MultiThreading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\multithreading\IFinishedTaskListener.h">
+      <Filter>Header Files\MultiThreading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\multithreading\IETThread.h">
+      <Filter>Header Files\MultiThreading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\multithreading\IETSemaphore.h">
+      <Filter>Header Files\MultiThreading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\multithreading\tasks\AWorkerTask.h">
+      <Filter>Header Files\MultiThreading\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common-classes\Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\proto\SceneLoader.proto">
+      <Filter>proto</Filter>
+    </None>
+  </ItemGroup>
+</Project>

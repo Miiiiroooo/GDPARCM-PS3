@@ -16,13 +16,13 @@ message VertexData
 message ObjectData
 {
 	string objName = 1;
-	int dataIndex = 2;
-	VertexData data = 3;
+	int32 vDataIndex = 2;
+	VertexData vData = 3;
 }
 
 message IntValue
 {
-	int value = 1;
+	int32 value = 1;
 }
 
 message FloatValue
