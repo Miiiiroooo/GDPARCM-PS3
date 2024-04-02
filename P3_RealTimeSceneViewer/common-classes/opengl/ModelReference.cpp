@@ -56,10 +56,14 @@ void ModelReference::LoadModelData(std::vector<float> data)
 {
     for (int i = 0; i < data.size(); i++)
     {
-        fullVertexData[i] = (GLfloat)data[i];
+        fullVertexData.push_back((GLfloat)data[i]);
     }
 
-    SetupBufferObjects();
+    GLFWwindow* window = glfwGetCurrentContext();
+    if (window != NULL)
+    {
+        SetupBufferObjects();
+    }
 }
 
 std::vector<GLfloat>& ModelReference::GetFullVertexData()

@@ -17,29 +17,33 @@ class SceneLoaderImpl final : public SceneLoader::Service
 public:
 	grpc::Status LoadObjectsInScene(grpc::ServerContext* context, const IntValue* request, grpc::ServerWriter<ObjectData>* writer) override
 	{
+		std::cout << "BOUT TO LOAD\n";
+
 		ModelReference* ref = new ModelReference("../3D/amumu.obj"); 
 		ref->LoadModel(); 
 		std::vector<float> data = ref->GetFullVertexData(); 
 
 		for (int i = 0; i < data.size(); i += 8)
 		{
-			VertexData vData;
-			vData.set_vx(data[i]);
-			vData.set_vy(data[i+1]);
-			vData.set_vz(data[i+2]);
-			vData.set_nx(data[i+3]);
-			vData.set_nx(data[i+4]);
-			vData.set_nx(data[i+5]);
-			vData.set_u(data[i+6]);
-			vData.set_v(data[i+7]);
+			VertexData* vData = new VertexData();
+			vData->set_vx(data[i]); 
+			vData->set_vy(data[i+1]); 
+			vData->set_vz(data[i+2]); 
+			vData->set_nx(data[i+3]); 
+			vData->set_nx(data[i+4]); 
+			vData->set_nx(data[i+5]); 
+			vData->set_u(data[i+6]); 
+			vData->set_v(data[i+7]); 
 
 			ObjectData oData;
 			oData.set_objname("amumu");  
 			oData.set_vdataindex(i / 8); 
-			oData.set_allocated_vdata(&vData);
+			oData.set_allocated_vdata(vData);
 
 			writer->Write(oData);
 		}
+
+		std::cout << "STATUS OK \n";
 
 		return grpc::Status::OK;
 	}
@@ -55,13 +59,17 @@ int main()
 {
 	srand(time(0));
 
-	std::string server_adr = "0.0.0.0:50051";
+	std::string server_adr = "localhost:50052";
 	SceneLoaderImpl loader;
 
 	grpc::ServerBuilder builder;
 
+	std::cout << "SETTING UP SERVER\n";
+
 	builder.AddListeningPort(server_adr, grpc::InsecureServerCredentials());
 	builder.RegisterService(&loader);
+
+	std::cout << "WAITING\n";
 
 	std::unique_ptr<grpc::Server> server(builder.BuildAndStart()); 
 	server->Wait();
