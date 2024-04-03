@@ -67,6 +67,57 @@ public:
 
     }
 
+    void LoadTexturesInScene(int id)
+    {
+        IntValue sceneID; 
+        sceneID.set_value(id);
+
+        //grpc::ClientContext context; 
+        //std::unique_ptr<grpc::ClientReader<TextureData>> reader(stub->LoadTexturesInScene(&context, sceneID)); 
+
+        //TextureData texData;
+        //while (reader->Read(&texData))
+        //{
+        //    Texture* newTexture = new Texture("");
+
+        //    GLint imageFormat = texData.hasalpha() ? GL_RGBA : GL_RGB;
+        //    const char* tex_bytes_to_char = texData.texturebytes().c_str();
+        //    unsigned char* tex_bytes = reinterpret_cast<unsigned char*>(const_cast<char*>(tex_bytes_to_char));
+
+        //   /* unsigned char* tex_bytes = new unsigned char[texData.texturebytes().length() + 1];
+        //    strcpy_s((char*)tex_bytes, texData.texturebytes().length() + 1, texData.texturebytes().c_str());*/
+        //    newTexture->LoadTextureData(texData.width(), texData.height(), imageFormat, tex_bytes);
+
+        //    texturesList.push_back(newTexture);
+        //}
+
+        //grpc::Status status = reader->Finish();  
+        //if (status.ok()) 
+        //{
+        //    std::cout << "CONNECTION SUCCESS\n"; 
+        //}
+        //else
+        //{
+        //    std::cout << "FAIL TO RECEVIVE " << status.error_code() << " " << status.error_message() << " " << status.error_details() << "\n"; 
+        //}
+
+
+        Texture* texture = new Texture("../3D/amumu.png");
+        texture->LoadTexture(GL_RGBA);
+        texture->GetTextureBytes(); // from this point, tex_bytes will have an error on the string which makes it impossible to convert into anything else
+
+       /* const char* tex_bytes_to_char = reinterpret_cast<char const*>(texture->GetTextureBytes());  
+        std::string* tex_bytes_to_str = new std::string(tex_bytes_to_char, strlen(tex_bytes_to_char));  // bytes in proto are usually represented as strings
+
+        const char* tex_bytes_to_char2 = tex_bytes_to_str->c_str();  
+        unsigned char* tex_bytes = reinterpret_cast<unsigned char*>(const_cast<char*>(tex_bytes_to_char)); 
+
+        int width = texture->GetWidth();
+        int height = texture->GetHeight();  
+        texture->LoadTextureData(width, height, GL_RGBA, tex_bytes); */
+        texturesList.push_back(texture);
+    }
+
     void LoadObjectsInScene(int id)
     {
         std::map<int, std::vector<float>> objDataMap; 
@@ -91,7 +142,7 @@ public:
                 objData.vdata().v()
             };
 
-            objDataMap[objData.vdataindex()] = vertexData;\
+            objDataMap[objData.vdataindex()] = vertexData;
         }
 
         grpc::Status status = reader->Finish();
@@ -149,12 +200,11 @@ int main(void)
     //};
     //LoadObjects(objPathsList);
 
-
-    // Load textures
-    std::vector<std::pair<std::string, GLuint>> textureInfoList = { 
-        {"../3D/amumu.png", GL_RGBA}, 
-    };
-    LoadTextures(textureInfoList); 
+    //// Load textures
+    //std::vector<std::pair<std::string, GLuint>> textureInfoList = { 
+    //    {"../3D/amumu.png", GL_RGBA}, 
+    //};
+    //LoadTextures(textureInfoList); 
 
     //// Create new models
     //std::vector<std::pair<int, int>> objTextureMap = {
@@ -171,6 +221,7 @@ int main(void)
 
     std::string server_adr = "localhost:50052";
     SceneViewer viewer(grpc::CreateChannel(server_adr, grpc::InsecureChannelCredentials()));
+    viewer.LoadTexturesInScene(0); 
     viewer.LoadObjectsInScene(0);
 
 

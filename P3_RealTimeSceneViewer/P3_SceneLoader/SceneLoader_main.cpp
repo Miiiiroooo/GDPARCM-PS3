@@ -7,6 +7,7 @@
 #include <cmath>
 #include <iostream>
 #include "../common-classes/opengl/ModelReference.h"
+#include "../common-classes/opengl/Texture.h"
 
 #include <grpcpp/grpcpp.h>
 #include "../proto/SceneLoader.grpc.pb.h"
@@ -42,6 +43,29 @@ public:
 
 			writer->Write(oData);
 		}
+
+		std::cout << "STATUS OK \n";
+
+		return grpc::Status::OK;
+	}
+
+	grpc::Status LoadTexturesInScene(grpc::ServerContext* context, const IntValue* request, grpc::ServerWriter<TextureData>* writer) override
+	{
+		std::cout << "BOUT TO LOAD\n";
+
+		Texture* texture = new Texture("../3D/amumu.png");
+		texture->LoadTexture(GL_RGBA);
+		const char* tex_bytes_to_char = reinterpret_cast<char const*>(texture->GetTextureBytes()); 
+		std::string* tex_bytes_to_str = new std::string(tex_bytes_to_char, strlen(tex_bytes_to_char));  
+
+		TextureData data;
+		data.set_texturename("amumu");
+		data.set_width(texture->GetWidth());
+		data.set_height(texture->GetHeight());
+		data.set_hasalpha(true);
+		data.set_allocated_texturebytes(tex_bytes_to_str); 
+
+		writer->Write(data);
 
 		std::cout << "STATUS OK \n";
 

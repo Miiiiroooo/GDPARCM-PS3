@@ -57,6 +57,9 @@ extern IntValueDefaultTypeInternal _IntValue_default_instance_;
 class ObjectData;
 struct ObjectDataDefaultTypeInternal;
 extern ObjectDataDefaultTypeInternal _ObjectData_default_instance_;
+class TextureData;
+struct TextureDataDefaultTypeInternal;
+extern TextureDataDefaultTypeInternal _TextureData_default_instance_;
 class VertexData;
 struct VertexDataDefaultTypeInternal;
 extern VertexDataDefaultTypeInternal _VertexData_default_instance_;
@@ -65,6 +68,7 @@ template<> ::Empty* Arena::CreateMaybeMessage<::Empty>(Arena*);
 template<> ::FloatValue* Arena::CreateMaybeMessage<::FloatValue>(Arena*);
 template<> ::IntValue* Arena::CreateMaybeMessage<::IntValue>(Arena*);
 template<> ::ObjectData* Arena::CreateMaybeMessage<::ObjectData>(Arena*);
+template<> ::TextureData* Arena::CreateMaybeMessage<::TextureData>(Arena*);
 template<> ::VertexData* Arena::CreateMaybeMessage<::VertexData>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 
@@ -479,6 +483,208 @@ class ObjectData final :
 };
 // -------------------------------------------------------------------
 
+class TextureData final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:TextureData) */ {
+ public:
+  inline TextureData() : TextureData(nullptr) {}
+  ~TextureData() override;
+  explicit PROTOBUF_CONSTEXPR TextureData(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  TextureData(const TextureData& from);
+  TextureData(TextureData&& from) noexcept
+    : TextureData() {
+    *this = ::std::move(from);
+  }
+
+  inline TextureData& operator=(const TextureData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TextureData& operator=(TextureData&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const TextureData& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const TextureData* internal_default_instance() {
+    return reinterpret_cast<const TextureData*>(
+               &_TextureData_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(TextureData& a, TextureData& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(TextureData* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TextureData* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  TextureData* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<TextureData>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const TextureData& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const TextureData& from) {
+    TextureData::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TextureData* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "TextureData";
+  }
+  protected:
+  explicit TextureData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kTextureNameFieldNumber = 1,
+    kTextureBytesFieldNumber = 5,
+    kWidthFieldNumber = 2,
+    kHeightFieldNumber = 3,
+    kHasAlphaFieldNumber = 4,
+  };
+  // string textureName = 1;
+  void clear_texturename();
+  const std::string& texturename() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_texturename(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_texturename();
+  PROTOBUF_NODISCARD std::string* release_texturename();
+  void set_allocated_texturename(std::string* texturename);
+  private:
+  const std::string& _internal_texturename() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_texturename(const std::string& value);
+  std::string* _internal_mutable_texturename();
+  public:
+
+  // bytes textureBytes = 5;
+  void clear_texturebytes();
+  const std::string& texturebytes() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_texturebytes(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_texturebytes();
+  PROTOBUF_NODISCARD std::string* release_texturebytes();
+  void set_allocated_texturebytes(std::string* texturebytes);
+  private:
+  const std::string& _internal_texturebytes() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_texturebytes(const std::string& value);
+  std::string* _internal_mutable_texturebytes();
+  public:
+
+  // int32 width = 2;
+  void clear_width();
+  int32_t width() const;
+  void set_width(int32_t value);
+  private:
+  int32_t _internal_width() const;
+  void _internal_set_width(int32_t value);
+  public:
+
+  // int32 height = 3;
+  void clear_height();
+  int32_t height() const;
+  void set_height(int32_t value);
+  private:
+  int32_t _internal_height() const;
+  void _internal_set_height(int32_t value);
+  public:
+
+  // bool hasAlpha = 4;
+  void clear_hasalpha();
+  bool hasalpha() const;
+  void set_hasalpha(bool value);
+  private:
+  bool _internal_hasalpha() const;
+  void _internal_set_hasalpha(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:TextureData)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr texturename_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr texturebytes_;
+    int32_t width_;
+    int32_t height_;
+    bool hasalpha_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_proto_2fSceneLoader_2eproto;
+};
+// -------------------------------------------------------------------
+
 class IntValue final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:IntValue) */ {
  public:
@@ -527,7 +733,7 @@ class IntValue final :
                &_IntValue_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   friend void swap(IntValue& a, IntValue& b) {
     a.Swap(&b);
@@ -675,7 +881,7 @@ class FloatValue final :
                &_FloatValue_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   friend void swap(FloatValue& a, FloatValue& b) {
     a.Swap(&b);
@@ -822,7 +1028,7 @@ class Empty final :
                &_Empty_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   friend void swap(Empty& a, Empty& b) {
     a.Swap(&b);
@@ -1228,6 +1434,170 @@ inline void ObjectData::set_allocated_vdata(::VertexData* vdata) {
 
 // -------------------------------------------------------------------
 
+// TextureData
+
+// string textureName = 1;
+inline void TextureData::clear_texturename() {
+  _impl_.texturename_.ClearToEmpty();
+}
+inline const std::string& TextureData::texturename() const {
+  // @@protoc_insertion_point(field_get:TextureData.textureName)
+  return _internal_texturename();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TextureData::set_texturename(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.texturename_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:TextureData.textureName)
+}
+inline std::string* TextureData::mutable_texturename() {
+  std::string* _s = _internal_mutable_texturename();
+  // @@protoc_insertion_point(field_mutable:TextureData.textureName)
+  return _s;
+}
+inline const std::string& TextureData::_internal_texturename() const {
+  return _impl_.texturename_.Get();
+}
+inline void TextureData::_internal_set_texturename(const std::string& value) {
+  
+  _impl_.texturename_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TextureData::_internal_mutable_texturename() {
+  
+  return _impl_.texturename_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TextureData::release_texturename() {
+  // @@protoc_insertion_point(field_release:TextureData.textureName)
+  return _impl_.texturename_.Release();
+}
+inline void TextureData::set_allocated_texturename(std::string* texturename) {
+  if (texturename != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.texturename_.SetAllocated(texturename, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.texturename_.IsDefault()) {
+    _impl_.texturename_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:TextureData.textureName)
+}
+
+// int32 width = 2;
+inline void TextureData::clear_width() {
+  _impl_.width_ = 0;
+}
+inline int32_t TextureData::_internal_width() const {
+  return _impl_.width_;
+}
+inline int32_t TextureData::width() const {
+  // @@protoc_insertion_point(field_get:TextureData.width)
+  return _internal_width();
+}
+inline void TextureData::_internal_set_width(int32_t value) {
+  
+  _impl_.width_ = value;
+}
+inline void TextureData::set_width(int32_t value) {
+  _internal_set_width(value);
+  // @@protoc_insertion_point(field_set:TextureData.width)
+}
+
+// int32 height = 3;
+inline void TextureData::clear_height() {
+  _impl_.height_ = 0;
+}
+inline int32_t TextureData::_internal_height() const {
+  return _impl_.height_;
+}
+inline int32_t TextureData::height() const {
+  // @@protoc_insertion_point(field_get:TextureData.height)
+  return _internal_height();
+}
+inline void TextureData::_internal_set_height(int32_t value) {
+  
+  _impl_.height_ = value;
+}
+inline void TextureData::set_height(int32_t value) {
+  _internal_set_height(value);
+  // @@protoc_insertion_point(field_set:TextureData.height)
+}
+
+// bool hasAlpha = 4;
+inline void TextureData::clear_hasalpha() {
+  _impl_.hasalpha_ = false;
+}
+inline bool TextureData::_internal_hasalpha() const {
+  return _impl_.hasalpha_;
+}
+inline bool TextureData::hasalpha() const {
+  // @@protoc_insertion_point(field_get:TextureData.hasAlpha)
+  return _internal_hasalpha();
+}
+inline void TextureData::_internal_set_hasalpha(bool value) {
+  
+  _impl_.hasalpha_ = value;
+}
+inline void TextureData::set_hasalpha(bool value) {
+  _internal_set_hasalpha(value);
+  // @@protoc_insertion_point(field_set:TextureData.hasAlpha)
+}
+
+// bytes textureBytes = 5;
+inline void TextureData::clear_texturebytes() {
+  _impl_.texturebytes_.ClearToEmpty();
+}
+inline const std::string& TextureData::texturebytes() const {
+  // @@protoc_insertion_point(field_get:TextureData.textureBytes)
+  return _internal_texturebytes();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TextureData::set_texturebytes(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.texturebytes_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:TextureData.textureBytes)
+}
+inline std::string* TextureData::mutable_texturebytes() {
+  std::string* _s = _internal_mutable_texturebytes();
+  // @@protoc_insertion_point(field_mutable:TextureData.textureBytes)
+  return _s;
+}
+inline const std::string& TextureData::_internal_texturebytes() const {
+  return _impl_.texturebytes_.Get();
+}
+inline void TextureData::_internal_set_texturebytes(const std::string& value) {
+  
+  _impl_.texturebytes_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TextureData::_internal_mutable_texturebytes() {
+  
+  return _impl_.texturebytes_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TextureData::release_texturebytes() {
+  // @@protoc_insertion_point(field_release:TextureData.textureBytes)
+  return _impl_.texturebytes_.Release();
+}
+inline void TextureData::set_allocated_texturebytes(std::string* texturebytes) {
+  if (texturebytes != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.texturebytes_.SetAllocated(texturebytes, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.texturebytes_.IsDefault()) {
+    _impl_.texturebytes_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:TextureData.textureBytes)
+}
+
+// -------------------------------------------------------------------
+
 // IntValue
 
 // int32 value = 1;
@@ -1281,6 +1651,8 @@ inline void FloatValue::set_value(float value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

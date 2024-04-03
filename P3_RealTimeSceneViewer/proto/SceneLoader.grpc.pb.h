@@ -42,6 +42,15 @@ class SceneLoader final {
     std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::ObjectData>> PrepareAsyncLoadObjectsInScene(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::ObjectData>>(PrepareAsyncLoadObjectsInSceneRaw(context, request, cq));
     }
+    std::unique_ptr< ::grpc::ClientReaderInterface< ::TextureData>> LoadTexturesInScene(::grpc::ClientContext* context, const ::IntValue& request) {
+      return std::unique_ptr< ::grpc::ClientReaderInterface< ::TextureData>>(LoadTexturesInSceneRaw(context, request));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::TextureData>> AsyncLoadTexturesInScene(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::TextureData>>(AsyncLoadTexturesInSceneRaw(context, request, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::TextureData>> PrepareAsyncLoadTexturesInScene(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::TextureData>>(PrepareAsyncLoadTexturesInSceneRaw(context, request, cq));
+    }
     virtual ::grpc::Status GetSceneProgress(::grpc::ClientContext* context, const ::IntValue& request, ::FloatValue* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::FloatValue>> AsyncGetSceneProgress(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::FloatValue>>(AsyncGetSceneProgressRaw(context, request, cq));
@@ -53,6 +62,7 @@ class SceneLoader final {
      public:
       virtual ~async_interface() {}
       virtual void LoadObjectsInScene(::grpc::ClientContext* context, const ::IntValue* request, ::grpc::ClientReadReactor< ::ObjectData>* reactor) = 0;
+      virtual void LoadTexturesInScene(::grpc::ClientContext* context, const ::IntValue* request, ::grpc::ClientReadReactor< ::TextureData>* reactor) = 0;
       virtual void GetSceneProgress(::grpc::ClientContext* context, const ::IntValue* request, ::FloatValue* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetSceneProgress(::grpc::ClientContext* context, const ::IntValue* request, ::FloatValue* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
@@ -63,6 +73,9 @@ class SceneLoader final {
     virtual ::grpc::ClientReaderInterface< ::ObjectData>* LoadObjectsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::ObjectData>* AsyncLoadObjectsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::ObjectData>* PrepareAsyncLoadObjectsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderInterface< ::TextureData>* LoadTexturesInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::TextureData>* AsyncLoadTexturesInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::TextureData>* PrepareAsyncLoadTexturesInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::FloatValue>* AsyncGetSceneProgressRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::FloatValue>* PrepareAsyncGetSceneProgressRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) = 0;
   };
@@ -78,6 +91,15 @@ class SceneLoader final {
     std::unique_ptr< ::grpc::ClientAsyncReader< ::ObjectData>> PrepareAsyncLoadObjectsInScene(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReader< ::ObjectData>>(PrepareAsyncLoadObjectsInSceneRaw(context, request, cq));
     }
+    std::unique_ptr< ::grpc::ClientReader< ::TextureData>> LoadTexturesInScene(::grpc::ClientContext* context, const ::IntValue& request) {
+      return std::unique_ptr< ::grpc::ClientReader< ::TextureData>>(LoadTexturesInSceneRaw(context, request));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::TextureData>> AsyncLoadTexturesInScene(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::TextureData>>(AsyncLoadTexturesInSceneRaw(context, request, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::TextureData>> PrepareAsyncLoadTexturesInScene(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::TextureData>>(PrepareAsyncLoadTexturesInSceneRaw(context, request, cq));
+    }
     ::grpc::Status GetSceneProgress(::grpc::ClientContext* context, const ::IntValue& request, ::FloatValue* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::FloatValue>> AsyncGetSceneProgress(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::FloatValue>>(AsyncGetSceneProgressRaw(context, request, cq));
@@ -89,6 +111,7 @@ class SceneLoader final {
       public StubInterface::async_interface {
      public:
       void LoadObjectsInScene(::grpc::ClientContext* context, const ::IntValue* request, ::grpc::ClientReadReactor< ::ObjectData>* reactor) override;
+      void LoadTexturesInScene(::grpc::ClientContext* context, const ::IntValue* request, ::grpc::ClientReadReactor< ::TextureData>* reactor) override;
       void GetSceneProgress(::grpc::ClientContext* context, const ::IntValue* request, ::FloatValue* response, std::function<void(::grpc::Status)>) override;
       void GetSceneProgress(::grpc::ClientContext* context, const ::IntValue* request, ::FloatValue* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
@@ -105,9 +128,13 @@ class SceneLoader final {
     ::grpc::ClientReader< ::ObjectData>* LoadObjectsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request) override;
     ::grpc::ClientAsyncReader< ::ObjectData>* AsyncLoadObjectsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReader< ::ObjectData>* PrepareAsyncLoadObjectsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReader< ::TextureData>* LoadTexturesInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request) override;
+    ::grpc::ClientAsyncReader< ::TextureData>* AsyncLoadTexturesInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReader< ::TextureData>* PrepareAsyncLoadTexturesInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::FloatValue>* AsyncGetSceneProgressRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::FloatValue>* PrepareAsyncGetSceneProgressRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_LoadObjectsInScene_;
+    const ::grpc::internal::RpcMethod rpcmethod_LoadTexturesInScene_;
     const ::grpc::internal::RpcMethod rpcmethod_GetSceneProgress_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
@@ -117,6 +144,7 @@ class SceneLoader final {
     Service();
     virtual ~Service();
     virtual ::grpc::Status LoadObjectsInScene(::grpc::ServerContext* context, const ::IntValue* request, ::grpc::ServerWriter< ::ObjectData>* writer);
+    virtual ::grpc::Status LoadTexturesInScene(::grpc::ServerContext* context, const ::IntValue* request, ::grpc::ServerWriter< ::TextureData>* writer);
     virtual ::grpc::Status GetSceneProgress(::grpc::ServerContext* context, const ::IntValue* request, ::FloatValue* response);
   };
   template <class BaseClass>
@@ -140,12 +168,32 @@ class SceneLoader final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_LoadTexturesInScene : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_LoadTexturesInScene() {
+      ::grpc::Service::MarkMethodAsync(1);
+    }
+    ~WithAsyncMethod_LoadTexturesInScene() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LoadTexturesInScene(::grpc::ServerContext* /*context*/, const ::IntValue* /*request*/, ::grpc::ServerWriter< ::TextureData>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestLoadTexturesInScene(::grpc::ServerContext* context, ::IntValue* request, ::grpc::ServerAsyncWriter< ::TextureData>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncServerStreaming(1, context, request, writer, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_GetSceneProgress : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_GetSceneProgress() {
-      ::grpc::Service::MarkMethodAsync(1);
+      ::grpc::Service::MarkMethodAsync(2);
     }
     ~WithAsyncMethod_GetSceneProgress() override {
       BaseClassMustBeDerivedFromService(this);
@@ -156,10 +204,10 @@ class SceneLoader final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestGetSceneProgress(::grpc::ServerContext* context, ::IntValue* request, ::grpc::ServerAsyncResponseWriter< ::FloatValue>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_LoadObjectsInScene<WithAsyncMethod_GetSceneProgress<Service > > AsyncService;
+  typedef WithAsyncMethod_LoadObjectsInScene<WithAsyncMethod_LoadTexturesInScene<WithAsyncMethod_GetSceneProgress<Service > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_LoadObjectsInScene : public BaseClass {
    private:
@@ -183,18 +231,40 @@ class SceneLoader final {
       ::grpc::CallbackServerContext* /*context*/, const ::IntValue* /*request*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithCallbackMethod_LoadTexturesInScene : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_LoadTexturesInScene() {
+      ::grpc::Service::MarkMethodCallback(1,
+          new ::grpc::internal::CallbackServerStreamingHandler< ::IntValue, ::TextureData>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::IntValue* request) { return this->LoadTexturesInScene(context, request); }));
+    }
+    ~WithCallbackMethod_LoadTexturesInScene() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LoadTexturesInScene(::grpc::ServerContext* /*context*/, const ::IntValue* /*request*/, ::grpc::ServerWriter< ::TextureData>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerWriteReactor< ::TextureData>* LoadTexturesInScene(
+      ::grpc::CallbackServerContext* /*context*/, const ::IntValue* /*request*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithCallbackMethod_GetSceneProgress : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_GetSceneProgress() {
-      ::grpc::Service::MarkMethodCallback(1,
+      ::grpc::Service::MarkMethodCallback(2,
           new ::grpc::internal::CallbackUnaryHandler< ::IntValue, ::FloatValue>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::IntValue* request, ::FloatValue* response) { return this->GetSceneProgress(context, request, response); }));}
     void SetMessageAllocatorFor_GetSceneProgress(
         ::grpc::MessageAllocator< ::IntValue, ::FloatValue>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::IntValue, ::FloatValue>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -209,7 +279,7 @@ class SceneLoader final {
     virtual ::grpc::ServerUnaryReactor* GetSceneProgress(
       ::grpc::CallbackServerContext* /*context*/, const ::IntValue* /*request*/, ::FloatValue* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_LoadObjectsInScene<WithCallbackMethod_GetSceneProgress<Service > > CallbackService;
+  typedef WithCallbackMethod_LoadObjectsInScene<WithCallbackMethod_LoadTexturesInScene<WithCallbackMethod_GetSceneProgress<Service > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_LoadObjectsInScene : public BaseClass {
@@ -229,12 +299,29 @@ class SceneLoader final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_LoadTexturesInScene : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_LoadTexturesInScene() {
+      ::grpc::Service::MarkMethodGeneric(1);
+    }
+    ~WithGenericMethod_LoadTexturesInScene() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LoadTexturesInScene(::grpc::ServerContext* /*context*/, const ::IntValue* /*request*/, ::grpc::ServerWriter< ::TextureData>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_GetSceneProgress : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_GetSceneProgress() {
-      ::grpc::Service::MarkMethodGeneric(1);
+      ::grpc::Service::MarkMethodGeneric(2);
     }
     ~WithGenericMethod_GetSceneProgress() override {
       BaseClassMustBeDerivedFromService(this);
@@ -266,12 +353,32 @@ class SceneLoader final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_LoadTexturesInScene : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_LoadTexturesInScene() {
+      ::grpc::Service::MarkMethodRaw(1);
+    }
+    ~WithRawMethod_LoadTexturesInScene() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LoadTexturesInScene(::grpc::ServerContext* /*context*/, const ::IntValue* /*request*/, ::grpc::ServerWriter< ::TextureData>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestLoadTexturesInScene(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncServerStreaming(1, context, request, writer, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_GetSceneProgress : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_GetSceneProgress() {
-      ::grpc::Service::MarkMethodRaw(1);
+      ::grpc::Service::MarkMethodRaw(2);
     }
     ~WithRawMethod_GetSceneProgress() override {
       BaseClassMustBeDerivedFromService(this);
@@ -282,7 +389,7 @@ class SceneLoader final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestGetSceneProgress(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -308,12 +415,34 @@ class SceneLoader final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_LoadTexturesInScene : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_LoadTexturesInScene() {
+      ::grpc::Service::MarkMethodRawCallback(1,
+          new ::grpc::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->LoadTexturesInScene(context, request); }));
+    }
+    ~WithRawCallbackMethod_LoadTexturesInScene() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LoadTexturesInScene(::grpc::ServerContext* /*context*/, const ::IntValue* /*request*/, ::grpc::ServerWriter< ::TextureData>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerWriteReactor< ::grpc::ByteBuffer>* LoadTexturesInScene(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_GetSceneProgress : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_GetSceneProgress() {
-      ::grpc::Service::MarkMethodRawCallback(1,
+      ::grpc::Service::MarkMethodRawCallback(2,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetSceneProgress(context, request, response); }));
@@ -335,7 +464,7 @@ class SceneLoader final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_GetSceneProgress() {
-      ::grpc::Service::MarkMethodStreamed(1,
+      ::grpc::Service::MarkMethodStreamed(2,
         new ::grpc::internal::StreamedUnaryHandler<
           ::IntValue, ::FloatValue>(
             [this](::grpc::ServerContext* context,
@@ -384,8 +513,35 @@ class SceneLoader final {
     // replace default version of method with split streamed
     virtual ::grpc::Status StreamedLoadObjectsInScene(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::IntValue,::ObjectData>* server_split_streamer) = 0;
   };
-  typedef WithSplitStreamingMethod_LoadObjectsInScene<Service > SplitStreamedService;
-  typedef WithSplitStreamingMethod_LoadObjectsInScene<WithStreamedUnaryMethod_GetSceneProgress<Service > > StreamedService;
+  template <class BaseClass>
+  class WithSplitStreamingMethod_LoadTexturesInScene : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithSplitStreamingMethod_LoadTexturesInScene() {
+      ::grpc::Service::MarkMethodStreamed(1,
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::IntValue, ::TextureData>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerSplitStreamer<
+                     ::IntValue, ::TextureData>* streamer) {
+                       return this->StreamedLoadTexturesInScene(context,
+                         streamer);
+                  }));
+    }
+    ~WithSplitStreamingMethod_LoadTexturesInScene() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status LoadTexturesInScene(::grpc::ServerContext* /*context*/, const ::IntValue* /*request*/, ::grpc::ServerWriter< ::TextureData>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with split streamed
+    virtual ::grpc::Status StreamedLoadTexturesInScene(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::IntValue,::TextureData>* server_split_streamer) = 0;
+  };
+  typedef WithSplitStreamingMethod_LoadObjectsInScene<WithSplitStreamingMethod_LoadTexturesInScene<Service > > SplitStreamedService;
+  typedef WithSplitStreamingMethod_LoadObjectsInScene<WithSplitStreamingMethod_LoadTexturesInScene<WithStreamedUnaryMethod_GetSceneProgress<Service > > > StreamedService;
 };
 
 
