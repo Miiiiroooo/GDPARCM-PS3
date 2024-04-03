@@ -20,14 +20,25 @@ PROTOBUF_PRAGMA_INIT_SEG
 namespace _pb = ::PROTOBUF_NAMESPACE_ID;
 namespace _pbi = _pb::internal;
 
+PROTOBUF_CONSTEXPR Vector3::Vector3(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.x_)*/0
+  , /*decltype(_impl_.y_)*/0
+  , /*decltype(_impl_.z_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct Vector3DefaultTypeInternal {
+  PROTOBUF_CONSTEXPR Vector3DefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~Vector3DefaultTypeInternal() {}
+  union {
+    Vector3 _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 Vector3DefaultTypeInternal _Vector3_default_instance_;
 PROTOBUF_CONSTEXPR VertexData::VertexData(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.vx_)*/0
-  , /*decltype(_impl_.vy_)*/0
-  , /*decltype(_impl_.vz_)*/0
-  , /*decltype(_impl_.nx_)*/0
-  , /*decltype(_impl_.ny_)*/0
-  , /*decltype(_impl_.nz_)*/0
+    /*decltype(_impl_.position_)*/nullptr
+  , /*decltype(_impl_.normals_)*/nullptr
   , /*decltype(_impl_.u_)*/0
   , /*decltype(_impl_.v_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
@@ -40,28 +51,45 @@ struct VertexDataDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 VertexDataDefaultTypeInternal _VertexData_default_instance_;
-PROTOBUF_CONSTEXPR ObjectData::ObjectData(
+PROTOBUF_CONSTEXPR ModelData::ModelData(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.objname_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+    /*decltype(_impl_.modelname_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.vdata_)*/nullptr
   , /*decltype(_impl_.vdataindex_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct ObjectDataDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ObjectDataDefaultTypeInternal()
+struct ModelDataDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ModelDataDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~ObjectDataDefaultTypeInternal() {}
+  ~ModelDataDefaultTypeInternal() {}
   union {
-    ObjectData _instance;
+    ModelData _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ObjectDataDefaultTypeInternal _ObjectData_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ModelDataDefaultTypeInternal _ModelData_default_instance_;
+PROTOBUF_CONSTEXPR PixelData::PixelData(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.r_)*/0u
+  , /*decltype(_impl_.g_)*/0u
+  , /*decltype(_impl_.b_)*/0u
+  , /*decltype(_impl_.a_)*/0u
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct PixelDataDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PixelDataDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PixelDataDefaultTypeInternal() {}
+  union {
+    PixelData _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PixelDataDefaultTypeInternal _PixelData_default_instance_;
 PROTOBUF_CONSTEXPR TextureData::TextureData(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.texturename_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.texturebytes_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.pixeldata_)*/nullptr
   , /*decltype(_impl_.width_)*/0
   , /*decltype(_impl_.height_)*/0
   , /*decltype(_impl_.hasalpha_)*/false
+  , /*decltype(_impl_.pixelindex_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct TextureDataDefaultTypeInternal {
   PROTOBUF_CONSTEXPR TextureDataDefaultTypeInternal()
@@ -72,6 +100,23 @@ struct TextureDataDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TextureDataDefaultTypeInternal _TextureData_default_instance_;
+PROTOBUF_CONSTEXPR ObjectData::ObjectData(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.modelname_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.texturename_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.position_)*/nullptr
+  , /*decltype(_impl_.rotation_)*/nullptr
+  , /*decltype(_impl_.scale_)*/nullptr
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct ObjectDataDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ObjectDataDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ObjectDataDefaultTypeInternal() {}
+  union {
+    ObjectData _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ObjectDataDefaultTypeInternal _ObjectData_default_instance_;
 PROTOBUF_CONSTEXPR IntValue::IntValue(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.value_)*/0
@@ -109,34 +154,49 @@ struct EmptyDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EmptyDefaultTypeInternal _Empty_default_instance_;
-static ::_pb::Metadata file_level_metadata_proto_2fSceneLoader_2eproto[6];
+static ::_pb::Metadata file_level_metadata_proto_2fSceneLoader_2eproto[9];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_proto_2fSceneLoader_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_proto_2fSceneLoader_2eproto = nullptr;
 
 const uint32_t TableStruct_proto_2fSceneLoader_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Vector3, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Vector3, _impl_.x_),
+  PROTOBUF_FIELD_OFFSET(::Vector3, _impl_.y_),
+  PROTOBUF_FIELD_OFFSET(::Vector3, _impl_.z_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::VertexData, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::VertexData, _impl_.vx_),
-  PROTOBUF_FIELD_OFFSET(::VertexData, _impl_.vy_),
-  PROTOBUF_FIELD_OFFSET(::VertexData, _impl_.vz_),
-  PROTOBUF_FIELD_OFFSET(::VertexData, _impl_.nx_),
-  PROTOBUF_FIELD_OFFSET(::VertexData, _impl_.ny_),
-  PROTOBUF_FIELD_OFFSET(::VertexData, _impl_.nz_),
+  PROTOBUF_FIELD_OFFSET(::VertexData, _impl_.position_),
+  PROTOBUF_FIELD_OFFSET(::VertexData, _impl_.normals_),
   PROTOBUF_FIELD_OFFSET(::VertexData, _impl_.u_),
   PROTOBUF_FIELD_OFFSET(::VertexData, _impl_.v_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::ObjectData, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::ModelData, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::ObjectData, _impl_.objname_),
-  PROTOBUF_FIELD_OFFSET(::ObjectData, _impl_.vdataindex_),
-  PROTOBUF_FIELD_OFFSET(::ObjectData, _impl_.vdata_),
+  PROTOBUF_FIELD_OFFSET(::ModelData, _impl_.modelname_),
+  PROTOBUF_FIELD_OFFSET(::ModelData, _impl_.vdataindex_),
+  PROTOBUF_FIELD_OFFSET(::ModelData, _impl_.vdata_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::PixelData, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::PixelData, _impl_.r_),
+  PROTOBUF_FIELD_OFFSET(::PixelData, _impl_.g_),
+  PROTOBUF_FIELD_OFFSET(::PixelData, _impl_.b_),
+  PROTOBUF_FIELD_OFFSET(::PixelData, _impl_.a_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::TextureData, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -147,7 +207,19 @@ const uint32_t TableStruct_proto_2fSceneLoader_2eproto::offsets[] PROTOBUF_SECTI
   PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.width_),
   PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.height_),
   PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.hasalpha_),
-  PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.texturebytes_),
+  PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.pixelindex_),
+  PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.pixeldata_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::ObjectData, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::ObjectData, _impl_.modelname_),
+  PROTOBUF_FIELD_OFFSET(::ObjectData, _impl_.texturename_),
+  PROTOBUF_FIELD_OFFSET(::ObjectData, _impl_.position_),
+  PROTOBUF_FIELD_OFFSET(::ObjectData, _impl_.rotation_),
+  PROTOBUF_FIELD_OFFSET(::ObjectData, _impl_.scale_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::IntValue, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -170,44 +242,58 @@ const uint32_t TableStruct_proto_2fSceneLoader_2eproto::offsets[] PROTOBUF_SECTI
   ~0u,  // no _inlined_string_donated_
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, -1, sizeof(::VertexData)},
-  { 14, -1, -1, sizeof(::ObjectData)},
-  { 23, -1, -1, sizeof(::TextureData)},
-  { 34, -1, -1, sizeof(::IntValue)},
-  { 41, -1, -1, sizeof(::FloatValue)},
-  { 48, -1, -1, sizeof(::Empty)},
+  { 0, -1, -1, sizeof(::Vector3)},
+  { 9, -1, -1, sizeof(::VertexData)},
+  { 19, -1, -1, sizeof(::ModelData)},
+  { 28, -1, -1, sizeof(::PixelData)},
+  { 38, -1, -1, sizeof(::TextureData)},
+  { 50, -1, -1, sizeof(::ObjectData)},
+  { 61, -1, -1, sizeof(::IntValue)},
+  { 68, -1, -1, sizeof(::FloatValue)},
+  { 75, -1, -1, sizeof(::Empty)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
+  &::_Vector3_default_instance_._instance,
   &::_VertexData_default_instance_._instance,
-  &::_ObjectData_default_instance_._instance,
+  &::_ModelData_default_instance_._instance,
+  &::_PixelData_default_instance_._instance,
   &::_TextureData_default_instance_._instance,
+  &::_ObjectData_default_instance_._instance,
   &::_IntValue_default_instance_._instance,
   &::_FloatValue_default_instance_._instance,
   &::_Empty_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_proto_2fSceneLoader_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\027proto/SceneLoader.proto\"j\n\nVertexData\022"
-  "\n\n\002vX\030\001 \001(\002\022\n\n\002vY\030\002 \001(\002\022\n\n\002vZ\030\003 \001(\002\022\n\n\002n"
-  "X\030\004 \001(\002\022\n\n\002nY\030\005 \001(\002\022\n\n\002nZ\030\006 \001(\002\022\t\n\001u\030\007 \001"
-  "(\002\022\t\n\001v\030\010 \001(\002\"M\n\nObjectData\022\017\n\007objName\030\001"
-  " \001(\t\022\022\n\nvDataIndex\030\002 \001(\005\022\032\n\005vData\030\003 \001(\0132"
-  "\013.VertexData\"i\n\013TextureData\022\023\n\013textureNa"
-  "me\030\001 \001(\t\022\r\n\005width\030\002 \001(\005\022\016\n\006height\030\003 \001(\005\022"
-  "\020\n\010hasAlpha\030\004 \001(\010\022\024\n\014textureBytes\030\005 \001(\014\""
-  "\031\n\010IntValue\022\r\n\005value\030\001 \001(\005\"\033\n\nFloatValue"
-  "\022\r\n\005value\030\001 \001(\002\"\007\n\005Empty2\233\001\n\013SceneLoader"
-  "\022.\n\022LoadObjectsInScene\022\t.IntValue\032\013.Obje"
-  "ctData0\001\0220\n\023LoadTexturesInScene\022\t.IntVal"
-  "ue\032\014.TextureData0\001\022*\n\020GetSceneProgress\022\t"
-  ".IntValue\032\013.FloatValueb\006proto3"
+  "\n\027proto/SceneLoader.proto\"*\n\007Vector3\022\t\n\001"
+  "x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002\"Y\n\nVertexD"
+  "ata\022\032\n\010position\030\001 \001(\0132\010.Vector3\022\031\n\007norma"
+  "ls\030\002 \001(\0132\010.Vector3\022\t\n\001u\030\003 \001(\002\022\t\n\001v\030\004 \001(\002"
+  "\"N\n\tModelData\022\021\n\tmodelName\030\001 \001(\t\022\022\n\nvDat"
+  "aIndex\030\002 \001(\005\022\032\n\005vData\030\003 \001(\0132\013.VertexData"
+  "\"7\n\tPixelData\022\t\n\001r\030\001 \001(\r\022\t\n\001g\030\002 \001(\r\022\t\n\001b"
+  "\030\003 \001(\r\022\t\n\001a\030\004 \001(\r\"\206\001\n\013TextureData\022\023\n\013tex"
+  "tureName\030\001 \001(\t\022\r\n\005width\030\002 \001(\005\022\016\n\006height\030"
+  "\003 \001(\005\022\020\n\010hasAlpha\030\004 \001(\010\022\022\n\npixelIndex\030\005 "
+  "\001(\005\022\035\n\tpixelData\030\006 \001(\0132\n.PixelData\"\205\001\n\nO"
+  "bjectData\022\021\n\tmodelName\030\001 \001(\t\022\023\n\013textureN"
+  "ame\030\002 \001(\t\022\032\n\010position\030\003 \001(\0132\010.Vector3\022\032\n"
+  "\010rotation\030\004 \001(\0132\010.Vector3\022\027\n\005scale\030\005 \001(\013"
+  "2\010.Vector3\"\031\n\010IntValue\022\r\n\005value\030\001 \001(\005\"\033\n"
+  "\nFloatValue\022\r\n\005value\030\001 \001(\002\"\007\n\005Empty2\311\001\n\013"
+  "SceneLoader\022,\n\021LoadModelsInScene\022\t.IntVa"
+  "lue\032\n.ModelData0\001\0220\n\023LoadTexturesInScene"
+  "\022\t.IntValue\032\014.TextureData0\001\022.\n\022LoadObjec"
+  "tsInScene\022\t.IntValue\032\013.ObjectData0\001\022*\n\020G"
+  "etSceneProgress\022\t.IntValue\032\013.FloatValueb"
+  "\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_proto_2fSceneLoader_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_proto_2fSceneLoader_2eproto = {
-    false, false, 550, descriptor_table_protodef_proto_2fSceneLoader_2eproto,
+    false, false, 847, descriptor_table_protodef_proto_2fSceneLoader_2eproto,
     "proto/SceneLoader.proto",
-    &descriptor_table_proto_2fSceneLoader_2eproto_once, nullptr, 0, 6,
+    &descriptor_table_proto_2fSceneLoader_2eproto_once, nullptr, 0, 9,
     schemas, file_default_instances, TableStruct_proto_2fSceneLoader_2eproto::offsets,
     file_level_metadata_proto_2fSceneLoader_2eproto, file_level_enum_descriptors_proto_2fSceneLoader_2eproto,
     file_level_service_descriptors_proto_2fSceneLoader_2eproto,
@@ -221,10 +307,291 @@ PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_in
 
 // ===================================================================
 
-class VertexData::_Internal {
+class Vector3::_Internal {
  public:
 };
 
+Vector3::Vector3(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:Vector3)
+}
+Vector3::Vector3(const Vector3& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Vector3* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){}
+    , decltype(_impl_.y_){}
+    , decltype(_impl_.z_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.x_, &from._impl_.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.z_) -
+    reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
+  // @@protoc_insertion_point(copy_constructor:Vector3)
+}
+
+inline void Vector3::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){0}
+    , decltype(_impl_.y_){0}
+    , decltype(_impl_.z_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+Vector3::~Vector3() {
+  // @@protoc_insertion_point(destructor:Vector3)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void Vector3::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void Vector3::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void Vector3::Clear() {
+// @@protoc_insertion_point(message_clear_start:Vector3)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.z_) -
+      reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Vector3::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // float x = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 13)) {
+          _impl_.x_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      // float y = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 21)) {
+          _impl_.y_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      // float z = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 29)) {
+          _impl_.z_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* Vector3::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Vector3)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // float x = 1;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_x = this->_internal_x();
+  uint32_t raw_x;
+  memcpy(&raw_x, &tmp_x, sizeof(tmp_x));
+  if (raw_x != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(1, this->_internal_x(), target);
+  }
+
+  // float y = 2;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_y = this->_internal_y();
+  uint32_t raw_y;
+  memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
+  if (raw_y != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(2, this->_internal_y(), target);
+  }
+
+  // float z = 3;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_z = this->_internal_z();
+  uint32_t raw_z;
+  memcpy(&raw_z, &tmp_z, sizeof(tmp_z));
+  if (raw_z != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(3, this->_internal_z(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Vector3)
+  return target;
+}
+
+size_t Vector3::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Vector3)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // float x = 1;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_x = this->_internal_x();
+  uint32_t raw_x;
+  memcpy(&raw_x, &tmp_x, sizeof(tmp_x));
+  if (raw_x != 0) {
+    total_size += 1 + 4;
+  }
+
+  // float y = 2;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_y = this->_internal_y();
+  uint32_t raw_y;
+  memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
+  if (raw_y != 0) {
+    total_size += 1 + 4;
+  }
+
+  // float z = 3;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_z = this->_internal_z();
+  uint32_t raw_z;
+  memcpy(&raw_z, &tmp_z, sizeof(tmp_z));
+  if (raw_z != 0) {
+    total_size += 1 + 4;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Vector3::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    Vector3::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Vector3::GetClassData() const { return &_class_data_; }
+
+
+void Vector3::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Vector3*>(&to_msg);
+  auto& from = static_cast<const Vector3&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Vector3)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_x = from._internal_x();
+  uint32_t raw_x;
+  memcpy(&raw_x, &tmp_x, sizeof(tmp_x));
+  if (raw_x != 0) {
+    _this->_internal_set_x(from._internal_x());
+  }
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_y = from._internal_y();
+  uint32_t raw_y;
+  memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
+  if (raw_y != 0) {
+    _this->_internal_set_y(from._internal_y());
+  }
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_z = from._internal_z();
+  uint32_t raw_z;
+  memcpy(&raw_z, &tmp_z, sizeof(tmp_z));
+  if (raw_z != 0) {
+    _this->_internal_set_z(from._internal_z());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Vector3::CopyFrom(const Vector3& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Vector3)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Vector3::IsInitialized() const {
+  return true;
+}
+
+void Vector3::InternalSwap(Vector3* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Vector3, _impl_.z_)
+      + sizeof(Vector3::_impl_.z_)
+      - PROTOBUF_FIELD_OFFSET(Vector3, _impl_.x_)>(
+          reinterpret_cast<char*>(&_impl_.x_),
+          reinterpret_cast<char*>(&other->_impl_.x_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Vector3::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_proto_2fSceneLoader_2eproto_getter, &descriptor_table_proto_2fSceneLoader_2eproto_once,
+      file_level_metadata_proto_2fSceneLoader_2eproto[0]);
+}
+
+// ===================================================================
+
+class VertexData::_Internal {
+ public:
+  static const ::Vector3& position(const VertexData* msg);
+  static const ::Vector3& normals(const VertexData* msg);
+};
+
+const ::Vector3&
+VertexData::_Internal::position(const VertexData* msg) {
+  return *msg->_impl_.position_;
+}
+const ::Vector3&
+VertexData::_Internal::normals(const VertexData* msg) {
+  return *msg->_impl_.normals_;
+}
 VertexData::VertexData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -235,20 +602,22 @@ VertexData::VertexData(const VertexData& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   VertexData* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.vx_){}
-    , decltype(_impl_.vy_){}
-    , decltype(_impl_.vz_){}
-    , decltype(_impl_.nx_){}
-    , decltype(_impl_.ny_){}
-    , decltype(_impl_.nz_){}
+      decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.normals_){nullptr}
     , decltype(_impl_.u_){}
     , decltype(_impl_.v_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&_impl_.vx_, &from._impl_.vx_,
+  if (from._internal_has_position()) {
+    _this->_impl_.position_ = new ::Vector3(*from._impl_.position_);
+  }
+  if (from._internal_has_normals()) {
+    _this->_impl_.normals_ = new ::Vector3(*from._impl_.normals_);
+  }
+  ::memcpy(&_impl_.u_, &from._impl_.u_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.v_) -
-    reinterpret_cast<char*>(&_impl_.vx_)) + sizeof(_impl_.v_));
+    reinterpret_cast<char*>(&_impl_.u_)) + sizeof(_impl_.v_));
   // @@protoc_insertion_point(copy_constructor:VertexData)
 }
 
@@ -257,12 +626,8 @@ inline void VertexData::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.vx_){0}
-    , decltype(_impl_.vy_){0}
-    , decltype(_impl_.vz_){0}
-    , decltype(_impl_.nx_){0}
-    , decltype(_impl_.ny_){0}
-    , decltype(_impl_.nz_){0}
+      decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.normals_){nullptr}
     , decltype(_impl_.u_){0}
     , decltype(_impl_.v_){0}
     , /*decltype(_impl_._cached_size_)*/{}
@@ -280,6 +645,8 @@ VertexData::~VertexData() {
 
 inline void VertexData::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.position_;
+  if (this != internal_default_instance()) delete _impl_.normals_;
 }
 
 void VertexData::SetCachedSize(int size) const {
@@ -292,9 +659,17 @@ void VertexData::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&_impl_.vx_, 0, static_cast<size_t>(
+  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
+    delete _impl_.position_;
+  }
+  _impl_.position_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.normals_ != nullptr) {
+    delete _impl_.normals_;
+  }
+  _impl_.normals_ = nullptr;
+  ::memset(&_impl_.u_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.v_) -
-      reinterpret_cast<char*>(&_impl_.vx_)) + sizeof(_impl_.v_));
+      reinterpret_cast<char*>(&_impl_.u_)) + sizeof(_impl_.v_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -304,65 +679,33 @@ const char* VertexData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ct
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // float vX = 1;
+      // .Vector3 position = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 13)) {
-          _impl_.vx_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
+          CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // float vY = 2;
+      // .Vector3 normals = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 21)) {
-          _impl_.vy_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_normals(), ptr);
+          CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // float vZ = 3;
+      // float u = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 29)) {
-          _impl_.vz_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
-        } else
-          goto handle_unusual;
-        continue;
-      // float nX = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 37)) {
-          _impl_.nx_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
-        } else
-          goto handle_unusual;
-        continue;
-      // float nY = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 45)) {
-          _impl_.ny_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
-        } else
-          goto handle_unusual;
-        continue;
-      // float nZ = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 53)) {
-          _impl_.nz_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
-        } else
-          goto handle_unusual;
-        continue;
-      // float u = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 61)) {
           _impl_.u_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else
           goto handle_unusual;
         continue;
-      // float v = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 69)) {
+      // float v = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 37)) {
           _impl_.v_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else
@@ -397,84 +740,38 @@ uint8_t* VertexData::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // float vX = 1;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_vx = this->_internal_vx();
-  uint32_t raw_vx;
-  memcpy(&raw_vx, &tmp_vx, sizeof(tmp_vx));
-  if (raw_vx != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(1, this->_internal_vx(), target);
+  // .Vector3 position = 1;
+  if (this->_internal_has_position()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::position(this),
+        _Internal::position(this).GetCachedSize(), target, stream);
   }
 
-  // float vY = 2;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_vy = this->_internal_vy();
-  uint32_t raw_vy;
-  memcpy(&raw_vy, &tmp_vy, sizeof(tmp_vy));
-  if (raw_vy != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(2, this->_internal_vy(), target);
+  // .Vector3 normals = 2;
+  if (this->_internal_has_normals()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::normals(this),
+        _Internal::normals(this).GetCachedSize(), target, stream);
   }
 
-  // float vZ = 3;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_vz = this->_internal_vz();
-  uint32_t raw_vz;
-  memcpy(&raw_vz, &tmp_vz, sizeof(tmp_vz));
-  if (raw_vz != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(3, this->_internal_vz(), target);
-  }
-
-  // float nX = 4;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_nx = this->_internal_nx();
-  uint32_t raw_nx;
-  memcpy(&raw_nx, &tmp_nx, sizeof(tmp_nx));
-  if (raw_nx != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(4, this->_internal_nx(), target);
-  }
-
-  // float nY = 5;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_ny = this->_internal_ny();
-  uint32_t raw_ny;
-  memcpy(&raw_ny, &tmp_ny, sizeof(tmp_ny));
-  if (raw_ny != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(5, this->_internal_ny(), target);
-  }
-
-  // float nZ = 6;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_nz = this->_internal_nz();
-  uint32_t raw_nz;
-  memcpy(&raw_nz, &tmp_nz, sizeof(tmp_nz));
-  if (raw_nz != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(6, this->_internal_nz(), target);
-  }
-
-  // float u = 7;
+  // float u = 3;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_u = this->_internal_u();
   uint32_t raw_u;
   memcpy(&raw_u, &tmp_u, sizeof(tmp_u));
   if (raw_u != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(7, this->_internal_u(), target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(3, this->_internal_u(), target);
   }
 
-  // float v = 8;
+  // float v = 4;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_v = this->_internal_v();
   uint32_t raw_v;
   memcpy(&raw_v, &tmp_v, sizeof(tmp_v));
   if (raw_v != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(8, this->_internal_v(), target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(4, this->_internal_v(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -493,61 +790,21 @@ size_t VertexData::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // float vX = 1;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_vx = this->_internal_vx();
-  uint32_t raw_vx;
-  memcpy(&raw_vx, &tmp_vx, sizeof(tmp_vx));
-  if (raw_vx != 0) {
-    total_size += 1 + 4;
+  // .Vector3 position = 1;
+  if (this->_internal_has_position()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.position_);
   }
 
-  // float vY = 2;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_vy = this->_internal_vy();
-  uint32_t raw_vy;
-  memcpy(&raw_vy, &tmp_vy, sizeof(tmp_vy));
-  if (raw_vy != 0) {
-    total_size += 1 + 4;
+  // .Vector3 normals = 2;
+  if (this->_internal_has_normals()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.normals_);
   }
 
-  // float vZ = 3;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_vz = this->_internal_vz();
-  uint32_t raw_vz;
-  memcpy(&raw_vz, &tmp_vz, sizeof(tmp_vz));
-  if (raw_vz != 0) {
-    total_size += 1 + 4;
-  }
-
-  // float nX = 4;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_nx = this->_internal_nx();
-  uint32_t raw_nx;
-  memcpy(&raw_nx, &tmp_nx, sizeof(tmp_nx));
-  if (raw_nx != 0) {
-    total_size += 1 + 4;
-  }
-
-  // float nY = 5;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_ny = this->_internal_ny();
-  uint32_t raw_ny;
-  memcpy(&raw_ny, &tmp_ny, sizeof(tmp_ny));
-  if (raw_ny != 0) {
-    total_size += 1 + 4;
-  }
-
-  // float nZ = 6;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_nz = this->_internal_nz();
-  uint32_t raw_nz;
-  memcpy(&raw_nz, &tmp_nz, sizeof(tmp_nz));
-  if (raw_nz != 0) {
-    total_size += 1 + 4;
-  }
-
-  // float u = 7;
+  // float u = 3;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_u = this->_internal_u();
   uint32_t raw_u;
@@ -556,7 +813,7 @@ size_t VertexData::ByteSizeLong() const {
     total_size += 1 + 4;
   }
 
-  // float v = 8;
+  // float v = 4;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_v = this->_internal_v();
   uint32_t raw_v;
@@ -583,47 +840,13 @@ void VertexData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_vx = from._internal_vx();
-  uint32_t raw_vx;
-  memcpy(&raw_vx, &tmp_vx, sizeof(tmp_vx));
-  if (raw_vx != 0) {
-    _this->_internal_set_vx(from._internal_vx());
+  if (from._internal_has_position()) {
+    _this->_internal_mutable_position()->::Vector3::MergeFrom(
+        from._internal_position());
   }
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_vy = from._internal_vy();
-  uint32_t raw_vy;
-  memcpy(&raw_vy, &tmp_vy, sizeof(tmp_vy));
-  if (raw_vy != 0) {
-    _this->_internal_set_vy(from._internal_vy());
-  }
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_vz = from._internal_vz();
-  uint32_t raw_vz;
-  memcpy(&raw_vz, &tmp_vz, sizeof(tmp_vz));
-  if (raw_vz != 0) {
-    _this->_internal_set_vz(from._internal_vz());
-  }
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_nx = from._internal_nx();
-  uint32_t raw_nx;
-  memcpy(&raw_nx, &tmp_nx, sizeof(tmp_nx));
-  if (raw_nx != 0) {
-    _this->_internal_set_nx(from._internal_nx());
-  }
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_ny = from._internal_ny();
-  uint32_t raw_ny;
-  memcpy(&raw_ny, &tmp_ny, sizeof(tmp_ny));
-  if (raw_ny != 0) {
-    _this->_internal_set_ny(from._internal_ny());
-  }
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_nz = from._internal_nz();
-  uint32_t raw_nz;
-  memcpy(&raw_nz, &tmp_nz, sizeof(tmp_nz));
-  if (raw_nz != 0) {
-    _this->_internal_set_nz(from._internal_nz());
+  if (from._internal_has_normals()) {
+    _this->_internal_mutable_normals()->::Vector3::MergeFrom(
+        from._internal_normals());
   }
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_u = from._internal_u();
@@ -659,77 +882,77 @@ void VertexData::InternalSwap(VertexData* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(VertexData, _impl_.v_)
       + sizeof(VertexData::_impl_.v_)
-      - PROTOBUF_FIELD_OFFSET(VertexData, _impl_.vx_)>(
-          reinterpret_cast<char*>(&_impl_.vx_),
-          reinterpret_cast<char*>(&other->_impl_.vx_));
+      - PROTOBUF_FIELD_OFFSET(VertexData, _impl_.position_)>(
+          reinterpret_cast<char*>(&_impl_.position_),
+          reinterpret_cast<char*>(&other->_impl_.position_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata VertexData::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_proto_2fSceneLoader_2eproto_getter, &descriptor_table_proto_2fSceneLoader_2eproto_once,
-      file_level_metadata_proto_2fSceneLoader_2eproto[0]);
+      file_level_metadata_proto_2fSceneLoader_2eproto[1]);
 }
 
 // ===================================================================
 
-class ObjectData::_Internal {
+class ModelData::_Internal {
  public:
-  static const ::VertexData& vdata(const ObjectData* msg);
+  static const ::VertexData& vdata(const ModelData* msg);
 };
 
 const ::VertexData&
-ObjectData::_Internal::vdata(const ObjectData* msg) {
+ModelData::_Internal::vdata(const ModelData* msg) {
   return *msg->_impl_.vdata_;
 }
-ObjectData::ObjectData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+ModelData::ModelData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:ObjectData)
+  // @@protoc_insertion_point(arena_constructor:ModelData)
 }
-ObjectData::ObjectData(const ObjectData& from)
+ModelData::ModelData(const ModelData& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
-  ObjectData* const _this = this; (void)_this;
+  ModelData* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.objname_){}
+      decltype(_impl_.modelname_){}
     , decltype(_impl_.vdata_){nullptr}
     , decltype(_impl_.vdataindex_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.objname_.InitDefault();
+  _impl_.modelname_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.objname_.Set("", GetArenaForAllocation());
+    _impl_.modelname_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_objname().empty()) {
-    _this->_impl_.objname_.Set(from._internal_objname(), 
+  if (!from._internal_modelname().empty()) {
+    _this->_impl_.modelname_.Set(from._internal_modelname(), 
       _this->GetArenaForAllocation());
   }
   if (from._internal_has_vdata()) {
     _this->_impl_.vdata_ = new ::VertexData(*from._impl_.vdata_);
   }
   _this->_impl_.vdataindex_ = from._impl_.vdataindex_;
-  // @@protoc_insertion_point(copy_constructor:ObjectData)
+  // @@protoc_insertion_point(copy_constructor:ModelData)
 }
 
-inline void ObjectData::SharedCtor(
+inline void ModelData::SharedCtor(
     ::_pb::Arena* arena, bool is_message_owned) {
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.objname_){}
+      decltype(_impl_.modelname_){}
     , decltype(_impl_.vdata_){nullptr}
     , decltype(_impl_.vdataindex_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
-  _impl_.objname_.InitDefault();
+  _impl_.modelname_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.objname_.Set("", GetArenaForAllocation());
+    _impl_.modelname_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
-ObjectData::~ObjectData() {
-  // @@protoc_insertion_point(destructor:ObjectData)
+ModelData::~ModelData() {
+  // @@protoc_insertion_point(destructor:ModelData)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -737,23 +960,23 @@ ObjectData::~ObjectData() {
   SharedDtor();
 }
 
-inline void ObjectData::SharedDtor() {
+inline void ModelData::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.objname_.Destroy();
+  _impl_.modelname_.Destroy();
   if (this != internal_default_instance()) delete _impl_.vdata_;
 }
 
-void ObjectData::SetCachedSize(int size) const {
+void ModelData::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void ObjectData::Clear() {
-// @@protoc_insertion_point(message_clear_start:ObjectData)
+void ModelData::Clear() {
+// @@protoc_insertion_point(message_clear_start:ModelData)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.objname_.ClearToEmpty();
+  _impl_.modelname_.ClearToEmpty();
   if (GetArenaForAllocation() == nullptr && _impl_.vdata_ != nullptr) {
     delete _impl_.vdata_;
   }
@@ -762,19 +985,19 @@ void ObjectData::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* ObjectData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* ModelData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // string objName = 1;
+      // string modelName = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_objname();
+          auto str = _internal_mutable_modelname();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "ObjectData.objName"));
+          CHK_(::_pbi::VerifyUTF8(str, "ModelData.modelName"));
         } else
           goto handle_unusual;
         continue;
@@ -817,20 +1040,20 @@ failure:
 #undef CHK_
 }
 
-uint8_t* ObjectData::_InternalSerialize(
+uint8_t* ModelData::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:ObjectData)
+  // @@protoc_insertion_point(serialize_to_array_start:ModelData)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // string objName = 1;
-  if (!this->_internal_objname().empty()) {
+  // string modelName = 1;
+  if (!this->_internal_modelname().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_objname().data(), static_cast<int>(this->_internal_objname().length()),
+      this->_internal_modelname().data(), static_cast<int>(this->_internal_modelname().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "ObjectData.objName");
+      "ModelData.modelName");
     target = stream->WriteStringMaybeAliased(
-        1, this->_internal_objname(), target);
+        1, this->_internal_modelname(), target);
   }
 
   // int32 vDataIndex = 2;
@@ -850,23 +1073,23 @@ uint8_t* ObjectData::_InternalSerialize(
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:ObjectData)
+  // @@protoc_insertion_point(serialize_to_array_end:ModelData)
   return target;
 }
 
-size_t ObjectData::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:ObjectData)
+size_t ModelData::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:ModelData)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string objName = 1;
-  if (!this->_internal_objname().empty()) {
+  // string modelName = 1;
+  if (!this->_internal_modelname().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_objname());
+        this->_internal_modelname());
   }
 
   // .VertexData vData = 3;
@@ -884,23 +1107,23 @@ size_t ObjectData::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ObjectData::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ModelData::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    ObjectData::MergeImpl
+    ModelData::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ObjectData::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ModelData::GetClassData() const { return &_class_data_; }
 
 
-void ObjectData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<ObjectData*>(&to_msg);
-  auto& from = static_cast<const ObjectData&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:ObjectData)
+void ModelData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<ModelData*>(&to_msg);
+  auto& from = static_cast<const ModelData&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:ModelData)
   GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!from._internal_objname().empty()) {
-    _this->_internal_set_objname(from._internal_objname());
+  if (!from._internal_modelname().empty()) {
+    _this->_internal_set_modelname(from._internal_modelname());
   }
   if (from._internal_has_vdata()) {
     _this->_internal_mutable_vdata()->::VertexData::MergeFrom(
@@ -912,46 +1135,310 @@ void ObjectData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void ObjectData::CopyFrom(const ObjectData& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:ObjectData)
+void ModelData::CopyFrom(const ModelData& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:ModelData)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool ObjectData::IsInitialized() const {
+bool ModelData::IsInitialized() const {
   return true;
 }
 
-void ObjectData::InternalSwap(ObjectData* other) {
+void ModelData::InternalSwap(ModelData* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.objname_, lhs_arena,
-      &other->_impl_.objname_, rhs_arena
+      &_impl_.modelname_, lhs_arena,
+      &other->_impl_.modelname_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(ObjectData, _impl_.vdataindex_)
-      + sizeof(ObjectData::_impl_.vdataindex_)
-      - PROTOBUF_FIELD_OFFSET(ObjectData, _impl_.vdata_)>(
+      PROTOBUF_FIELD_OFFSET(ModelData, _impl_.vdataindex_)
+      + sizeof(ModelData::_impl_.vdataindex_)
+      - PROTOBUF_FIELD_OFFSET(ModelData, _impl_.vdata_)>(
           reinterpret_cast<char*>(&_impl_.vdata_),
           reinterpret_cast<char*>(&other->_impl_.vdata_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata ObjectData::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata ModelData::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_proto_2fSceneLoader_2eproto_getter, &descriptor_table_proto_2fSceneLoader_2eproto_once,
-      file_level_metadata_proto_2fSceneLoader_2eproto[1]);
+      file_level_metadata_proto_2fSceneLoader_2eproto[2]);
+}
+
+// ===================================================================
+
+class PixelData::_Internal {
+ public:
+};
+
+PixelData::PixelData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:PixelData)
+}
+PixelData::PixelData(const PixelData& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  PixelData* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.r_){}
+    , decltype(_impl_.g_){}
+    , decltype(_impl_.b_){}
+    , decltype(_impl_.a_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.r_, &from._impl_.r_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.a_) -
+    reinterpret_cast<char*>(&_impl_.r_)) + sizeof(_impl_.a_));
+  // @@protoc_insertion_point(copy_constructor:PixelData)
+}
+
+inline void PixelData::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.r_){0u}
+    , decltype(_impl_.g_){0u}
+    , decltype(_impl_.b_){0u}
+    , decltype(_impl_.a_){0u}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+PixelData::~PixelData() {
+  // @@protoc_insertion_point(destructor:PixelData)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void PixelData::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void PixelData::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void PixelData::Clear() {
+// @@protoc_insertion_point(message_clear_start:PixelData)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.r_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.a_) -
+      reinterpret_cast<char*>(&_impl_.r_)) + sizeof(_impl_.a_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* PixelData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // uint32 r = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.r_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // uint32 g = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.g_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // uint32 b = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.b_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // uint32 a = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.a_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* PixelData::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:PixelData)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 r = 1;
+  if (this->_internal_r() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_r(), target);
+  }
+
+  // uint32 g = 2;
+  if (this->_internal_g() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(2, this->_internal_g(), target);
+  }
+
+  // uint32 b = 3;
+  if (this->_internal_b() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(3, this->_internal_b(), target);
+  }
+
+  // uint32 a = 4;
+  if (this->_internal_a() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(4, this->_internal_a(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:PixelData)
+  return target;
+}
+
+size_t PixelData::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PixelData)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // uint32 r = 1;
+  if (this->_internal_r() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_r());
+  }
+
+  // uint32 g = 2;
+  if (this->_internal_g() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_g());
+  }
+
+  // uint32 b = 3;
+  if (this->_internal_b() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_b());
+  }
+
+  // uint32 a = 4;
+  if (this->_internal_a() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_a());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PixelData::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    PixelData::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PixelData::GetClassData() const { return &_class_data_; }
+
+
+void PixelData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<PixelData*>(&to_msg);
+  auto& from = static_cast<const PixelData&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:PixelData)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_r() != 0) {
+    _this->_internal_set_r(from._internal_r());
+  }
+  if (from._internal_g() != 0) {
+    _this->_internal_set_g(from._internal_g());
+  }
+  if (from._internal_b() != 0) {
+    _this->_internal_set_b(from._internal_b());
+  }
+  if (from._internal_a() != 0) {
+    _this->_internal_set_a(from._internal_a());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void PixelData::CopyFrom(const PixelData& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PixelData)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PixelData::IsInitialized() const {
+  return true;
+}
+
+void PixelData::InternalSwap(PixelData* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(PixelData, _impl_.a_)
+      + sizeof(PixelData::_impl_.a_)
+      - PROTOBUF_FIELD_OFFSET(PixelData, _impl_.r_)>(
+          reinterpret_cast<char*>(&_impl_.r_),
+          reinterpret_cast<char*>(&other->_impl_.r_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata PixelData::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_proto_2fSceneLoader_2eproto_getter, &descriptor_table_proto_2fSceneLoader_2eproto_once,
+      file_level_metadata_proto_2fSceneLoader_2eproto[3]);
 }
 
 // ===================================================================
 
 class TextureData::_Internal {
  public:
+  static const ::PixelData& pixeldata(const TextureData* msg);
 };
 
+const ::PixelData&
+TextureData::_Internal::pixeldata(const TextureData* msg) {
+  return *msg->_impl_.pixeldata_;
+}
 TextureData::TextureData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -963,10 +1450,11 @@ TextureData::TextureData(const TextureData& from)
   TextureData* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.texturename_){}
-    , decltype(_impl_.texturebytes_){}
+    , decltype(_impl_.pixeldata_){nullptr}
     , decltype(_impl_.width_){}
     , decltype(_impl_.height_){}
     , decltype(_impl_.hasalpha_){}
+    , decltype(_impl_.pixelindex_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -978,17 +1466,12 @@ TextureData::TextureData(const TextureData& from)
     _this->_impl_.texturename_.Set(from._internal_texturename(), 
       _this->GetArenaForAllocation());
   }
-  _impl_.texturebytes_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.texturebytes_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_texturebytes().empty()) {
-    _this->_impl_.texturebytes_.Set(from._internal_texturebytes(), 
-      _this->GetArenaForAllocation());
+  if (from._internal_has_pixeldata()) {
+    _this->_impl_.pixeldata_ = new ::PixelData(*from._impl_.pixeldata_);
   }
   ::memcpy(&_impl_.width_, &from._impl_.width_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.hasalpha_) -
-    reinterpret_cast<char*>(&_impl_.width_)) + sizeof(_impl_.hasalpha_));
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.pixelindex_) -
+    reinterpret_cast<char*>(&_impl_.width_)) + sizeof(_impl_.pixelindex_));
   // @@protoc_insertion_point(copy_constructor:TextureData)
 }
 
@@ -998,19 +1481,16 @@ inline void TextureData::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.texturename_){}
-    , decltype(_impl_.texturebytes_){}
+    , decltype(_impl_.pixeldata_){nullptr}
     , decltype(_impl_.width_){0}
     , decltype(_impl_.height_){0}
     , decltype(_impl_.hasalpha_){false}
+    , decltype(_impl_.pixelindex_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
   _impl_.texturename_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.texturename_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.texturebytes_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.texturebytes_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
@@ -1026,7 +1506,7 @@ TextureData::~TextureData() {
 inline void TextureData::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.texturename_.Destroy();
-  _impl_.texturebytes_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.pixeldata_;
 }
 
 void TextureData::SetCachedSize(int size) const {
@@ -1040,10 +1520,13 @@ void TextureData::Clear() {
   (void) cached_has_bits;
 
   _impl_.texturename_.ClearToEmpty();
-  _impl_.texturebytes_.ClearToEmpty();
+  if (GetArenaForAllocation() == nullptr && _impl_.pixeldata_ != nullptr) {
+    delete _impl_.pixeldata_;
+  }
+  _impl_.pixeldata_ = nullptr;
   ::memset(&_impl_.width_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.hasalpha_) -
-      reinterpret_cast<char*>(&_impl_.width_)) + sizeof(_impl_.hasalpha_));
+      reinterpret_cast<char*>(&_impl_.pixelindex_) -
+      reinterpret_cast<char*>(&_impl_.width_)) + sizeof(_impl_.pixelindex_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1087,11 +1570,18 @@ const char* TextureData::_InternalParse(const char* ptr, ::_pbi::ParseContext* c
         } else
           goto handle_unusual;
         continue;
-      // bytes textureBytes = 5;
+      // int32 pixelIndex = 5;
       case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
-          auto str = _internal_mutable_texturebytes();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
+          _impl_.pixelindex_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .PixelData pixelData = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
+          ptr = ctx->ParseMessage(_internal_mutable_pixeldata(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -1153,10 +1643,17 @@ uint8_t* TextureData::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteBoolToArray(4, this->_internal_hasalpha(), target);
   }
 
-  // bytes textureBytes = 5;
-  if (!this->_internal_texturebytes().empty()) {
-    target = stream->WriteBytesMaybeAliased(
-        5, this->_internal_texturebytes(), target);
+  // int32 pixelIndex = 5;
+  if (this->_internal_pixelindex() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(5, this->_internal_pixelindex(), target);
+  }
+
+  // .PixelData pixelData = 6;
+  if (this->_internal_has_pixeldata()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(6, _Internal::pixeldata(this),
+        _Internal::pixeldata(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1182,11 +1679,11 @@ size_t TextureData::ByteSizeLong() const {
         this->_internal_texturename());
   }
 
-  // bytes textureBytes = 5;
-  if (!this->_internal_texturebytes().empty()) {
+  // .PixelData pixelData = 6;
+  if (this->_internal_has_pixeldata()) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-        this->_internal_texturebytes());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.pixeldata_);
   }
 
   // int32 width = 2;
@@ -1202,6 +1699,11 @@ size_t TextureData::ByteSizeLong() const {
   // bool hasAlpha = 4;
   if (this->_internal_hasalpha() != 0) {
     total_size += 1 + 1;
+  }
+
+  // int32 pixelIndex = 5;
+  if (this->_internal_pixelindex() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_pixelindex());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -1225,8 +1727,9 @@ void TextureData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PR
   if (!from._internal_texturename().empty()) {
     _this->_internal_set_texturename(from._internal_texturename());
   }
-  if (!from._internal_texturebytes().empty()) {
-    _this->_internal_set_texturebytes(from._internal_texturebytes());
+  if (from._internal_has_pixeldata()) {
+    _this->_internal_mutable_pixeldata()->::PixelData::MergeFrom(
+        from._internal_pixeldata());
   }
   if (from._internal_width() != 0) {
     _this->_internal_set_width(from._internal_width());
@@ -1236,6 +1739,9 @@ void TextureData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PR
   }
   if (from._internal_hasalpha() != 0) {
     _this->_internal_set_hasalpha(from._internal_hasalpha());
+  }
+  if (from._internal_pixelindex() != 0) {
+    _this->_internal_set_pixelindex(from._internal_pixelindex());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -1260,22 +1766,400 @@ void TextureData::InternalSwap(TextureData* other) {
       &_impl_.texturename_, lhs_arena,
       &other->_impl_.texturename_, rhs_arena
   );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.texturebytes_, lhs_arena,
-      &other->_impl_.texturebytes_, rhs_arena
-  );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(TextureData, _impl_.hasalpha_)
-      + sizeof(TextureData::_impl_.hasalpha_)
-      - PROTOBUF_FIELD_OFFSET(TextureData, _impl_.width_)>(
-          reinterpret_cast<char*>(&_impl_.width_),
-          reinterpret_cast<char*>(&other->_impl_.width_));
+      PROTOBUF_FIELD_OFFSET(TextureData, _impl_.pixelindex_)
+      + sizeof(TextureData::_impl_.pixelindex_)
+      - PROTOBUF_FIELD_OFFSET(TextureData, _impl_.pixeldata_)>(
+          reinterpret_cast<char*>(&_impl_.pixeldata_),
+          reinterpret_cast<char*>(&other->_impl_.pixeldata_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata TextureData::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_proto_2fSceneLoader_2eproto_getter, &descriptor_table_proto_2fSceneLoader_2eproto_once,
-      file_level_metadata_proto_2fSceneLoader_2eproto[2]);
+      file_level_metadata_proto_2fSceneLoader_2eproto[4]);
+}
+
+// ===================================================================
+
+class ObjectData::_Internal {
+ public:
+  static const ::Vector3& position(const ObjectData* msg);
+  static const ::Vector3& rotation(const ObjectData* msg);
+  static const ::Vector3& scale(const ObjectData* msg);
+};
+
+const ::Vector3&
+ObjectData::_Internal::position(const ObjectData* msg) {
+  return *msg->_impl_.position_;
+}
+const ::Vector3&
+ObjectData::_Internal::rotation(const ObjectData* msg) {
+  return *msg->_impl_.rotation_;
+}
+const ::Vector3&
+ObjectData::_Internal::scale(const ObjectData* msg) {
+  return *msg->_impl_.scale_;
+}
+ObjectData::ObjectData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:ObjectData)
+}
+ObjectData::ObjectData(const ObjectData& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  ObjectData* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.modelname_){}
+    , decltype(_impl_.texturename_){}
+    , decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.rotation_){nullptr}
+    , decltype(_impl_.scale_){nullptr}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.modelname_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.modelname_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_modelname().empty()) {
+    _this->_impl_.modelname_.Set(from._internal_modelname(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.texturename_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.texturename_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_texturename().empty()) {
+    _this->_impl_.texturename_.Set(from._internal_texturename(), 
+      _this->GetArenaForAllocation());
+  }
+  if (from._internal_has_position()) {
+    _this->_impl_.position_ = new ::Vector3(*from._impl_.position_);
+  }
+  if (from._internal_has_rotation()) {
+    _this->_impl_.rotation_ = new ::Vector3(*from._impl_.rotation_);
+  }
+  if (from._internal_has_scale()) {
+    _this->_impl_.scale_ = new ::Vector3(*from._impl_.scale_);
+  }
+  // @@protoc_insertion_point(copy_constructor:ObjectData)
+}
+
+inline void ObjectData::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.modelname_){}
+    , decltype(_impl_.texturename_){}
+    , decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.rotation_){nullptr}
+    , decltype(_impl_.scale_){nullptr}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.modelname_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.modelname_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.texturename_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.texturename_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+ObjectData::~ObjectData() {
+  // @@protoc_insertion_point(destructor:ObjectData)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void ObjectData::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.modelname_.Destroy();
+  _impl_.texturename_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.position_;
+  if (this != internal_default_instance()) delete _impl_.rotation_;
+  if (this != internal_default_instance()) delete _impl_.scale_;
+}
+
+void ObjectData::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void ObjectData::Clear() {
+// @@protoc_insertion_point(message_clear_start:ObjectData)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.modelname_.ClearToEmpty();
+  _impl_.texturename_.ClearToEmpty();
+  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
+    delete _impl_.position_;
+  }
+  _impl_.position_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.rotation_ != nullptr) {
+    delete _impl_.rotation_;
+  }
+  _impl_.rotation_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.scale_ != nullptr) {
+    delete _impl_.scale_;
+  }
+  _impl_.scale_ = nullptr;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* ObjectData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string modelName = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_modelname();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ObjectData.modelName"));
+        } else
+          goto handle_unusual;
+        continue;
+      // string textureName = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_texturename();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ObjectData.textureName"));
+        } else
+          goto handle_unusual;
+        continue;
+      // .Vector3 position = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .Vector3 rotation = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+          ptr = ctx->ParseMessage(_internal_mutable_rotation(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .Vector3 scale = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
+          ptr = ctx->ParseMessage(_internal_mutable_scale(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* ObjectData::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:ObjectData)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string modelName = 1;
+  if (!this->_internal_modelname().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_modelname().data(), static_cast<int>(this->_internal_modelname().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ObjectData.modelName");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_modelname(), target);
+  }
+
+  // string textureName = 2;
+  if (!this->_internal_texturename().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_texturename().data(), static_cast<int>(this->_internal_texturename().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ObjectData.textureName");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_texturename(), target);
+  }
+
+  // .Vector3 position = 3;
+  if (this->_internal_has_position()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(3, _Internal::position(this),
+        _Internal::position(this).GetCachedSize(), target, stream);
+  }
+
+  // .Vector3 rotation = 4;
+  if (this->_internal_has_rotation()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(4, _Internal::rotation(this),
+        _Internal::rotation(this).GetCachedSize(), target, stream);
+  }
+
+  // .Vector3 scale = 5;
+  if (this->_internal_has_scale()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(5, _Internal::scale(this),
+        _Internal::scale(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ObjectData)
+  return target;
+}
+
+size_t ObjectData::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:ObjectData)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string modelName = 1;
+  if (!this->_internal_modelname().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_modelname());
+  }
+
+  // string textureName = 2;
+  if (!this->_internal_texturename().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_texturename());
+  }
+
+  // .Vector3 position = 3;
+  if (this->_internal_has_position()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.position_);
+  }
+
+  // .Vector3 rotation = 4;
+  if (this->_internal_has_rotation()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.rotation_);
+  }
+
+  // .Vector3 scale = 5;
+  if (this->_internal_has_scale()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.scale_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ObjectData::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    ObjectData::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ObjectData::GetClassData() const { return &_class_data_; }
+
+
+void ObjectData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<ObjectData*>(&to_msg);
+  auto& from = static_cast<const ObjectData&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:ObjectData)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_modelname().empty()) {
+    _this->_internal_set_modelname(from._internal_modelname());
+  }
+  if (!from._internal_texturename().empty()) {
+    _this->_internal_set_texturename(from._internal_texturename());
+  }
+  if (from._internal_has_position()) {
+    _this->_internal_mutable_position()->::Vector3::MergeFrom(
+        from._internal_position());
+  }
+  if (from._internal_has_rotation()) {
+    _this->_internal_mutable_rotation()->::Vector3::MergeFrom(
+        from._internal_rotation());
+  }
+  if (from._internal_has_scale()) {
+    _this->_internal_mutable_scale()->::Vector3::MergeFrom(
+        from._internal_scale());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void ObjectData::CopyFrom(const ObjectData& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:ObjectData)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ObjectData::IsInitialized() const {
+  return true;
+}
+
+void ObjectData::InternalSwap(ObjectData* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.modelname_, lhs_arena,
+      &other->_impl_.modelname_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.texturename_, lhs_arena,
+      &other->_impl_.texturename_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(ObjectData, _impl_.scale_)
+      + sizeof(ObjectData::_impl_.scale_)
+      - PROTOBUF_FIELD_OFFSET(ObjectData, _impl_.position_)>(
+          reinterpret_cast<char*>(&_impl_.position_),
+          reinterpret_cast<char*>(&other->_impl_.position_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata ObjectData::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_proto_2fSceneLoader_2eproto_getter, &descriptor_table_proto_2fSceneLoader_2eproto_once,
+      file_level_metadata_proto_2fSceneLoader_2eproto[5]);
 }
 
 // ===================================================================
@@ -1453,7 +2337,7 @@ void IntValue::InternalSwap(IntValue* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata IntValue::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_proto_2fSceneLoader_2eproto_getter, &descriptor_table_proto_2fSceneLoader_2eproto_once,
-      file_level_metadata_proto_2fSceneLoader_2eproto[3]);
+      file_level_metadata_proto_2fSceneLoader_2eproto[6]);
 }
 
 // ===================================================================
@@ -1643,7 +2527,7 @@ void FloatValue::InternalSwap(FloatValue* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata FloatValue::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_proto_2fSceneLoader_2eproto_getter, &descriptor_table_proto_2fSceneLoader_2eproto_once,
-      file_level_metadata_proto_2fSceneLoader_2eproto[4]);
+      file_level_metadata_proto_2fSceneLoader_2eproto[7]);
 }
 
 // ===================================================================
@@ -1683,22 +2567,34 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Empty::GetClassData() const { 
 ::PROTOBUF_NAMESPACE_ID::Metadata Empty::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_proto_2fSceneLoader_2eproto_getter, &descriptor_table_proto_2fSceneLoader_2eproto_once,
-      file_level_metadata_proto_2fSceneLoader_2eproto[5]);
+      file_level_metadata_proto_2fSceneLoader_2eproto[8]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
 PROTOBUF_NAMESPACE_OPEN
+template<> PROTOBUF_NOINLINE ::Vector3*
+Arena::CreateMaybeMessage< ::Vector3 >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Vector3 >(arena);
+}
 template<> PROTOBUF_NOINLINE ::VertexData*
 Arena::CreateMaybeMessage< ::VertexData >(Arena* arena) {
   return Arena::CreateMessageInternal< ::VertexData >(arena);
 }
-template<> PROTOBUF_NOINLINE ::ObjectData*
-Arena::CreateMaybeMessage< ::ObjectData >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::ObjectData >(arena);
+template<> PROTOBUF_NOINLINE ::ModelData*
+Arena::CreateMaybeMessage< ::ModelData >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::ModelData >(arena);
+}
+template<> PROTOBUF_NOINLINE ::PixelData*
+Arena::CreateMaybeMessage< ::PixelData >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::PixelData >(arena);
 }
 template<> PROTOBUF_NOINLINE ::TextureData*
 Arena::CreateMaybeMessage< ::TextureData >(Arena* arena) {
   return Arena::CreateMessageInternal< ::TextureData >(arena);
+}
+template<> PROTOBUF_NOINLINE ::ObjectData*
+Arena::CreateMaybeMessage< ::ObjectData >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::ObjectData >(arena);
 }
 template<> PROTOBUF_NOINLINE ::IntValue*
 Arena::CreateMaybeMessage< ::IntValue >(Arena* arena) {

@@ -16,32 +16,38 @@
 class SceneLoaderImpl final : public SceneLoader::Service
 {
 public:
-	grpc::Status LoadObjectsInScene(grpc::ServerContext* context, const IntValue* request, grpc::ServerWriter<ObjectData>* writer) override
+	grpc::Status LoadModelsInScene(grpc::ServerContext* context, const IntValue* request, grpc::ServerWriter<ModelData>* writer) override 
 	{
-		std::cout << "BOUT TO LOAD\n";
+		std::cout << "BOUT TO LOAD MODEL\n";
 
 		ModelReference* ref = new ModelReference("../3D/amumu.obj"); 
 		ref->LoadModel(); 
 		std::vector<float> data = ref->GetFullVertexData(); 
-
+		
 		for (int i = 0; i < data.size(); i += 8)
 		{
+			Vector3* pos = new Vector3();
+			pos->set_x(data[i]);
+			pos->set_y(data[i+1]);
+			pos->set_z(data[i+2]);
+
+			Vector3* normals = new Vector3();
+			normals->set_x(data[i+3]);
+			normals->set_y(data[i+4]);
+			normals->set_z(data[i+5]);
+
 			VertexData* vData = new VertexData();
-			vData->set_vx(data[i]); 
-			vData->set_vy(data[i+1]); 
-			vData->set_vz(data[i+2]); 
-			vData->set_nx(data[i+3]); 
-			vData->set_nx(data[i+4]); 
-			vData->set_nx(data[i+5]); 
-			vData->set_u(data[i+6]); 
+			vData->set_allocated_position(pos);
+			vData->set_allocated_normals(normals);
+			vData->set_u(data[i+6]);
 			vData->set_v(data[i+7]); 
 
-			ObjectData oData;
-			oData.set_objname("amumu");  
-			oData.set_vdataindex(i / 8); 
-			oData.set_allocated_vdata(vData);
+			ModelData mData;
+			mData.set_modelname("amumu"); 
+			mData.set_vdataindex(i / 8); 
+			mData.set_allocated_vdata(vData); 
 
-			writer->Write(oData);
+			writer->Write(mData); 
 		}
 
 		std::cout << "STATUS OK \n";
@@ -51,21 +57,53 @@ public:
 
 	grpc::Status LoadTexturesInScene(grpc::ServerContext* context, const IntValue* request, grpc::ServerWriter<TextureData>* writer) override
 	{
-		std::cout << "BOUT TO LOAD\n";
+		std::cout << "BOUT TO LOAD TEXTURE\n";
 
 		Texture* texture = new Texture("../3D/amumu.png");
 		texture->LoadTexture(GL_RGBA);
-		const char* tex_bytes_to_char = reinterpret_cast<char const*>(texture->GetTextureBytes()); 
-		std::string* tex_bytes_to_str = new std::string(tex_bytes_to_char, strlen(tex_bytes_to_char));  
+		unsigned char* tex_bytes = texture->GetTextureBytes();
 
-		TextureData data;
-		data.set_texturename("amumu");
-		data.set_width(texture->GetWidth());
-		data.set_height(texture->GetHeight());
-		data.set_hasalpha(true);
-		data.set_allocated_texturebytes(tex_bytes_to_str); 
+		int width = texture->GetWidth();
+		int height = texture->GetHeight();
 
-		writer->Write(data);
+		int index = 0;
+		for (int i = 0; i < width; i++)
+		{
+			for (int j = 0; j < height; j++)
+			{
+				unsigned bytePerPixel = 4;
+				unsigned char* pixelOffset = tex_bytes + (j + width * i) * bytePerPixel; 
+				unsigned int r = (unsigned int)(pixelOffset[0] & 0xff);  
+				unsigned int g = (unsigned int)(pixelOffset[1] & 0xff); 
+				unsigned int b = (unsigned int)(pixelOffset[2] & 0xff); 
+				unsigned int a = (unsigned int)(pixelOffset[3] & 0xff); 
+
+				PixelData* pixelData = new PixelData();
+				pixelData->set_r(r); 
+				pixelData->set_g(g); 
+				pixelData->set_b(b); 
+				pixelData->set_a(a); 
+
+				TextureData textureData = TextureData();
+				textureData.set_texturename("amumu"); 
+				textureData.set_width(width); 
+				textureData.set_height(height); 
+				textureData.set_hasalpha(true); 
+				textureData.set_pixelindex(index); 
+				textureData.set_allocated_pixeldata(pixelData);
+				writer->Write(textureData);
+
+				index++;
+			}
+		}
+
+		std::cout << "STATUS OK \n";
+
+		return grpc::Status::OK;
+	}
+
+	grpc::Status LoadObjectsInScene(::grpc::ServerContext* context, const ::IntValue* request, ::grpc::ServerWriter< ::ObjectData>* writer) override
+	{
 
 		std::cout << "STATUS OK \n";
 

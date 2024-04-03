@@ -1,7 +1,6 @@
 #pragma once
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <string>
 
 class Texture
 {
@@ -10,7 +9,7 @@ public:
 	~Texture();
 
 	void LoadTexture(GLint imageFormat);
-	void LoadTextureData(int width, int height, GLint imageFormat, unsigned char* tex_bytes);
+	void LoadTextureData(int width, int height, GLint imageFormat, GLubyte* pixels);
 
 	GLuint& GetTexture();
 	int GetWidth();
@@ -28,7 +27,6 @@ private:
 
 	const char* imagePath;
 	unsigned char* tex_bytes;
-	std::string* tex_bytes2;
+	GLubyte* pixels;
 	GLuint texture;
 };
-

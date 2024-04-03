@@ -1,23 +1,34 @@
 syntax = "proto3";
 
 
-message VertexData
+message Vector3
 {
-	float vX = 1;
-	float vY = 2;
-	float vZ = 3;
-	float nX = 4;
-	float nY = 5;
-	float nZ = 6;
-	float u = 7;
-	float v = 8;
+	float x = 1;
+	float y = 2;
+	float z = 3;
 }
 
-message ObjectData
+message VertexData
 {
-	string objName = 1;
+	Vector3 position = 1;
+	Vector3 normals = 2;
+	float u = 3;
+	float v = 4;
+}
+
+message ModelData
+{
+	string modelName = 1;
 	int32 vDataIndex = 2;
 	VertexData vData = 3;
+}
+
+message PixelData
+{
+	uint32 r = 1;
+	uint32 g = 2;
+	uint32 b = 3;
+	uint32 a = 4;
 }
 
 message TextureData
@@ -26,7 +37,17 @@ message TextureData
 	int32 width = 2;
 	int32 height = 3;
 	bool hasAlpha = 4;
-	bytes textureBytes = 5;
+	int32 pixelIndex = 5;
+	PixelData pixelData = 6;
+}
+
+message ObjectData
+{
+	string modelName = 1;
+	string textureName = 2;
+	Vector3 position = 3;
+	Vector3 rotation = 4;
+	Vector3 scale = 5;
 }
 
 message IntValue
@@ -47,7 +68,8 @@ message Empty
 
 service SceneLoader
 {
-	rpc LoadObjectsInScene(IntValue) returns (stream ObjectData);
+	rpc LoadModelsInScene(IntValue) returns (stream ModelData);
 	rpc LoadTexturesInScene(IntValue) returns (stream TextureData);
+	rpc LoadObjectsInScene(IntValue) returns (stream ObjectData);
 	rpc GetSceneProgress(IntValue) returns (FloatValue);
 }

@@ -21,8 +21,9 @@
 #include <grpcpp/support/sync_stream.h>
 
 static const char* SceneLoader_method_names[] = {
-  "/SceneLoader/LoadObjectsInScene",
+  "/SceneLoader/LoadModelsInScene",
   "/SceneLoader/LoadTexturesInScene",
+  "/SceneLoader/LoadObjectsInScene",
   "/SceneLoader/GetSceneProgress",
 };
 
@@ -33,25 +34,26 @@ std::unique_ptr< SceneLoader::Stub> SceneLoader::NewStub(const std::shared_ptr< 
 }
 
 SceneLoader::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
-  : channel_(channel), rpcmethod_LoadObjectsInScene_(SceneLoader_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  : channel_(channel), rpcmethod_LoadModelsInScene_(SceneLoader_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_LoadTexturesInScene_(SceneLoader_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
-  , rpcmethod_GetSceneProgress_(SceneLoader_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_LoadObjectsInScene_(SceneLoader_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_GetSceneProgress_(SceneLoader_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
-::grpc::ClientReader< ::ObjectData>* SceneLoader::Stub::LoadObjectsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request) {
-  return ::grpc::internal::ClientReaderFactory< ::ObjectData>::Create(channel_.get(), rpcmethod_LoadObjectsInScene_, context, request);
+::grpc::ClientReader< ::ModelData>* SceneLoader::Stub::LoadModelsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request) {
+  return ::grpc::internal::ClientReaderFactory< ::ModelData>::Create(channel_.get(), rpcmethod_LoadModelsInScene_, context, request);
 }
 
-void SceneLoader::Stub::async::LoadObjectsInScene(::grpc::ClientContext* context, const ::IntValue* request, ::grpc::ClientReadReactor< ::ObjectData>* reactor) {
-  ::grpc::internal::ClientCallbackReaderFactory< ::ObjectData>::Create(stub_->channel_.get(), stub_->rpcmethod_LoadObjectsInScene_, context, request, reactor);
+void SceneLoader::Stub::async::LoadModelsInScene(::grpc::ClientContext* context, const ::IntValue* request, ::grpc::ClientReadReactor< ::ModelData>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::ModelData>::Create(stub_->channel_.get(), stub_->rpcmethod_LoadModelsInScene_, context, request, reactor);
 }
 
-::grpc::ClientAsyncReader< ::ObjectData>* SceneLoader::Stub::AsyncLoadObjectsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq, void* tag) {
-  return ::grpc::internal::ClientAsyncReaderFactory< ::ObjectData>::Create(channel_.get(), cq, rpcmethod_LoadObjectsInScene_, context, request, true, tag);
+::grpc::ClientAsyncReader< ::ModelData>* SceneLoader::Stub::AsyncLoadModelsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::ModelData>::Create(channel_.get(), cq, rpcmethod_LoadModelsInScene_, context, request, true, tag);
 }
 
-::grpc::ClientAsyncReader< ::ObjectData>* SceneLoader::Stub::PrepareAsyncLoadObjectsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncReaderFactory< ::ObjectData>::Create(channel_.get(), cq, rpcmethod_LoadObjectsInScene_, context, request, false, nullptr);
+::grpc::ClientAsyncReader< ::ModelData>* SceneLoader::Stub::PrepareAsyncLoadModelsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::ModelData>::Create(channel_.get(), cq, rpcmethod_LoadModelsInScene_, context, request, false, nullptr);
 }
 
 ::grpc::ClientReader< ::TextureData>* SceneLoader::Stub::LoadTexturesInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request) {
@@ -68,6 +70,22 @@ void SceneLoader::Stub::async::LoadTexturesInScene(::grpc::ClientContext* contex
 
 ::grpc::ClientAsyncReader< ::TextureData>* SceneLoader::Stub::PrepareAsyncLoadTexturesInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) {
   return ::grpc::internal::ClientAsyncReaderFactory< ::TextureData>::Create(channel_.get(), cq, rpcmethod_LoadTexturesInScene_, context, request, false, nullptr);
+}
+
+::grpc::ClientReader< ::ObjectData>* SceneLoader::Stub::LoadObjectsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request) {
+  return ::grpc::internal::ClientReaderFactory< ::ObjectData>::Create(channel_.get(), rpcmethod_LoadObjectsInScene_, context, request);
+}
+
+void SceneLoader::Stub::async::LoadObjectsInScene(::grpc::ClientContext* context, const ::IntValue* request, ::grpc::ClientReadReactor< ::ObjectData>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::ObjectData>::Create(stub_->channel_.get(), stub_->rpcmethod_LoadObjectsInScene_, context, request, reactor);
+}
+
+::grpc::ClientAsyncReader< ::ObjectData>* SceneLoader::Stub::AsyncLoadObjectsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::ObjectData>::Create(channel_.get(), cq, rpcmethod_LoadObjectsInScene_, context, request, true, tag);
+}
+
+::grpc::ClientAsyncReader< ::ObjectData>* SceneLoader::Stub::PrepareAsyncLoadObjectsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::ObjectData>::Create(channel_.get(), cq, rpcmethod_LoadObjectsInScene_, context, request, false, nullptr);
 }
 
 ::grpc::Status SceneLoader::Stub::GetSceneProgress(::grpc::ClientContext* context, const ::IntValue& request, ::FloatValue* response) {
@@ -97,12 +115,12 @@ SceneLoader::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       SceneLoader_method_names[0],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
-      new ::grpc::internal::ServerStreamingHandler< SceneLoader::Service, ::IntValue, ::ObjectData>(
+      new ::grpc::internal::ServerStreamingHandler< SceneLoader::Service, ::IntValue, ::ModelData>(
           [](SceneLoader::Service* service,
              ::grpc::ServerContext* ctx,
              const ::IntValue* req,
-             ::grpc::ServerWriter<::ObjectData>* writer) {
-               return service->LoadObjectsInScene(ctx, req, writer);
+             ::grpc::ServerWriter<::ModelData>* writer) {
+               return service->LoadModelsInScene(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       SceneLoader_method_names[1],
@@ -116,6 +134,16 @@ SceneLoader::Service::Service() {
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       SceneLoader_method_names[2],
+      ::grpc::internal::RpcMethod::SERVER_STREAMING,
+      new ::grpc::internal::ServerStreamingHandler< SceneLoader::Service, ::IntValue, ::ObjectData>(
+          [](SceneLoader::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::IntValue* req,
+             ::grpc::ServerWriter<::ObjectData>* writer) {
+               return service->LoadObjectsInScene(ctx, req, writer);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      SceneLoader_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< SceneLoader::Service, ::IntValue, ::FloatValue, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](SceneLoader::Service* service,
@@ -129,7 +157,7 @@ SceneLoader::Service::Service() {
 SceneLoader::Service::~Service() {
 }
 
-::grpc::Status SceneLoader::Service::LoadObjectsInScene(::grpc::ServerContext* context, const ::IntValue* request, ::grpc::ServerWriter< ::ObjectData>* writer) {
+::grpc::Status SceneLoader::Service::LoadModelsInScene(::grpc::ServerContext* context, const ::IntValue* request, ::grpc::ServerWriter< ::ModelData>* writer) {
   (void) context;
   (void) request;
   (void) writer;
@@ -137,6 +165,13 @@ SceneLoader::Service::~Service() {
 }
 
 ::grpc::Status SceneLoader::Service::LoadTexturesInScene(::grpc::ServerContext* context, const ::IntValue* request, ::grpc::ServerWriter< ::TextureData>* writer) {
+  (void) context;
+  (void) request;
+  (void) writer;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status SceneLoader::Service::LoadObjectsInScene(::grpc::ServerContext* context, const ::IntValue* request, ::grpc::ServerWriter< ::ObjectData>* writer) {
   (void) context;
   (void) request;
   (void) writer;

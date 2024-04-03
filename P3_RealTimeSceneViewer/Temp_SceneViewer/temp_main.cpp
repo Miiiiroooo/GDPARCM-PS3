@@ -69,80 +69,78 @@ public:
 
     void LoadTexturesInScene(int id)
     {
+        GLubyte* pixels = NULL;
+        GLint imageFormat;
+        int width;
+        int height; 
+
+        
         IntValue sceneID; 
         sceneID.set_value(id);
 
-        //grpc::ClientContext context; 
-        //std::unique_ptr<grpc::ClientReader<TextureData>> reader(stub->LoadTexturesInScene(&context, sceneID)); 
+        grpc::ClientContext context;  
+        std::unique_ptr<grpc::ClientReader<TextureData>> reader(stub->LoadTexturesInScene(&context, sceneID)); 
 
-        //TextureData texData;
-        //while (reader->Read(&texData))
-        //{
-        //    Texture* newTexture = new Texture("");
+        TextureData texData;
+        while (reader->Read(&texData))
+        {
+            width = texData.width(); 
+            height = texData.height(); 
+            imageFormat = texData.hasalpha() ? GL_RGBA : GL_RGB; 
+            unsigned bytePerPixel = texData.hasalpha() ? 4 : 3; 
+            int index = texData.pixelindex() * bytePerPixel;
 
-        //    GLint imageFormat = texData.hasalpha() ? GL_RGBA : GL_RGB;
-        //    const char* tex_bytes_to_char = texData.texturebytes().c_str();
-        //    unsigned char* tex_bytes = reinterpret_cast<unsigned char*>(const_cast<char*>(tex_bytes_to_char));
+            if (pixels == NULL) 
+            {
+                pixels = new GLubyte[width * height * bytePerPixel]; 
+            }
 
-        //   /* unsigned char* tex_bytes = new unsigned char[texData.texturebytes().length() + 1];
-        //    strcpy_s((char*)tex_bytes, texData.texturebytes().length() + 1, texData.texturebytes().c_str());*/
-        //    newTexture->LoadTextureData(texData.width(), texData.height(), imageFormat, tex_bytes);
+            pixels[index] = texData.pixeldata().r();
+            pixels[index+1] = texData.pixeldata().g(); 
+            pixels[index+2] = texData.pixeldata().b();
+            pixels[index+3] = texData.pixeldata().a(); 
+        }
 
-        //    texturesList.push_back(newTexture);
-        //}
+        grpc::Status status = reader->Finish();  
+        if (status.ok()) 
+        {
+            Texture* newTexture = new Texture("");  
+            newTexture->LoadTextureData(texData.width(), texData.height(), imageFormat, pixels);  
+            texturesList.push_back(newTexture);  
 
-        //grpc::Status status = reader->Finish();  
-        //if (status.ok()) 
-        //{
-        //    std::cout << "CONNECTION SUCCESS\n"; 
-        //}
-        //else
-        //{
-        //    std::cout << "FAIL TO RECEVIVE " << status.error_code() << " " << status.error_message() << " " << status.error_details() << "\n"; 
-        //}
-
-
-        Texture* texture = new Texture("../3D/amumu.png");
-        texture->LoadTexture(GL_RGBA);
-        texture->GetTextureBytes(); // from this point, tex_bytes will have an error on the string which makes it impossible to convert into anything else
-
-       /* const char* tex_bytes_to_char = reinterpret_cast<char const*>(texture->GetTextureBytes());  
-        std::string* tex_bytes_to_str = new std::string(tex_bytes_to_char, strlen(tex_bytes_to_char));  // bytes in proto are usually represented as strings
-
-        const char* tex_bytes_to_char2 = tex_bytes_to_str->c_str();  
-        unsigned char* tex_bytes = reinterpret_cast<unsigned char*>(const_cast<char*>(tex_bytes_to_char)); 
-
-        int width = texture->GetWidth();
-        int height = texture->GetHeight();  
-        texture->LoadTextureData(width, height, GL_RGBA, tex_bytes); */
-        texturesList.push_back(texture);
+            std::cout << "TEXTURE CREATED\n"; 
+        }
+        else
+        {
+            std::cout << "FAIL TO RECEIVE TEXTURE " << status.error_code() << " " << status.error_message() << " " << status.error_details() << "\n"; 
+        }
     }
 
     void LoadObjectsInScene(int id)
     {
-        std::map<int, std::vector<float>> objDataMap; 
+        std::map<int, std::vector<float>> modelDataMap; 
 
         IntValue sceneID;
         sceneID.set_value(id);
 
         grpc::ClientContext context;
-        std::unique_ptr<grpc::ClientReader<ObjectData>> reader(stub->LoadObjectsInScene(&context, sceneID));
+        std::unique_ptr<grpc::ClientReader<ModelData>> reader(stub->LoadModelsInScene(&context, sceneID)); 
 
-        ObjectData objData; 
-        while (reader->Read(&objData))
+        ModelData modelData;  
+        while (reader->Read(&modelData)) 
         {
-            std::vector<float> vertexData = {
-                objData.vdata().vx(),
-                objData.vdata().vy(),
-                objData.vdata().vz(),
-                objData.vdata().nx(),
-                objData.vdata().ny(),
-                objData.vdata().nz(),
-                objData.vdata().u(),
-                objData.vdata().v()
+            std::vector<float> vertexData = { 
+                modelData.vdata().position().x(),
+                modelData.vdata().position().y(), 
+                modelData.vdata().position().z(),
+                modelData.vdata().normals().x(),
+                modelData.vdata().normals().y(), 
+                modelData.vdata().normals().z(), 
+                modelData.vdata().u(), 
+                modelData.vdata().v() 
             };
 
-            objDataMap[objData.vdataindex()] = vertexData;
+            modelDataMap[modelData.vdataindex()] = vertexData;
         }
 
         grpc::Status status = reader->Finish();
@@ -151,7 +149,7 @@ public:
             ModelReference* ref = new ModelReference(""); 
             std::vector<float> fullVertexData;
 
-            for (auto pair : objDataMap)
+            for (auto pair : modelDataMap)
             {
                 fullVertexData.insert(fullVertexData.end(), pair.second.begin(), pair.second.end());
             }
@@ -169,7 +167,7 @@ public:
         }
         else
         {
-            std::cout << "FAIL TO RECEVIVE " << status.error_code() << " " << status.error_message()  << " " << status.error_details() << "\n";
+            std::cout << "FAIL TO RECEVIVE MODEL " << status.error_code() << " " << status.error_message()  << " " << status.error_details() << "\n";
         }
     }
 

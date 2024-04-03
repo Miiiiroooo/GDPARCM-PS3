@@ -54,12 +54,21 @@ extern FloatValueDefaultTypeInternal _FloatValue_default_instance_;
 class IntValue;
 struct IntValueDefaultTypeInternal;
 extern IntValueDefaultTypeInternal _IntValue_default_instance_;
+class ModelData;
+struct ModelDataDefaultTypeInternal;
+extern ModelDataDefaultTypeInternal _ModelData_default_instance_;
 class ObjectData;
 struct ObjectDataDefaultTypeInternal;
 extern ObjectDataDefaultTypeInternal _ObjectData_default_instance_;
+class PixelData;
+struct PixelDataDefaultTypeInternal;
+extern PixelDataDefaultTypeInternal _PixelData_default_instance_;
 class TextureData;
 struct TextureDataDefaultTypeInternal;
 extern TextureDataDefaultTypeInternal _TextureData_default_instance_;
+class Vector3;
+struct Vector3DefaultTypeInternal;
+extern Vector3DefaultTypeInternal _Vector3_default_instance_;
 class VertexData;
 struct VertexDataDefaultTypeInternal;
 extern VertexDataDefaultTypeInternal _VertexData_default_instance_;
@@ -67,12 +76,185 @@ PROTOBUF_NAMESPACE_OPEN
 template<> ::Empty* Arena::CreateMaybeMessage<::Empty>(Arena*);
 template<> ::FloatValue* Arena::CreateMaybeMessage<::FloatValue>(Arena*);
 template<> ::IntValue* Arena::CreateMaybeMessage<::IntValue>(Arena*);
+template<> ::ModelData* Arena::CreateMaybeMessage<::ModelData>(Arena*);
 template<> ::ObjectData* Arena::CreateMaybeMessage<::ObjectData>(Arena*);
+template<> ::PixelData* Arena::CreateMaybeMessage<::PixelData>(Arena*);
 template<> ::TextureData* Arena::CreateMaybeMessage<::TextureData>(Arena*);
+template<> ::Vector3* Arena::CreateMaybeMessage<::Vector3>(Arena*);
 template<> ::VertexData* Arena::CreateMaybeMessage<::VertexData>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 
 // ===================================================================
+
+class Vector3 final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Vector3) */ {
+ public:
+  inline Vector3() : Vector3(nullptr) {}
+  ~Vector3() override;
+  explicit PROTOBUF_CONSTEXPR Vector3(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Vector3(const Vector3& from);
+  Vector3(Vector3&& from) noexcept
+    : Vector3() {
+    *this = ::std::move(from);
+  }
+
+  inline Vector3& operator=(const Vector3& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Vector3& operator=(Vector3&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Vector3& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Vector3* internal_default_instance() {
+    return reinterpret_cast<const Vector3*>(
+               &_Vector3_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    0;
+
+  friend void swap(Vector3& a, Vector3& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Vector3* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Vector3* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Vector3* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Vector3>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Vector3& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Vector3& from) {
+    Vector3::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Vector3* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Vector3";
+  }
+  protected:
+  explicit Vector3(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kXFieldNumber = 1,
+    kYFieldNumber = 2,
+    kZFieldNumber = 3,
+  };
+  // float x = 1;
+  void clear_x();
+  float x() const;
+  void set_x(float value);
+  private:
+  float _internal_x() const;
+  void _internal_set_x(float value);
+  public:
+
+  // float y = 2;
+  void clear_y();
+  float y() const;
+  void set_y(float value);
+  private:
+  float _internal_y() const;
+  void _internal_set_y(float value);
+  public:
+
+  // float z = 3;
+  void clear_z();
+  float z() const;
+  void set_z(float value);
+  private:
+  float _internal_z() const;
+  void _internal_set_z(float value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Vector3)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    float x_;
+    float y_;
+    float z_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_proto_2fSceneLoader_2eproto;
+};
+// -------------------------------------------------------------------
 
 class VertexData final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:VertexData) */ {
@@ -122,7 +304,7 @@ class VertexData final :
                &_VertexData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    0;
+    1;
 
   friend void swap(VertexData& a, VertexData& b) {
     a.Swap(&b);
@@ -195,70 +377,48 @@ class VertexData final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kVXFieldNumber = 1,
-    kVYFieldNumber = 2,
-    kVZFieldNumber = 3,
-    kNXFieldNumber = 4,
-    kNYFieldNumber = 5,
-    kNZFieldNumber = 6,
-    kUFieldNumber = 7,
-    kVFieldNumber = 8,
+    kPositionFieldNumber = 1,
+    kNormalsFieldNumber = 2,
+    kUFieldNumber = 3,
+    kVFieldNumber = 4,
   };
-  // float vX = 1;
-  void clear_vx();
-  float vx() const;
-  void set_vx(float value);
+  // .Vector3 position = 1;
+  bool has_position() const;
   private:
-  float _internal_vx() const;
-  void _internal_set_vx(float value);
+  bool _internal_has_position() const;
   public:
-
-  // float vY = 2;
-  void clear_vy();
-  float vy() const;
-  void set_vy(float value);
+  void clear_position();
+  const ::Vector3& position() const;
+  PROTOBUF_NODISCARD ::Vector3* release_position();
+  ::Vector3* mutable_position();
+  void set_allocated_position(::Vector3* position);
   private:
-  float _internal_vy() const;
-  void _internal_set_vy(float value);
+  const ::Vector3& _internal_position() const;
+  ::Vector3* _internal_mutable_position();
   public:
+  void unsafe_arena_set_allocated_position(
+      ::Vector3* position);
+  ::Vector3* unsafe_arena_release_position();
 
-  // float vZ = 3;
-  void clear_vz();
-  float vz() const;
-  void set_vz(float value);
+  // .Vector3 normals = 2;
+  bool has_normals() const;
   private:
-  float _internal_vz() const;
-  void _internal_set_vz(float value);
+  bool _internal_has_normals() const;
   public:
-
-  // float nX = 4;
-  void clear_nx();
-  float nx() const;
-  void set_nx(float value);
+  void clear_normals();
+  const ::Vector3& normals() const;
+  PROTOBUF_NODISCARD ::Vector3* release_normals();
+  ::Vector3* mutable_normals();
+  void set_allocated_normals(::Vector3* normals);
   private:
-  float _internal_nx() const;
-  void _internal_set_nx(float value);
+  const ::Vector3& _internal_normals() const;
+  ::Vector3* _internal_mutable_normals();
   public:
+  void unsafe_arena_set_allocated_normals(
+      ::Vector3* normals);
+  ::Vector3* unsafe_arena_release_normals();
 
-  // float nY = 5;
-  void clear_ny();
-  float ny() const;
-  void set_ny(float value);
-  private:
-  float _internal_ny() const;
-  void _internal_set_ny(float value);
-  public:
-
-  // float nZ = 6;
-  void clear_nz();
-  float nz() const;
-  void set_nz(float value);
-  private:
-  float _internal_nz() const;
-  void _internal_set_nz(float value);
-  public:
-
-  // float u = 7;
+  // float u = 3;
   void clear_u();
   float u() const;
   void set_u(float value);
@@ -267,7 +427,7 @@ class VertexData final :
   void _internal_set_u(float value);
   public:
 
-  // float v = 8;
+  // float v = 4;
   void clear_v();
   float v() const;
   void set_v(float value);
@@ -284,12 +444,8 @@ class VertexData final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    float vx_;
-    float vy_;
-    float vz_;
-    float nx_;
-    float ny_;
-    float nz_;
+    ::Vector3* position_;
+    ::Vector3* normals_;
     float u_;
     float v_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -299,24 +455,24 @@ class VertexData final :
 };
 // -------------------------------------------------------------------
 
-class ObjectData final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ObjectData) */ {
+class ModelData final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ModelData) */ {
  public:
-  inline ObjectData() : ObjectData(nullptr) {}
-  ~ObjectData() override;
-  explicit PROTOBUF_CONSTEXPR ObjectData(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline ModelData() : ModelData(nullptr) {}
+  ~ModelData() override;
+  explicit PROTOBUF_CONSTEXPR ModelData(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  ObjectData(const ObjectData& from);
-  ObjectData(ObjectData&& from) noexcept
-    : ObjectData() {
+  ModelData(const ModelData& from);
+  ModelData(ModelData&& from) noexcept
+    : ModelData() {
     *this = ::std::move(from);
   }
 
-  inline ObjectData& operator=(const ObjectData& from) {
+  inline ModelData& operator=(const ModelData& from) {
     CopyFrom(from);
     return *this;
   }
-  inline ObjectData& operator=(ObjectData&& from) noexcept {
+  inline ModelData& operator=(ModelData&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -339,20 +495,20 @@ class ObjectData final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const ObjectData& default_instance() {
+  static const ModelData& default_instance() {
     return *internal_default_instance();
   }
-  static inline const ObjectData* internal_default_instance() {
-    return reinterpret_cast<const ObjectData*>(
-               &_ObjectData_default_instance_);
+  static inline const ModelData* internal_default_instance() {
+    return reinterpret_cast<const ModelData*>(
+               &_ModelData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    2;
 
-  friend void swap(ObjectData& a, ObjectData& b) {
+  friend void swap(ModelData& a, ModelData& b) {
     a.Swap(&b);
   }
-  inline void Swap(ObjectData* other) {
+  inline void Swap(ModelData* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -365,7 +521,7 @@ class ObjectData final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(ObjectData* other) {
+  void UnsafeArenaSwap(ModelData* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -373,14 +529,14 @@ class ObjectData final :
 
   // implements Message ----------------------------------------------
 
-  ObjectData* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<ObjectData>(arena);
+  ModelData* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ModelData>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const ObjectData& from);
+  void CopyFrom(const ModelData& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const ObjectData& from) {
-    ObjectData::MergeImpl(*this, from);
+  void MergeFrom( const ModelData& from) {
+    ModelData::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -398,15 +554,15 @@ class ObjectData final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(ObjectData* other);
+  void InternalSwap(ModelData* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "ObjectData";
+    return "ModelData";
   }
   protected:
-  explicit ObjectData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit ModelData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -420,22 +576,22 @@ class ObjectData final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kObjNameFieldNumber = 1,
+    kModelNameFieldNumber = 1,
     kVDataFieldNumber = 3,
     kVDataIndexFieldNumber = 2,
   };
-  // string objName = 1;
-  void clear_objname();
-  const std::string& objname() const;
+  // string modelName = 1;
+  void clear_modelname();
+  const std::string& modelname() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_objname(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_objname();
-  PROTOBUF_NODISCARD std::string* release_objname();
-  void set_allocated_objname(std::string* objname);
+  void set_modelname(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_modelname();
+  PROTOBUF_NODISCARD std::string* release_modelname();
+  void set_allocated_modelname(std::string* modelname);
   private:
-  const std::string& _internal_objname() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_objname(const std::string& value);
-  std::string* _internal_mutable_objname();
+  const std::string& _internal_modelname() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_modelname(const std::string& value);
+  std::string* _internal_mutable_modelname();
   public:
 
   // .VertexData vData = 3;
@@ -465,7 +621,7 @@ class ObjectData final :
   void _internal_set_vdataindex(int32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:ObjectData)
+  // @@protoc_insertion_point(class_scope:ModelData)
  private:
   class _Internal;
 
@@ -473,9 +629,190 @@ class ObjectData final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr objname_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr modelname_;
     ::VertexData* vdata_;
     int32_t vdataindex_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_proto_2fSceneLoader_2eproto;
+};
+// -------------------------------------------------------------------
+
+class PixelData final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:PixelData) */ {
+ public:
+  inline PixelData() : PixelData(nullptr) {}
+  ~PixelData() override;
+  explicit PROTOBUF_CONSTEXPR PixelData(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  PixelData(const PixelData& from);
+  PixelData(PixelData&& from) noexcept
+    : PixelData() {
+    *this = ::std::move(from);
+  }
+
+  inline PixelData& operator=(const PixelData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PixelData& operator=(PixelData&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PixelData& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const PixelData* internal_default_instance() {
+    return reinterpret_cast<const PixelData*>(
+               &_PixelData_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(PixelData& a, PixelData& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PixelData* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PixelData* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PixelData* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PixelData>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const PixelData& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const PixelData& from) {
+    PixelData::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PixelData* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "PixelData";
+  }
+  protected:
+  explicit PixelData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kRFieldNumber = 1,
+    kGFieldNumber = 2,
+    kBFieldNumber = 3,
+    kAFieldNumber = 4,
+  };
+  // uint32 r = 1;
+  void clear_r();
+  uint32_t r() const;
+  void set_r(uint32_t value);
+  private:
+  uint32_t _internal_r() const;
+  void _internal_set_r(uint32_t value);
+  public:
+
+  // uint32 g = 2;
+  void clear_g();
+  uint32_t g() const;
+  void set_g(uint32_t value);
+  private:
+  uint32_t _internal_g() const;
+  void _internal_set_g(uint32_t value);
+  public:
+
+  // uint32 b = 3;
+  void clear_b();
+  uint32_t b() const;
+  void set_b(uint32_t value);
+  private:
+  uint32_t _internal_b() const;
+  void _internal_set_b(uint32_t value);
+  public:
+
+  // uint32 a = 4;
+  void clear_a();
+  uint32_t a() const;
+  void set_a(uint32_t value);
+  private:
+  uint32_t _internal_a() const;
+  void _internal_set_a(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:PixelData)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    uint32_t r_;
+    uint32_t g_;
+    uint32_t b_;
+    uint32_t a_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -531,7 +868,7 @@ class TextureData final :
                &_TextureData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    4;
 
   friend void swap(TextureData& a, TextureData& b) {
     a.Swap(&b);
@@ -605,10 +942,11 @@ class TextureData final :
 
   enum : int {
     kTextureNameFieldNumber = 1,
-    kTextureBytesFieldNumber = 5,
+    kPixelDataFieldNumber = 6,
     kWidthFieldNumber = 2,
     kHeightFieldNumber = 3,
     kHasAlphaFieldNumber = 4,
+    kPixelIndexFieldNumber = 5,
   };
   // string textureName = 1;
   void clear_texturename();
@@ -624,19 +962,23 @@ class TextureData final :
   std::string* _internal_mutable_texturename();
   public:
 
-  // bytes textureBytes = 5;
-  void clear_texturebytes();
-  const std::string& texturebytes() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_texturebytes(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_texturebytes();
-  PROTOBUF_NODISCARD std::string* release_texturebytes();
-  void set_allocated_texturebytes(std::string* texturebytes);
+  // .PixelData pixelData = 6;
+  bool has_pixeldata() const;
   private:
-  const std::string& _internal_texturebytes() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_texturebytes(const std::string& value);
-  std::string* _internal_mutable_texturebytes();
+  bool _internal_has_pixeldata() const;
   public:
+  void clear_pixeldata();
+  const ::PixelData& pixeldata() const;
+  PROTOBUF_NODISCARD ::PixelData* release_pixeldata();
+  ::PixelData* mutable_pixeldata();
+  void set_allocated_pixeldata(::PixelData* pixeldata);
+  private:
+  const ::PixelData& _internal_pixeldata() const;
+  ::PixelData* _internal_mutable_pixeldata();
+  public:
+  void unsafe_arena_set_allocated_pixeldata(
+      ::PixelData* pixeldata);
+  ::PixelData* unsafe_arena_release_pixeldata();
 
   // int32 width = 2;
   void clear_width();
@@ -665,6 +1007,15 @@ class TextureData final :
   void _internal_set_hasalpha(bool value);
   public:
 
+  // int32 pixelIndex = 5;
+  void clear_pixelindex();
+  int32_t pixelindex() const;
+  void set_pixelindex(int32_t value);
+  private:
+  int32_t _internal_pixelindex() const;
+  void _internal_set_pixelindex(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:TextureData)
  private:
   class _Internal;
@@ -674,10 +1025,240 @@ class TextureData final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr texturename_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr texturebytes_;
+    ::PixelData* pixeldata_;
     int32_t width_;
     int32_t height_;
     bool hasalpha_;
+    int32_t pixelindex_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_proto_2fSceneLoader_2eproto;
+};
+// -------------------------------------------------------------------
+
+class ObjectData final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ObjectData) */ {
+ public:
+  inline ObjectData() : ObjectData(nullptr) {}
+  ~ObjectData() override;
+  explicit PROTOBUF_CONSTEXPR ObjectData(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  ObjectData(const ObjectData& from);
+  ObjectData(ObjectData&& from) noexcept
+    : ObjectData() {
+    *this = ::std::move(from);
+  }
+
+  inline ObjectData& operator=(const ObjectData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ObjectData& operator=(ObjectData&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ObjectData& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ObjectData* internal_default_instance() {
+    return reinterpret_cast<const ObjectData*>(
+               &_ObjectData_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(ObjectData& a, ObjectData& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ObjectData* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ObjectData* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ObjectData* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ObjectData>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const ObjectData& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const ObjectData& from) {
+    ObjectData::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ObjectData* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ObjectData";
+  }
+  protected:
+  explicit ObjectData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kModelNameFieldNumber = 1,
+    kTextureNameFieldNumber = 2,
+    kPositionFieldNumber = 3,
+    kRotationFieldNumber = 4,
+    kScaleFieldNumber = 5,
+  };
+  // string modelName = 1;
+  void clear_modelname();
+  const std::string& modelname() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_modelname(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_modelname();
+  PROTOBUF_NODISCARD std::string* release_modelname();
+  void set_allocated_modelname(std::string* modelname);
+  private:
+  const std::string& _internal_modelname() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_modelname(const std::string& value);
+  std::string* _internal_mutable_modelname();
+  public:
+
+  // string textureName = 2;
+  void clear_texturename();
+  const std::string& texturename() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_texturename(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_texturename();
+  PROTOBUF_NODISCARD std::string* release_texturename();
+  void set_allocated_texturename(std::string* texturename);
+  private:
+  const std::string& _internal_texturename() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_texturename(const std::string& value);
+  std::string* _internal_mutable_texturename();
+  public:
+
+  // .Vector3 position = 3;
+  bool has_position() const;
+  private:
+  bool _internal_has_position() const;
+  public:
+  void clear_position();
+  const ::Vector3& position() const;
+  PROTOBUF_NODISCARD ::Vector3* release_position();
+  ::Vector3* mutable_position();
+  void set_allocated_position(::Vector3* position);
+  private:
+  const ::Vector3& _internal_position() const;
+  ::Vector3* _internal_mutable_position();
+  public:
+  void unsafe_arena_set_allocated_position(
+      ::Vector3* position);
+  ::Vector3* unsafe_arena_release_position();
+
+  // .Vector3 rotation = 4;
+  bool has_rotation() const;
+  private:
+  bool _internal_has_rotation() const;
+  public:
+  void clear_rotation();
+  const ::Vector3& rotation() const;
+  PROTOBUF_NODISCARD ::Vector3* release_rotation();
+  ::Vector3* mutable_rotation();
+  void set_allocated_rotation(::Vector3* rotation);
+  private:
+  const ::Vector3& _internal_rotation() const;
+  ::Vector3* _internal_mutable_rotation();
+  public:
+  void unsafe_arena_set_allocated_rotation(
+      ::Vector3* rotation);
+  ::Vector3* unsafe_arena_release_rotation();
+
+  // .Vector3 scale = 5;
+  bool has_scale() const;
+  private:
+  bool _internal_has_scale() const;
+  public:
+  void clear_scale();
+  const ::Vector3& scale() const;
+  PROTOBUF_NODISCARD ::Vector3* release_scale();
+  ::Vector3* mutable_scale();
+  void set_allocated_scale(::Vector3* scale);
+  private:
+  const ::Vector3& _internal_scale() const;
+  ::Vector3* _internal_mutable_scale();
+  public:
+  void unsafe_arena_set_allocated_scale(
+      ::Vector3* scale);
+  ::Vector3* unsafe_arena_release_scale();
+
+  // @@protoc_insertion_point(class_scope:ObjectData)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr modelname_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr texturename_;
+    ::Vector3* position_;
+    ::Vector3* rotation_;
+    ::Vector3* scale_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -733,7 +1314,7 @@ class IntValue final :
                &_IntValue_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    6;
 
   friend void swap(IntValue& a, IntValue& b) {
     a.Swap(&b);
@@ -881,7 +1462,7 @@ class FloatValue final :
                &_FloatValue_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    7;
 
   friend void swap(FloatValue& a, FloatValue& b) {
     a.Swap(&b);
@@ -1028,7 +1609,7 @@ class Empty final :
                &_Empty_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    8;
 
   friend void swap(Empty& a, Empty& b) {
     a.Swap(&b);
@@ -1106,129 +1687,253 @@ class Empty final :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
+// Vector3
+
+// float x = 1;
+inline void Vector3::clear_x() {
+  _impl_.x_ = 0;
+}
+inline float Vector3::_internal_x() const {
+  return _impl_.x_;
+}
+inline float Vector3::x() const {
+  // @@protoc_insertion_point(field_get:Vector3.x)
+  return _internal_x();
+}
+inline void Vector3::_internal_set_x(float value) {
+  
+  _impl_.x_ = value;
+}
+inline void Vector3::set_x(float value) {
+  _internal_set_x(value);
+  // @@protoc_insertion_point(field_set:Vector3.x)
+}
+
+// float y = 2;
+inline void Vector3::clear_y() {
+  _impl_.y_ = 0;
+}
+inline float Vector3::_internal_y() const {
+  return _impl_.y_;
+}
+inline float Vector3::y() const {
+  // @@protoc_insertion_point(field_get:Vector3.y)
+  return _internal_y();
+}
+inline void Vector3::_internal_set_y(float value) {
+  
+  _impl_.y_ = value;
+}
+inline void Vector3::set_y(float value) {
+  _internal_set_y(value);
+  // @@protoc_insertion_point(field_set:Vector3.y)
+}
+
+// float z = 3;
+inline void Vector3::clear_z() {
+  _impl_.z_ = 0;
+}
+inline float Vector3::_internal_z() const {
+  return _impl_.z_;
+}
+inline float Vector3::z() const {
+  // @@protoc_insertion_point(field_get:Vector3.z)
+  return _internal_z();
+}
+inline void Vector3::_internal_set_z(float value) {
+  
+  _impl_.z_ = value;
+}
+inline void Vector3::set_z(float value) {
+  _internal_set_z(value);
+  // @@protoc_insertion_point(field_set:Vector3.z)
+}
+
+// -------------------------------------------------------------------
+
 // VertexData
 
-// float vX = 1;
-inline void VertexData::clear_vx() {
-  _impl_.vx_ = 0;
+// .Vector3 position = 1;
+inline bool VertexData::_internal_has_position() const {
+  return this != internal_default_instance() && _impl_.position_ != nullptr;
 }
-inline float VertexData::_internal_vx() const {
-  return _impl_.vx_;
+inline bool VertexData::has_position() const {
+  return _internal_has_position();
 }
-inline float VertexData::vx() const {
-  // @@protoc_insertion_point(field_get:VertexData.vX)
-  return _internal_vx();
+inline void VertexData::clear_position() {
+  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
+    delete _impl_.position_;
+  }
+  _impl_.position_ = nullptr;
 }
-inline void VertexData::_internal_set_vx(float value) {
+inline const ::Vector3& VertexData::_internal_position() const {
+  const ::Vector3* p = _impl_.position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Vector3&>(
+      ::_Vector3_default_instance_);
+}
+inline const ::Vector3& VertexData::position() const {
+  // @@protoc_insertion_point(field_get:VertexData.position)
+  return _internal_position();
+}
+inline void VertexData::unsafe_arena_set_allocated_position(
+    ::Vector3* position) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  _impl_.position_ = position;
+  if (position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:VertexData.position)
+}
+inline ::Vector3* VertexData::release_position() {
   
-  _impl_.vx_ = value;
+  ::Vector3* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-inline void VertexData::set_vx(float value) {
-  _internal_set_vx(value);
-  // @@protoc_insertion_point(field_set:VertexData.vX)
+inline ::Vector3* VertexData::unsafe_arena_release_position() {
+  // @@protoc_insertion_point(field_release:VertexData.position)
+  
+  ::Vector3* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+  return temp;
+}
+inline ::Vector3* VertexData::_internal_mutable_position() {
+  
+  if (_impl_.position_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Vector3>(GetArenaForAllocation());
+    _impl_.position_ = p;
+  }
+  return _impl_.position_;
+}
+inline ::Vector3* VertexData::mutable_position() {
+  ::Vector3* _msg = _internal_mutable_position();
+  // @@protoc_insertion_point(field_mutable:VertexData.position)
+  return _msg;
+}
+inline void VertexData::set_allocated_position(::Vector3* position) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.position_;
+  }
+  if (position) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(position);
+    if (message_arena != submessage_arena) {
+      position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, position, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.position_ = position;
+  // @@protoc_insertion_point(field_set_allocated:VertexData.position)
 }
 
-// float vY = 2;
-inline void VertexData::clear_vy() {
-  _impl_.vy_ = 0;
+// .Vector3 normals = 2;
+inline bool VertexData::_internal_has_normals() const {
+  return this != internal_default_instance() && _impl_.normals_ != nullptr;
 }
-inline float VertexData::_internal_vy() const {
-  return _impl_.vy_;
+inline bool VertexData::has_normals() const {
+  return _internal_has_normals();
 }
-inline float VertexData::vy() const {
-  // @@protoc_insertion_point(field_get:VertexData.vY)
-  return _internal_vy();
+inline void VertexData::clear_normals() {
+  if (GetArenaForAllocation() == nullptr && _impl_.normals_ != nullptr) {
+    delete _impl_.normals_;
+  }
+  _impl_.normals_ = nullptr;
 }
-inline void VertexData::_internal_set_vy(float value) {
+inline const ::Vector3& VertexData::_internal_normals() const {
+  const ::Vector3* p = _impl_.normals_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Vector3&>(
+      ::_Vector3_default_instance_);
+}
+inline const ::Vector3& VertexData::normals() const {
+  // @@protoc_insertion_point(field_get:VertexData.normals)
+  return _internal_normals();
+}
+inline void VertexData::unsafe_arena_set_allocated_normals(
+    ::Vector3* normals) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.normals_);
+  }
+  _impl_.normals_ = normals;
+  if (normals) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:VertexData.normals)
+}
+inline ::Vector3* VertexData::release_normals() {
   
-  _impl_.vy_ = value;
+  ::Vector3* temp = _impl_.normals_;
+  _impl_.normals_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-inline void VertexData::set_vy(float value) {
-  _internal_set_vy(value);
-  // @@protoc_insertion_point(field_set:VertexData.vY)
+inline ::Vector3* VertexData::unsafe_arena_release_normals() {
+  // @@protoc_insertion_point(field_release:VertexData.normals)
+  
+  ::Vector3* temp = _impl_.normals_;
+  _impl_.normals_ = nullptr;
+  return temp;
+}
+inline ::Vector3* VertexData::_internal_mutable_normals() {
+  
+  if (_impl_.normals_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Vector3>(GetArenaForAllocation());
+    _impl_.normals_ = p;
+  }
+  return _impl_.normals_;
+}
+inline ::Vector3* VertexData::mutable_normals() {
+  ::Vector3* _msg = _internal_mutable_normals();
+  // @@protoc_insertion_point(field_mutable:VertexData.normals)
+  return _msg;
+}
+inline void VertexData::set_allocated_normals(::Vector3* normals) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.normals_;
+  }
+  if (normals) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(normals);
+    if (message_arena != submessage_arena) {
+      normals = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, normals, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.normals_ = normals;
+  // @@protoc_insertion_point(field_set_allocated:VertexData.normals)
 }
 
-// float vZ = 3;
-inline void VertexData::clear_vz() {
-  _impl_.vz_ = 0;
-}
-inline float VertexData::_internal_vz() const {
-  return _impl_.vz_;
-}
-inline float VertexData::vz() const {
-  // @@protoc_insertion_point(field_get:VertexData.vZ)
-  return _internal_vz();
-}
-inline void VertexData::_internal_set_vz(float value) {
-  
-  _impl_.vz_ = value;
-}
-inline void VertexData::set_vz(float value) {
-  _internal_set_vz(value);
-  // @@protoc_insertion_point(field_set:VertexData.vZ)
-}
-
-// float nX = 4;
-inline void VertexData::clear_nx() {
-  _impl_.nx_ = 0;
-}
-inline float VertexData::_internal_nx() const {
-  return _impl_.nx_;
-}
-inline float VertexData::nx() const {
-  // @@protoc_insertion_point(field_get:VertexData.nX)
-  return _internal_nx();
-}
-inline void VertexData::_internal_set_nx(float value) {
-  
-  _impl_.nx_ = value;
-}
-inline void VertexData::set_nx(float value) {
-  _internal_set_nx(value);
-  // @@protoc_insertion_point(field_set:VertexData.nX)
-}
-
-// float nY = 5;
-inline void VertexData::clear_ny() {
-  _impl_.ny_ = 0;
-}
-inline float VertexData::_internal_ny() const {
-  return _impl_.ny_;
-}
-inline float VertexData::ny() const {
-  // @@protoc_insertion_point(field_get:VertexData.nY)
-  return _internal_ny();
-}
-inline void VertexData::_internal_set_ny(float value) {
-  
-  _impl_.ny_ = value;
-}
-inline void VertexData::set_ny(float value) {
-  _internal_set_ny(value);
-  // @@protoc_insertion_point(field_set:VertexData.nY)
-}
-
-// float nZ = 6;
-inline void VertexData::clear_nz() {
-  _impl_.nz_ = 0;
-}
-inline float VertexData::_internal_nz() const {
-  return _impl_.nz_;
-}
-inline float VertexData::nz() const {
-  // @@protoc_insertion_point(field_get:VertexData.nZ)
-  return _internal_nz();
-}
-inline void VertexData::_internal_set_nz(float value) {
-  
-  _impl_.nz_ = value;
-}
-inline void VertexData::set_nz(float value) {
-  _internal_set_nz(value);
-  // @@protoc_insertion_point(field_set:VertexData.nZ)
-}
-
-// float u = 7;
+// float u = 3;
 inline void VertexData::clear_u() {
   _impl_.u_ = 0;
 }
@@ -1248,7 +1953,7 @@ inline void VertexData::set_u(float value) {
   // @@protoc_insertion_point(field_set:VertexData.u)
 }
 
-// float v = 8;
+// float v = 4;
 inline void VertexData::clear_v() {
   _impl_.v_ = 0;
 }
@@ -1270,101 +1975,101 @@ inline void VertexData::set_v(float value) {
 
 // -------------------------------------------------------------------
 
-// ObjectData
+// ModelData
 
-// string objName = 1;
-inline void ObjectData::clear_objname() {
-  _impl_.objname_.ClearToEmpty();
+// string modelName = 1;
+inline void ModelData::clear_modelname() {
+  _impl_.modelname_.ClearToEmpty();
 }
-inline const std::string& ObjectData::objname() const {
-  // @@protoc_insertion_point(field_get:ObjectData.objName)
-  return _internal_objname();
+inline const std::string& ModelData::modelname() const {
+  // @@protoc_insertion_point(field_get:ModelData.modelName)
+  return _internal_modelname();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void ObjectData::set_objname(ArgT0&& arg0, ArgT... args) {
+void ModelData::set_modelname(ArgT0&& arg0, ArgT... args) {
  
- _impl_.objname_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:ObjectData.objName)
+ _impl_.modelname_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ModelData.modelName)
 }
-inline std::string* ObjectData::mutable_objname() {
-  std::string* _s = _internal_mutable_objname();
-  // @@protoc_insertion_point(field_mutable:ObjectData.objName)
+inline std::string* ModelData::mutable_modelname() {
+  std::string* _s = _internal_mutable_modelname();
+  // @@protoc_insertion_point(field_mutable:ModelData.modelName)
   return _s;
 }
-inline const std::string& ObjectData::_internal_objname() const {
-  return _impl_.objname_.Get();
+inline const std::string& ModelData::_internal_modelname() const {
+  return _impl_.modelname_.Get();
 }
-inline void ObjectData::_internal_set_objname(const std::string& value) {
+inline void ModelData::_internal_set_modelname(const std::string& value) {
   
-  _impl_.objname_.Set(value, GetArenaForAllocation());
+  _impl_.modelname_.Set(value, GetArenaForAllocation());
 }
-inline std::string* ObjectData::_internal_mutable_objname() {
+inline std::string* ModelData::_internal_mutable_modelname() {
   
-  return _impl_.objname_.Mutable(GetArenaForAllocation());
+  return _impl_.modelname_.Mutable(GetArenaForAllocation());
 }
-inline std::string* ObjectData::release_objname() {
-  // @@protoc_insertion_point(field_release:ObjectData.objName)
-  return _impl_.objname_.Release();
+inline std::string* ModelData::release_modelname() {
+  // @@protoc_insertion_point(field_release:ModelData.modelName)
+  return _impl_.modelname_.Release();
 }
-inline void ObjectData::set_allocated_objname(std::string* objname) {
-  if (objname != nullptr) {
+inline void ModelData::set_allocated_modelname(std::string* modelname) {
+  if (modelname != nullptr) {
     
   } else {
     
   }
-  _impl_.objname_.SetAllocated(objname, GetArenaForAllocation());
+  _impl_.modelname_.SetAllocated(modelname, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.objname_.IsDefault()) {
-    _impl_.objname_.Set("", GetArenaForAllocation());
+  if (_impl_.modelname_.IsDefault()) {
+    _impl_.modelname_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:ObjectData.objName)
+  // @@protoc_insertion_point(field_set_allocated:ModelData.modelName)
 }
 
 // int32 vDataIndex = 2;
-inline void ObjectData::clear_vdataindex() {
+inline void ModelData::clear_vdataindex() {
   _impl_.vdataindex_ = 0;
 }
-inline int32_t ObjectData::_internal_vdataindex() const {
+inline int32_t ModelData::_internal_vdataindex() const {
   return _impl_.vdataindex_;
 }
-inline int32_t ObjectData::vdataindex() const {
-  // @@protoc_insertion_point(field_get:ObjectData.vDataIndex)
+inline int32_t ModelData::vdataindex() const {
+  // @@protoc_insertion_point(field_get:ModelData.vDataIndex)
   return _internal_vdataindex();
 }
-inline void ObjectData::_internal_set_vdataindex(int32_t value) {
+inline void ModelData::_internal_set_vdataindex(int32_t value) {
   
   _impl_.vdataindex_ = value;
 }
-inline void ObjectData::set_vdataindex(int32_t value) {
+inline void ModelData::set_vdataindex(int32_t value) {
   _internal_set_vdataindex(value);
-  // @@protoc_insertion_point(field_set:ObjectData.vDataIndex)
+  // @@protoc_insertion_point(field_set:ModelData.vDataIndex)
 }
 
 // .VertexData vData = 3;
-inline bool ObjectData::_internal_has_vdata() const {
+inline bool ModelData::_internal_has_vdata() const {
   return this != internal_default_instance() && _impl_.vdata_ != nullptr;
 }
-inline bool ObjectData::has_vdata() const {
+inline bool ModelData::has_vdata() const {
   return _internal_has_vdata();
 }
-inline void ObjectData::clear_vdata() {
+inline void ModelData::clear_vdata() {
   if (GetArenaForAllocation() == nullptr && _impl_.vdata_ != nullptr) {
     delete _impl_.vdata_;
   }
   _impl_.vdata_ = nullptr;
 }
-inline const ::VertexData& ObjectData::_internal_vdata() const {
+inline const ::VertexData& ModelData::_internal_vdata() const {
   const ::VertexData* p = _impl_.vdata_;
   return p != nullptr ? *p : reinterpret_cast<const ::VertexData&>(
       ::_VertexData_default_instance_);
 }
-inline const ::VertexData& ObjectData::vdata() const {
-  // @@protoc_insertion_point(field_get:ObjectData.vData)
+inline const ::VertexData& ModelData::vdata() const {
+  // @@protoc_insertion_point(field_get:ModelData.vData)
   return _internal_vdata();
 }
-inline void ObjectData::unsafe_arena_set_allocated_vdata(
+inline void ModelData::unsafe_arena_set_allocated_vdata(
     ::VertexData* vdata) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.vdata_);
@@ -1375,9 +2080,9 @@ inline void ObjectData::unsafe_arena_set_allocated_vdata(
   } else {
     
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ObjectData.vData)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ModelData.vData)
 }
-inline ::VertexData* ObjectData::release_vdata() {
+inline ::VertexData* ModelData::release_vdata() {
   
   ::VertexData* temp = _impl_.vdata_;
   _impl_.vdata_ = nullptr;
@@ -1392,14 +2097,14 @@ inline ::VertexData* ObjectData::release_vdata() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::VertexData* ObjectData::unsafe_arena_release_vdata() {
-  // @@protoc_insertion_point(field_release:ObjectData.vData)
+inline ::VertexData* ModelData::unsafe_arena_release_vdata() {
+  // @@protoc_insertion_point(field_release:ModelData.vData)
   
   ::VertexData* temp = _impl_.vdata_;
   _impl_.vdata_ = nullptr;
   return temp;
 }
-inline ::VertexData* ObjectData::_internal_mutable_vdata() {
+inline ::VertexData* ModelData::_internal_mutable_vdata() {
   
   if (_impl_.vdata_ == nullptr) {
     auto* p = CreateMaybeMessage<::VertexData>(GetArenaForAllocation());
@@ -1407,12 +2112,12 @@ inline ::VertexData* ObjectData::_internal_mutable_vdata() {
   }
   return _impl_.vdata_;
 }
-inline ::VertexData* ObjectData::mutable_vdata() {
+inline ::VertexData* ModelData::mutable_vdata() {
   ::VertexData* _msg = _internal_mutable_vdata();
-  // @@protoc_insertion_point(field_mutable:ObjectData.vData)
+  // @@protoc_insertion_point(field_mutable:ModelData.vData)
   return _msg;
 }
-inline void ObjectData::set_allocated_vdata(::VertexData* vdata) {
+inline void ModelData::set_allocated_vdata(::VertexData* vdata) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete _impl_.vdata_;
@@ -1429,7 +2134,91 @@ inline void ObjectData::set_allocated_vdata(::VertexData* vdata) {
     
   }
   _impl_.vdata_ = vdata;
-  // @@protoc_insertion_point(field_set_allocated:ObjectData.vData)
+  // @@protoc_insertion_point(field_set_allocated:ModelData.vData)
+}
+
+// -------------------------------------------------------------------
+
+// PixelData
+
+// uint32 r = 1;
+inline void PixelData::clear_r() {
+  _impl_.r_ = 0u;
+}
+inline uint32_t PixelData::_internal_r() const {
+  return _impl_.r_;
+}
+inline uint32_t PixelData::r() const {
+  // @@protoc_insertion_point(field_get:PixelData.r)
+  return _internal_r();
+}
+inline void PixelData::_internal_set_r(uint32_t value) {
+  
+  _impl_.r_ = value;
+}
+inline void PixelData::set_r(uint32_t value) {
+  _internal_set_r(value);
+  // @@protoc_insertion_point(field_set:PixelData.r)
+}
+
+// uint32 g = 2;
+inline void PixelData::clear_g() {
+  _impl_.g_ = 0u;
+}
+inline uint32_t PixelData::_internal_g() const {
+  return _impl_.g_;
+}
+inline uint32_t PixelData::g() const {
+  // @@protoc_insertion_point(field_get:PixelData.g)
+  return _internal_g();
+}
+inline void PixelData::_internal_set_g(uint32_t value) {
+  
+  _impl_.g_ = value;
+}
+inline void PixelData::set_g(uint32_t value) {
+  _internal_set_g(value);
+  // @@protoc_insertion_point(field_set:PixelData.g)
+}
+
+// uint32 b = 3;
+inline void PixelData::clear_b() {
+  _impl_.b_ = 0u;
+}
+inline uint32_t PixelData::_internal_b() const {
+  return _impl_.b_;
+}
+inline uint32_t PixelData::b() const {
+  // @@protoc_insertion_point(field_get:PixelData.b)
+  return _internal_b();
+}
+inline void PixelData::_internal_set_b(uint32_t value) {
+  
+  _impl_.b_ = value;
+}
+inline void PixelData::set_b(uint32_t value) {
+  _internal_set_b(value);
+  // @@protoc_insertion_point(field_set:PixelData.b)
+}
+
+// uint32 a = 4;
+inline void PixelData::clear_a() {
+  _impl_.a_ = 0u;
+}
+inline uint32_t PixelData::_internal_a() const {
+  return _impl_.a_;
+}
+inline uint32_t PixelData::a() const {
+  // @@protoc_insertion_point(field_get:PixelData.a)
+  return _internal_a();
+}
+inline void PixelData::_internal_set_a(uint32_t value) {
+  
+  _impl_.a_ = value;
+}
+inline void PixelData::set_a(uint32_t value) {
+  _internal_set_a(value);
+  // @@protoc_insertion_point(field_set:PixelData.a)
 }
 
 // -------------------------------------------------------------------
@@ -1546,54 +2335,488 @@ inline void TextureData::set_hasalpha(bool value) {
   // @@protoc_insertion_point(field_set:TextureData.hasAlpha)
 }
 
-// bytes textureBytes = 5;
-inline void TextureData::clear_texturebytes() {
-  _impl_.texturebytes_.ClearToEmpty();
+// int32 pixelIndex = 5;
+inline void TextureData::clear_pixelindex() {
+  _impl_.pixelindex_ = 0;
 }
-inline const std::string& TextureData::texturebytes() const {
-  // @@protoc_insertion_point(field_get:TextureData.textureBytes)
-  return _internal_texturebytes();
+inline int32_t TextureData::_internal_pixelindex() const {
+  return _impl_.pixelindex_;
 }
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void TextureData::set_texturebytes(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.texturebytes_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:TextureData.textureBytes)
+inline int32_t TextureData::pixelindex() const {
+  // @@protoc_insertion_point(field_get:TextureData.pixelIndex)
+  return _internal_pixelindex();
 }
-inline std::string* TextureData::mutable_texturebytes() {
-  std::string* _s = _internal_mutable_texturebytes();
-  // @@protoc_insertion_point(field_mutable:TextureData.textureBytes)
-  return _s;
-}
-inline const std::string& TextureData::_internal_texturebytes() const {
-  return _impl_.texturebytes_.Get();
-}
-inline void TextureData::_internal_set_texturebytes(const std::string& value) {
+inline void TextureData::_internal_set_pixelindex(int32_t value) {
   
-  _impl_.texturebytes_.Set(value, GetArenaForAllocation());
+  _impl_.pixelindex_ = value;
 }
-inline std::string* TextureData::_internal_mutable_texturebytes() {
-  
-  return _impl_.texturebytes_.Mutable(GetArenaForAllocation());
+inline void TextureData::set_pixelindex(int32_t value) {
+  _internal_set_pixelindex(value);
+  // @@protoc_insertion_point(field_set:TextureData.pixelIndex)
 }
-inline std::string* TextureData::release_texturebytes() {
-  // @@protoc_insertion_point(field_release:TextureData.textureBytes)
-  return _impl_.texturebytes_.Release();
+
+// .PixelData pixelData = 6;
+inline bool TextureData::_internal_has_pixeldata() const {
+  return this != internal_default_instance() && _impl_.pixeldata_ != nullptr;
 }
-inline void TextureData::set_allocated_texturebytes(std::string* texturebytes) {
-  if (texturebytes != nullptr) {
+inline bool TextureData::has_pixeldata() const {
+  return _internal_has_pixeldata();
+}
+inline void TextureData::clear_pixeldata() {
+  if (GetArenaForAllocation() == nullptr && _impl_.pixeldata_ != nullptr) {
+    delete _impl_.pixeldata_;
+  }
+  _impl_.pixeldata_ = nullptr;
+}
+inline const ::PixelData& TextureData::_internal_pixeldata() const {
+  const ::PixelData* p = _impl_.pixeldata_;
+  return p != nullptr ? *p : reinterpret_cast<const ::PixelData&>(
+      ::_PixelData_default_instance_);
+}
+inline const ::PixelData& TextureData::pixeldata() const {
+  // @@protoc_insertion_point(field_get:TextureData.pixelData)
+  return _internal_pixeldata();
+}
+inline void TextureData::unsafe_arena_set_allocated_pixeldata(
+    ::PixelData* pixeldata) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.pixeldata_);
+  }
+  _impl_.pixeldata_ = pixeldata;
+  if (pixeldata) {
     
   } else {
     
   }
-  _impl_.texturebytes_.SetAllocated(texturebytes, GetArenaForAllocation());
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:TextureData.pixelData)
+}
+inline ::PixelData* TextureData::release_pixeldata() {
+  
+  ::PixelData* temp = _impl_.pixeldata_;
+  _impl_.pixeldata_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::PixelData* TextureData::unsafe_arena_release_pixeldata() {
+  // @@protoc_insertion_point(field_release:TextureData.pixelData)
+  
+  ::PixelData* temp = _impl_.pixeldata_;
+  _impl_.pixeldata_ = nullptr;
+  return temp;
+}
+inline ::PixelData* TextureData::_internal_mutable_pixeldata() {
+  
+  if (_impl_.pixeldata_ == nullptr) {
+    auto* p = CreateMaybeMessage<::PixelData>(GetArenaForAllocation());
+    _impl_.pixeldata_ = p;
+  }
+  return _impl_.pixeldata_;
+}
+inline ::PixelData* TextureData::mutable_pixeldata() {
+  ::PixelData* _msg = _internal_mutable_pixeldata();
+  // @@protoc_insertion_point(field_mutable:TextureData.pixelData)
+  return _msg;
+}
+inline void TextureData::set_allocated_pixeldata(::PixelData* pixeldata) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.pixeldata_;
+  }
+  if (pixeldata) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(pixeldata);
+    if (message_arena != submessage_arena) {
+      pixeldata = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, pixeldata, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.pixeldata_ = pixeldata;
+  // @@protoc_insertion_point(field_set_allocated:TextureData.pixelData)
+}
+
+// -------------------------------------------------------------------
+
+// ObjectData
+
+// string modelName = 1;
+inline void ObjectData::clear_modelname() {
+  _impl_.modelname_.ClearToEmpty();
+}
+inline const std::string& ObjectData::modelname() const {
+  // @@protoc_insertion_point(field_get:ObjectData.modelName)
+  return _internal_modelname();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ObjectData::set_modelname(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.modelname_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ObjectData.modelName)
+}
+inline std::string* ObjectData::mutable_modelname() {
+  std::string* _s = _internal_mutable_modelname();
+  // @@protoc_insertion_point(field_mutable:ObjectData.modelName)
+  return _s;
+}
+inline const std::string& ObjectData::_internal_modelname() const {
+  return _impl_.modelname_.Get();
+}
+inline void ObjectData::_internal_set_modelname(const std::string& value) {
+  
+  _impl_.modelname_.Set(value, GetArenaForAllocation());
+}
+inline std::string* ObjectData::_internal_mutable_modelname() {
+  
+  return _impl_.modelname_.Mutable(GetArenaForAllocation());
+}
+inline std::string* ObjectData::release_modelname() {
+  // @@protoc_insertion_point(field_release:ObjectData.modelName)
+  return _impl_.modelname_.Release();
+}
+inline void ObjectData::set_allocated_modelname(std::string* modelname) {
+  if (modelname != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.modelname_.SetAllocated(modelname, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.texturebytes_.IsDefault()) {
-    _impl_.texturebytes_.Set("", GetArenaForAllocation());
+  if (_impl_.modelname_.IsDefault()) {
+    _impl_.modelname_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:TextureData.textureBytes)
+  // @@protoc_insertion_point(field_set_allocated:ObjectData.modelName)
+}
+
+// string textureName = 2;
+inline void ObjectData::clear_texturename() {
+  _impl_.texturename_.ClearToEmpty();
+}
+inline const std::string& ObjectData::texturename() const {
+  // @@protoc_insertion_point(field_get:ObjectData.textureName)
+  return _internal_texturename();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ObjectData::set_texturename(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.texturename_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ObjectData.textureName)
+}
+inline std::string* ObjectData::mutable_texturename() {
+  std::string* _s = _internal_mutable_texturename();
+  // @@protoc_insertion_point(field_mutable:ObjectData.textureName)
+  return _s;
+}
+inline const std::string& ObjectData::_internal_texturename() const {
+  return _impl_.texturename_.Get();
+}
+inline void ObjectData::_internal_set_texturename(const std::string& value) {
+  
+  _impl_.texturename_.Set(value, GetArenaForAllocation());
+}
+inline std::string* ObjectData::_internal_mutable_texturename() {
+  
+  return _impl_.texturename_.Mutable(GetArenaForAllocation());
+}
+inline std::string* ObjectData::release_texturename() {
+  // @@protoc_insertion_point(field_release:ObjectData.textureName)
+  return _impl_.texturename_.Release();
+}
+inline void ObjectData::set_allocated_texturename(std::string* texturename) {
+  if (texturename != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.texturename_.SetAllocated(texturename, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.texturename_.IsDefault()) {
+    _impl_.texturename_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ObjectData.textureName)
+}
+
+// .Vector3 position = 3;
+inline bool ObjectData::_internal_has_position() const {
+  return this != internal_default_instance() && _impl_.position_ != nullptr;
+}
+inline bool ObjectData::has_position() const {
+  return _internal_has_position();
+}
+inline void ObjectData::clear_position() {
+  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
+    delete _impl_.position_;
+  }
+  _impl_.position_ = nullptr;
+}
+inline const ::Vector3& ObjectData::_internal_position() const {
+  const ::Vector3* p = _impl_.position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Vector3&>(
+      ::_Vector3_default_instance_);
+}
+inline const ::Vector3& ObjectData::position() const {
+  // @@protoc_insertion_point(field_get:ObjectData.position)
+  return _internal_position();
+}
+inline void ObjectData::unsafe_arena_set_allocated_position(
+    ::Vector3* position) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  _impl_.position_ = position;
+  if (position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ObjectData.position)
+}
+inline ::Vector3* ObjectData::release_position() {
+  
+  ::Vector3* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::Vector3* ObjectData::unsafe_arena_release_position() {
+  // @@protoc_insertion_point(field_release:ObjectData.position)
+  
+  ::Vector3* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+  return temp;
+}
+inline ::Vector3* ObjectData::_internal_mutable_position() {
+  
+  if (_impl_.position_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Vector3>(GetArenaForAllocation());
+    _impl_.position_ = p;
+  }
+  return _impl_.position_;
+}
+inline ::Vector3* ObjectData::mutable_position() {
+  ::Vector3* _msg = _internal_mutable_position();
+  // @@protoc_insertion_point(field_mutable:ObjectData.position)
+  return _msg;
+}
+inline void ObjectData::set_allocated_position(::Vector3* position) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.position_;
+  }
+  if (position) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(position);
+    if (message_arena != submessage_arena) {
+      position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, position, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.position_ = position;
+  // @@protoc_insertion_point(field_set_allocated:ObjectData.position)
+}
+
+// .Vector3 rotation = 4;
+inline bool ObjectData::_internal_has_rotation() const {
+  return this != internal_default_instance() && _impl_.rotation_ != nullptr;
+}
+inline bool ObjectData::has_rotation() const {
+  return _internal_has_rotation();
+}
+inline void ObjectData::clear_rotation() {
+  if (GetArenaForAllocation() == nullptr && _impl_.rotation_ != nullptr) {
+    delete _impl_.rotation_;
+  }
+  _impl_.rotation_ = nullptr;
+}
+inline const ::Vector3& ObjectData::_internal_rotation() const {
+  const ::Vector3* p = _impl_.rotation_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Vector3&>(
+      ::_Vector3_default_instance_);
+}
+inline const ::Vector3& ObjectData::rotation() const {
+  // @@protoc_insertion_point(field_get:ObjectData.rotation)
+  return _internal_rotation();
+}
+inline void ObjectData::unsafe_arena_set_allocated_rotation(
+    ::Vector3* rotation) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
+  }
+  _impl_.rotation_ = rotation;
+  if (rotation) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ObjectData.rotation)
+}
+inline ::Vector3* ObjectData::release_rotation() {
+  
+  ::Vector3* temp = _impl_.rotation_;
+  _impl_.rotation_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::Vector3* ObjectData::unsafe_arena_release_rotation() {
+  // @@protoc_insertion_point(field_release:ObjectData.rotation)
+  
+  ::Vector3* temp = _impl_.rotation_;
+  _impl_.rotation_ = nullptr;
+  return temp;
+}
+inline ::Vector3* ObjectData::_internal_mutable_rotation() {
+  
+  if (_impl_.rotation_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Vector3>(GetArenaForAllocation());
+    _impl_.rotation_ = p;
+  }
+  return _impl_.rotation_;
+}
+inline ::Vector3* ObjectData::mutable_rotation() {
+  ::Vector3* _msg = _internal_mutable_rotation();
+  // @@protoc_insertion_point(field_mutable:ObjectData.rotation)
+  return _msg;
+}
+inline void ObjectData::set_allocated_rotation(::Vector3* rotation) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.rotation_;
+  }
+  if (rotation) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(rotation);
+    if (message_arena != submessage_arena) {
+      rotation = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, rotation, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.rotation_ = rotation;
+  // @@protoc_insertion_point(field_set_allocated:ObjectData.rotation)
+}
+
+// .Vector3 scale = 5;
+inline bool ObjectData::_internal_has_scale() const {
+  return this != internal_default_instance() && _impl_.scale_ != nullptr;
+}
+inline bool ObjectData::has_scale() const {
+  return _internal_has_scale();
+}
+inline void ObjectData::clear_scale() {
+  if (GetArenaForAllocation() == nullptr && _impl_.scale_ != nullptr) {
+    delete _impl_.scale_;
+  }
+  _impl_.scale_ = nullptr;
+}
+inline const ::Vector3& ObjectData::_internal_scale() const {
+  const ::Vector3* p = _impl_.scale_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Vector3&>(
+      ::_Vector3_default_instance_);
+}
+inline const ::Vector3& ObjectData::scale() const {
+  // @@protoc_insertion_point(field_get:ObjectData.scale)
+  return _internal_scale();
+}
+inline void ObjectData::unsafe_arena_set_allocated_scale(
+    ::Vector3* scale) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.scale_);
+  }
+  _impl_.scale_ = scale;
+  if (scale) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ObjectData.scale)
+}
+inline ::Vector3* ObjectData::release_scale() {
+  
+  ::Vector3* temp = _impl_.scale_;
+  _impl_.scale_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::Vector3* ObjectData::unsafe_arena_release_scale() {
+  // @@protoc_insertion_point(field_release:ObjectData.scale)
+  
+  ::Vector3* temp = _impl_.scale_;
+  _impl_.scale_ = nullptr;
+  return temp;
+}
+inline ::Vector3* ObjectData::_internal_mutable_scale() {
+  
+  if (_impl_.scale_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Vector3>(GetArenaForAllocation());
+    _impl_.scale_ = p;
+  }
+  return _impl_.scale_;
+}
+inline ::Vector3* ObjectData::mutable_scale() {
+  ::Vector3* _msg = _internal_mutable_scale();
+  // @@protoc_insertion_point(field_mutable:ObjectData.scale)
+  return _msg;
+}
+inline void ObjectData::set_allocated_scale(::Vector3* scale) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.scale_;
+  }
+  if (scale) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(scale);
+    if (message_arena != submessage_arena) {
+      scale = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, scale, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.scale_ = scale;
+  // @@protoc_insertion_point(field_set_allocated:ObjectData.scale)
 }
 
 // -------------------------------------------------------------------
@@ -1651,6 +2874,12 @@ inline void FloatValue::set_value(float value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
