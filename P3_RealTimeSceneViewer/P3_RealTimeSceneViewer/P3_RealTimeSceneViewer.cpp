@@ -8,10 +8,10 @@
 #include<glm/gtc/type_ptr.hpp>
 
 #define TINYOBJLOADER_IMPLEMENTATION
-#include"../../common-classes/tiny_obj_loader.h"
+#include"tiny_obj_loader.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-#include"../../common-classes/stb_image.h"
+#include "stb_image.h"
 
 //DearIMGUI Includes
 #include "imgui.h"
@@ -22,6 +22,7 @@
 #include <iostream>
 
 //Created Classes Includes
+#include "opengl/PerspectiveCamera.h"
 
 using namespace std;
 
@@ -77,9 +78,13 @@ int main()
     ImGui_ImplOpenGL3_Init();
 
 #pragma endregion
+
     //Time
     float delta = 0;
     float lastTime = glfwGetTime();
+
+    //GameObject Declarations
+    PerspectiveCamera camera;
 
 
     //Main Loop
@@ -98,7 +103,7 @@ int main()
         delta = currTime - lastTime;
 
        /*Start of Loop*/
-
+        
 
 
 

@@ -25,6 +25,9 @@
     <Filter Include="Threading\Tasks">
       <UniqueIdentifier>{418a5f56-6c1d-4c8a-9acd-63d8a32d0cf5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{855152f9-552d-4523-90ba-577faa561671}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="P3_RealTimeSceneViewer.cpp">
@@ -108,6 +111,9 @@
     </ClCompile>
     <ClCompile Include="..\proto\SceneLoader.pb.cc">
       <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelObject.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +204,9 @@
     </ClInclude>
     <ClInclude Include="..\proto\SceneLoader.pb.h">
       <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelObject.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

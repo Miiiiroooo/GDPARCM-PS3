@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLFW_INCLUDE_NONE;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/Libs/include;$(SolutionDir)/Libs/imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Libs/include;$(SolutionDir)/Libs/imgui;$(SolutionDir)/common-classes</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -158,6 +158,7 @@
     <ClCompile Include="..\Libs\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\proto\SceneLoader.grpc.pb.cc" />
     <ClCompile Include="..\proto\SceneLoader.pb.cc" />
+    <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="P3_RealTimeSceneViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +192,7 @@
     <ClInclude Include="..\Libs\imgui\imstb_truetype.h" />
     <ClInclude Include="..\proto\SceneLoader.grpc.pb.h" />
     <ClInclude Include="..\proto\SceneLoader.pb.h" />
+    <ClInclude Include="ModelObject.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\proto\SceneLoader.proto" />
