@@ -72,8 +72,27 @@ public:
         IntValue sceneID; 
         sceneID.set_value(id);
 
-        //grpc::ClientContext context; 
-        //std::unique_ptr<grpc::ClientReader<TextureData>> reader(stub->LoadTexturesInScene(&context, sceneID)); 
+        grpc::ClientContext context; 
+        std::unique_ptr<grpc::ClientReader<TextureData>> reader(stub->LoadTexturesInScene(&context, sceneID)); 
+
+        TextureData texData;
+
+        while (reader->Read(&texData)) {
+            // Process received image data
+            Texture* newTexture = new Texture("");
+            GLint imageFormat = texData.hasalpha() ? GL_RGBA : GL_RGB;
+            std::string textureBytes = texData.texturebytes();
+            unsigned char* tex_bytes = reinterpret_cast<unsigned char*>(textureBytes.data());
+            newTexture->LoadTextureData(texData.width(), texData.height(), imageFormat, tex_bytes);
+     
+            texturesList.push_back(newTexture);
+        }
+
+        grpc::Status status = reader->Finish();
+        if (!status.ok()) {
+            std::cerr << "Error reading image: " << status.error_message() << std::endl;
+        }
+ 
 
         //TextureData texData;
         //while (reader->Read(&texData))
@@ -101,11 +120,6 @@ public:
         //    std::cout << "FAIL TO RECEVIVE " << status.error_code() << " " << status.error_message() << " " << status.error_details() << "\n"; 
         //}
 
-
-        Texture* texture = new Texture("../3D/amumu.png");
-        texture->LoadTexture(GL_RGBA);
-        texture->GetTextureBytes(); // from this point, tex_bytes will have an error on the string which makes it impossible to convert into anything else
-
        /* const char* tex_bytes_to_char = reinterpret_cast<char const*>(texture->GetTextureBytes());  
         std::string* tex_bytes_to_str = new std::string(tex_bytes_to_char, strlen(tex_bytes_to_char));  // bytes in proto are usually represented as strings
 
@@ -115,7 +129,13 @@ public:
         int width = texture->GetWidth();
         int height = texture->GetHeight();  
         texture->LoadTextureData(width, height, GL_RGBA, tex_bytes); */
+
+        /*
+        Texture* texture = new Texture("../3D/amumu.png");
+        texture->LoadTexture(GL_RGBA);
+        texture->GetTextureBytes(); // from this point, tex_bytes will have an error on the string which makes it impossible to convert into anything else
         texturesList.push_back(texture);
+        */
     }
 
     void LoadObjectsInScene(int id)

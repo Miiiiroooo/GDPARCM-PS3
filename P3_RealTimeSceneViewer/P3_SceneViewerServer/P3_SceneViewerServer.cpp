@@ -20,25 +20,25 @@ public:
 	{
 		std::cout << "LOADING VERTICES\n";
 
-		ModelReference* ref = new ModelReference("../3D/amumu.obj"); 
-		ref->LoadModel(); 
-		std::vector<float> data = ref->GetFullVertexData(); 
+		ModelReference* ref = new ModelReference("../3D/amumu.obj");
+		ref->LoadModel();
+		std::vector<float> data = ref->GetFullVertexData();
 
 		for (int i = 0; i < data.size(); i += 8)
 		{
 			VertexData* vData = new VertexData();
-			vData->set_vx(data[i]); 
-			vData->set_vy(data[i+1]); 
-			vData->set_vz(data[i+2]); 
-			vData->set_nx(data[i+3]); 
-			vData->set_nx(data[i+4]); 
-			vData->set_nx(data[i+5]); 
-			vData->set_u(data[i+6]); 
-			vData->set_v(data[i+7]); 
+			vData->set_vx(data[i]);
+			vData->set_vy(data[i + 1]);
+			vData->set_vz(data[i + 2]);
+			vData->set_nx(data[i + 3]);
+			vData->set_nx(data[i + 4]);
+			vData->set_nx(data[i + 5]);
+			vData->set_u(data[i + 6]);
+			vData->set_v(data[i + 7]);
 
 			ObjectData oData;
-			oData.set_objname("amumu");  
-			oData.set_vdataindex(i / 8); 
+			oData.set_objname("amumu");
+			oData.set_vdataindex(i / 8);
 			oData.set_allocated_vdata(vData);
 
 			writer->Write(oData);
@@ -52,34 +52,18 @@ public:
 	grpc::Status LoadTexturesInScene(grpc::ServerContext* context, const IntValue* request, grpc::ServerWriter<TextureData>* writer) override
 	{
 		std::cout << "LOADING TEXTURE\n";
-
-		int img_width, img_height, colorChannels;
-		unsigned char* tex_bytes = stbi_load("../3D/amumu.png", &img_width, &img_height, &colorChannels, 0);
-
-		// Convert tex_bytes to a std::string
-		std::string textureBytes(reinterpret_cast<char*>(tex_bytes));
-
-		TextureData texData;
-		texData.set_texturebytes(textureBytes);
-		texData.set_width(img_width);
-		texData.set_height(img_height);
-		texData.set_texturename("Amumu");
-		texData.set_hasalpha(false);
-
-		writer->Write(texData);
-
 		/*
 		Texture* texture = new Texture("../3D/amumu.png");
 		texture->LoadTexture(GL_RGBA);
-		const char* tex_bytes_to_char = reinterpret_cast<char const*>(texture->GetTextureBytes()); 
-		std::string* tex_bytes_to_str = new std::string(tex_bytes_to_char, strlen(tex_bytes_to_char));  
+		const char* tex_bytes_to_char = reinterpret_cast<char const*>(texture->GetTextureBytes());
+		std::string* tex_bytes_to_str = new std::string(tex_bytes_to_char, strlen(tex_bytes_to_char));
 
 		TextureData data;
 		data.set_texturename("amumu");
 		data.set_width(texture->GetWidth());
 		data.set_height(texture->GetHeight());
 		data.set_hasalpha(true);
-		data.set_allocated_texturebytes(tex_bytes_to_str); 
+		data.set_allocated_texturebytes(tex_bytes_to_str);
 
 		writer->Write(data);
 		*/
@@ -114,7 +98,7 @@ int main()
 
 	std::cout << "WAITING\n";
 
-	std::unique_ptr<grpc::Server> server(builder.BuildAndStart()); 
+	std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
 	server->Wait();
 
 
@@ -122,20 +106,20 @@ int main()
 
 	for (int i = 0; i < 10; i++)
 	{
-		ModelReference* ref = new ModelReference("../3D/amumu.obj"); 
-		ref->LoadModel(); 
+		ModelReference* ref = new ModelReference("../3D/amumu.obj");
+		ref->LoadModel();
 	}
 
-	ModelReference* ref = new ModelReference("../3D/amumu.obj"); 
-	ref->LoadModel(); 
-	std::vector<float> data = ref->GetFullVertexData(); 
+	ModelReference* ref = new ModelReference("../3D/amumu.obj");
+	ref->LoadModel();
+	std::vector<float> data = ref->GetFullVertexData();
 
-	for (int i = 0; i < data.size(); i++) 
+	for (int i = 0; i < data.size(); i++)
 	{
-		std::cout << data[i] << " "; 
-		if (i % 8 == 7) 
+		std::cout << data[i] << " ";
+		if (i % 8 == 7)
 		{
-			std::cout << "\n"; 
+			std::cout << "\n";
 		}
 	}
 

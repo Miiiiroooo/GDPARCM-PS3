@@ -4,9 +4,6 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{165eb09c-5a4f-4074-b9c8-007d96a8f963}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SceneViewer">
-      <UniqueIdentifier>{4d5e36fd-2183-458b-9a3c-a00ec4915fd9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Threading">
       <UniqueIdentifier>{a26099ac-777d-4bdc-9d9c-9b8dbe2a1448}</UniqueIdentifier>
     </Filter>
@@ -28,11 +25,11 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{855152f9-552d-4523-90ba-577faa561671}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\UI">
+      <UniqueIdentifier>{25b97255-5d61-4ebe-b86a-436e90ce4003}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="P3_RealTimeSceneViewer.cpp">
-      <Filter>SceneViewer</Filter>
-    </ClCompile>
     <ClCompile Include="..\Libs\imgui\imgui_impl_opengl3.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
@@ -114,6 +111,21 @@
     </ClCompile>
     <ClCompile Include="ModelObject.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="P3_RealTimeSceneViewer.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="AUIPanel.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuPanel.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineProfiler.cpp">
+      <Filter>Engine\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +219,18 @@
     </ClInclude>
     <ClInclude Include="ModelObject.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="AUIPanel.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuPanel.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineProfiler.h">
+      <Filter>Engine\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

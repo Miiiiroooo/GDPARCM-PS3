@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{cb592fc1-0654-4e51-a054-7863bfe634e0}</ProjectGuid>
-    <RootNamespace>P3RealTimeSceneViewer</RootNamespace>
+    <ProjectGuid>{e2805ba0-e12b-4286-bebc-80573910e6d9}</ProjectGuid>
+    <RootNamespace>P3SceneViewerServer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -102,15 +102,14 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/Libs/include;$(SolutionDir)/Libs/imgui;$(SolutionDir)/common-classes</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Libs/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)/Libs/lib;$(SolutionDir)/Libs/lib-vc2022</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/Libs/lib;$(SolutionDir)/Libs/lib-vc2022;</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -120,7 +119,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -131,79 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\common-classes\glad.c" />
-    <ClCompile Include="..\common-classes\multithreading\IETSemaphore.cpp" />
-    <ClCompile Include="..\common-classes\multithreading\IETThread.cpp" />
-    <ClCompile Include="..\common-classes\multithreading\PoolWorker.cpp" />
-    <ClCompile Include="..\common-classes\multithreading\tasks\AWorkerTask.cpp" />
-    <ClCompile Include="..\common-classes\multithreading\ThreadPoolScheduler.cpp" />
-    <ClCompile Include="..\common-classes\opengl\Camera.cpp" />
-    <ClCompile Include="..\common-classes\opengl\DirectionalLight.cpp" />
-    <ClCompile Include="..\common-classes\opengl\Light.cpp" />
-    <ClCompile Include="..\common-classes\opengl\Model3D.cpp" />
-    <ClCompile Include="..\common-classes\opengl\ModelReference.cpp" />
-    <ClCompile Include="..\common-classes\opengl\OrthoCamera.cpp" />
-    <ClCompile Include="..\common-classes\opengl\PerspectiveCamera.cpp" />
-    <ClCompile Include="..\common-classes\opengl\Shader.cpp" />
-    <ClCompile Include="..\common-classes\opengl\Skybox.cpp" />
-    <ClCompile Include="..\common-classes\opengl\Texture.cpp" />
-    <ClCompile Include="..\common-classes\opengl\Transform.cpp" />
-    <ClCompile Include="..\common-classes\Utils.cpp" />
-    <ClCompile Include="..\Libs\imgui\imgui.cpp" />
-    <ClCompile Include="..\Libs\imgui\imgui_demo.cpp" />
-    <ClCompile Include="..\Libs\imgui\imgui_draw.cpp" />
-    <ClCompile Include="..\Libs\imgui\imgui_impl_glfw.cpp" />
-    <ClCompile Include="..\Libs\imgui\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="..\Libs\imgui\imgui_tables.cpp" />
-    <ClCompile Include="..\Libs\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="..\proto\SceneLoader.grpc.pb.cc" />
-    <ClCompile Include="..\proto\SceneLoader.pb.cc" />
-    <ClCompile Include="AUIPanel.cpp" />
-    <ClCompile Include="EngineProfiler.cpp" />
-    <ClCompile Include="MainMenuPanel.cpp" />
-    <ClCompile Include="ModelObject.cpp" />
-    <ClCompile Include="P3_RealTimeSceneViewer.cpp" />
-    <ClCompile Include="UIManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\common-classes\multithreading\IETSemaphore.h" />
-    <ClInclude Include="..\common-classes\multithreading\IETThread.h" />
-    <ClInclude Include="..\common-classes\multithreading\IFinishedTaskListener.h" />
-    <ClInclude Include="..\common-classes\multithreading\PoolWorker.h" />
-    <ClInclude Include="..\common-classes\multithreading\tasks\AWorkerTask.h" />
-    <ClInclude Include="..\common-classes\multithreading\ThreadPoolScheduler.h" />
-    <ClInclude Include="..\common-classes\opengl\Camera.h" />
-    <ClInclude Include="..\common-classes\opengl\DirectionalLight.h" />
-    <ClInclude Include="..\common-classes\opengl\Light.h" />
-    <ClInclude Include="..\common-classes\opengl\Model3D.h" />
-    <ClInclude Include="..\common-classes\opengl\ModelReference.h" />
-    <ClInclude Include="..\common-classes\opengl\OrthoCamera.h" />
-    <ClInclude Include="..\common-classes\opengl\PerspectiveCamera.h" />
-    <ClInclude Include="..\common-classes\opengl\Shader.h" />
-    <ClInclude Include="..\common-classes\opengl\Skybox.h" />
-    <ClInclude Include="..\common-classes\opengl\Texture.h" />
-    <ClInclude Include="..\common-classes\opengl\Transform.h" />
-    <ClInclude Include="..\common-classes\stb_image.h" />
-    <ClInclude Include="..\common-classes\tiny_obj_loader.h" />
-    <ClInclude Include="..\common-classes\Utils.h" />
-    <ClInclude Include="..\Libs\imgui\imconfig.h" />
-    <ClInclude Include="..\Libs\imgui\imgui.h" />
-    <ClInclude Include="..\Libs\imgui\imgui_impl_glfw.h" />
-    <ClInclude Include="..\Libs\imgui\imgui_impl_opengl3.h" />
-    <ClInclude Include="..\Libs\imgui\imgui_internal.h" />
-    <ClInclude Include="..\Libs\imgui\imstb_rectpack.h" />
-    <ClInclude Include="..\Libs\imgui\imstb_textedit.h" />
-    <ClInclude Include="..\Libs\imgui\imstb_truetype.h" />
-    <ClInclude Include="..\proto\SceneLoader.grpc.pb.h" />
-    <ClInclude Include="..\proto\SceneLoader.pb.h" />
-    <ClInclude Include="AUIPanel.h" />
-    <ClInclude Include="EngineProfiler.h" />
-    <ClInclude Include="MainMenuPanel.h" />
-    <ClInclude Include="ModelObject.h" />
-    <ClInclude Include="UIManager.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\proto\SceneLoader.proto" />
+    <ClCompile Include="P3_SceneViewerServer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
