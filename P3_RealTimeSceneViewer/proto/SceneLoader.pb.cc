@@ -55,6 +55,23 @@ struct ObjectDataDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ObjectDataDefaultTypeInternal _ObjectData_default_instance_;
+PROTOBUF_CONSTEXPR TextureData::TextureData(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.texturename_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.texturebytes_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.width_)*/0
+  , /*decltype(_impl_.height_)*/0
+  , /*decltype(_impl_.hasalpha_)*/false
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct TextureDataDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR TextureDataDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~TextureDataDefaultTypeInternal() {}
+  union {
+    TextureData _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TextureDataDefaultTypeInternal _TextureData_default_instance_;
 PROTOBUF_CONSTEXPR IntValue::IntValue(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.value_)*/0
@@ -92,7 +109,7 @@ struct EmptyDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EmptyDefaultTypeInternal _Empty_default_instance_;
-static ::_pb::Metadata file_level_metadata_proto_2fSceneLoader_2eproto[5];
+static ::_pb::Metadata file_level_metadata_proto_2fSceneLoader_2eproto[6];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_proto_2fSceneLoader_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_proto_2fSceneLoader_2eproto = nullptr;
 
@@ -121,6 +138,17 @@ const uint32_t TableStruct_proto_2fSceneLoader_2eproto::offsets[] PROTOBUF_SECTI
   PROTOBUF_FIELD_OFFSET(::ObjectData, _impl_.vdataindex_),
   PROTOBUF_FIELD_OFFSET(::ObjectData, _impl_.vdata_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::TextureData, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.texturename_),
+  PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.width_),
+  PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.height_),
+  PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.hasalpha_),
+  PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.texturebytes_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::IntValue, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -144,14 +172,16 @@ const uint32_t TableStruct_proto_2fSceneLoader_2eproto::offsets[] PROTOBUF_SECTI
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::VertexData)},
   { 14, -1, -1, sizeof(::ObjectData)},
-  { 23, -1, -1, sizeof(::IntValue)},
-  { 30, -1, -1, sizeof(::FloatValue)},
-  { 37, -1, -1, sizeof(::Empty)},
+  { 23, -1, -1, sizeof(::TextureData)},
+  { 34, -1, -1, sizeof(::IntValue)},
+  { 41, -1, -1, sizeof(::FloatValue)},
+  { 48, -1, -1, sizeof(::Empty)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
   &::_VertexData_default_instance_._instance,
   &::_ObjectData_default_instance_._instance,
+  &::_TextureData_default_instance_._instance,
   &::_IntValue_default_instance_._instance,
   &::_FloatValue_default_instance_._instance,
   &::_Empty_default_instance_._instance,
@@ -163,17 +193,21 @@ const char descriptor_table_protodef_proto_2fSceneLoader_2eproto[] PROTOBUF_SECT
   "X\030\004 \001(\002\022\n\n\002nY\030\005 \001(\002\022\n\n\002nZ\030\006 \001(\002\022\t\n\001u\030\007 \001"
   "(\002\022\t\n\001v\030\010 \001(\002\"M\n\nObjectData\022\017\n\007objName\030\001"
   " \001(\t\022\022\n\nvDataIndex\030\002 \001(\005\022\032\n\005vData\030\003 \001(\0132"
-  "\013.VertexData\"\031\n\010IntValue\022\r\n\005value\030\001 \001(\005\""
-  "\033\n\nFloatValue\022\r\n\005value\030\001 \001(\002\"\007\n\005Empty2i\n"
-  "\013SceneLoader\022.\n\022LoadObjectsInScene\022\t.Int"
-  "Value\032\013.ObjectData0\001\022*\n\020GetSceneProgress"
-  "\022\t.IntValue\032\013.FloatValueb\006proto3"
+  "\013.VertexData\"i\n\013TextureData\022\023\n\013textureNa"
+  "me\030\001 \001(\t\022\r\n\005width\030\002 \001(\005\022\016\n\006height\030\003 \001(\005\022"
+  "\020\n\010hasAlpha\030\004 \001(\010\022\024\n\014textureBytes\030\005 \001(\014\""
+  "\031\n\010IntValue\022\r\n\005value\030\001 \001(\005\"\033\n\nFloatValue"
+  "\022\r\n\005value\030\001 \001(\002\"\007\n\005Empty2\233\001\n\013SceneLoader"
+  "\022.\n\022LoadObjectsInScene\022\t.IntValue\032\013.Obje"
+  "ctData0\001\0220\n\023LoadTexturesInScene\022\t.IntVal"
+  "ue\032\014.TextureData0\001\022*\n\020GetSceneProgress\022\t"
+  ".IntValue\032\013.FloatValueb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_proto_2fSceneLoader_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_proto_2fSceneLoader_2eproto = {
-    false, false, 392, descriptor_table_protodef_proto_2fSceneLoader_2eproto,
+    false, false, 550, descriptor_table_protodef_proto_2fSceneLoader_2eproto,
     "proto/SceneLoader.proto",
-    &descriptor_table_proto_2fSceneLoader_2eproto_once, nullptr, 0, 5,
+    &descriptor_table_proto_2fSceneLoader_2eproto_once, nullptr, 0, 6,
     schemas, file_default_instances, TableStruct_proto_2fSceneLoader_2eproto::offsets,
     file_level_metadata_proto_2fSceneLoader_2eproto, file_level_enum_descriptors_proto_2fSceneLoader_2eproto,
     file_level_service_descriptors_proto_2fSceneLoader_2eproto,
@@ -914,6 +948,338 @@ void ObjectData::InternalSwap(ObjectData* other) {
 
 // ===================================================================
 
+class TextureData::_Internal {
+ public:
+};
+
+TextureData::TextureData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:TextureData)
+}
+TextureData::TextureData(const TextureData& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  TextureData* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.texturename_){}
+    , decltype(_impl_.texturebytes_){}
+    , decltype(_impl_.width_){}
+    , decltype(_impl_.height_){}
+    , decltype(_impl_.hasalpha_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.texturename_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.texturename_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_texturename().empty()) {
+    _this->_impl_.texturename_.Set(from._internal_texturename(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.texturebytes_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.texturebytes_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_texturebytes().empty()) {
+    _this->_impl_.texturebytes_.Set(from._internal_texturebytes(), 
+      _this->GetArenaForAllocation());
+  }
+  ::memcpy(&_impl_.width_, &from._impl_.width_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.hasalpha_) -
+    reinterpret_cast<char*>(&_impl_.width_)) + sizeof(_impl_.hasalpha_));
+  // @@protoc_insertion_point(copy_constructor:TextureData)
+}
+
+inline void TextureData::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.texturename_){}
+    , decltype(_impl_.texturebytes_){}
+    , decltype(_impl_.width_){0}
+    , decltype(_impl_.height_){0}
+    , decltype(_impl_.hasalpha_){false}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.texturename_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.texturename_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.texturebytes_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.texturebytes_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+TextureData::~TextureData() {
+  // @@protoc_insertion_point(destructor:TextureData)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void TextureData::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.texturename_.Destroy();
+  _impl_.texturebytes_.Destroy();
+}
+
+void TextureData::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void TextureData::Clear() {
+// @@protoc_insertion_point(message_clear_start:TextureData)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.texturename_.ClearToEmpty();
+  _impl_.texturebytes_.ClearToEmpty();
+  ::memset(&_impl_.width_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.hasalpha_) -
+      reinterpret_cast<char*>(&_impl_.width_)) + sizeof(_impl_.hasalpha_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* TextureData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string textureName = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_texturename();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "TextureData.textureName"));
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 width = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.width_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 height = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.height_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool hasAlpha = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.hasalpha_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bytes textureBytes = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
+          auto str = _internal_mutable_texturebytes();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* TextureData::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:TextureData)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string textureName = 1;
+  if (!this->_internal_texturename().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_texturename().data(), static_cast<int>(this->_internal_texturename().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "TextureData.textureName");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_texturename(), target);
+  }
+
+  // int32 width = 2;
+  if (this->_internal_width() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_width(), target);
+  }
+
+  // int32 height = 3;
+  if (this->_internal_height() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_height(), target);
+  }
+
+  // bool hasAlpha = 4;
+  if (this->_internal_hasalpha() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(4, this->_internal_hasalpha(), target);
+  }
+
+  // bytes textureBytes = 5;
+  if (!this->_internal_texturebytes().empty()) {
+    target = stream->WriteBytesMaybeAliased(
+        5, this->_internal_texturebytes(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:TextureData)
+  return target;
+}
+
+size_t TextureData::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:TextureData)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string textureName = 1;
+  if (!this->_internal_texturename().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_texturename());
+  }
+
+  // bytes textureBytes = 5;
+  if (!this->_internal_texturebytes().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_texturebytes());
+  }
+
+  // int32 width = 2;
+  if (this->_internal_width() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_width());
+  }
+
+  // int32 height = 3;
+  if (this->_internal_height() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_height());
+  }
+
+  // bool hasAlpha = 4;
+  if (this->_internal_hasalpha() != 0) {
+    total_size += 1 + 1;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData TextureData::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    TextureData::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*TextureData::GetClassData() const { return &_class_data_; }
+
+
+void TextureData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<TextureData*>(&to_msg);
+  auto& from = static_cast<const TextureData&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:TextureData)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_texturename().empty()) {
+    _this->_internal_set_texturename(from._internal_texturename());
+  }
+  if (!from._internal_texturebytes().empty()) {
+    _this->_internal_set_texturebytes(from._internal_texturebytes());
+  }
+  if (from._internal_width() != 0) {
+    _this->_internal_set_width(from._internal_width());
+  }
+  if (from._internal_height() != 0) {
+    _this->_internal_set_height(from._internal_height());
+  }
+  if (from._internal_hasalpha() != 0) {
+    _this->_internal_set_hasalpha(from._internal_hasalpha());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void TextureData::CopyFrom(const TextureData& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:TextureData)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool TextureData::IsInitialized() const {
+  return true;
+}
+
+void TextureData::InternalSwap(TextureData* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.texturename_, lhs_arena,
+      &other->_impl_.texturename_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.texturebytes_, lhs_arena,
+      &other->_impl_.texturebytes_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(TextureData, _impl_.hasalpha_)
+      + sizeof(TextureData::_impl_.hasalpha_)
+      - PROTOBUF_FIELD_OFFSET(TextureData, _impl_.width_)>(
+          reinterpret_cast<char*>(&_impl_.width_),
+          reinterpret_cast<char*>(&other->_impl_.width_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata TextureData::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_proto_2fSceneLoader_2eproto_getter, &descriptor_table_proto_2fSceneLoader_2eproto_once,
+      file_level_metadata_proto_2fSceneLoader_2eproto[2]);
+}
+
+// ===================================================================
+
 class IntValue::_Internal {
  public:
 };
@@ -1087,7 +1453,7 @@ void IntValue::InternalSwap(IntValue* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata IntValue::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_proto_2fSceneLoader_2eproto_getter, &descriptor_table_proto_2fSceneLoader_2eproto_once,
-      file_level_metadata_proto_2fSceneLoader_2eproto[2]);
+      file_level_metadata_proto_2fSceneLoader_2eproto[3]);
 }
 
 // ===================================================================
@@ -1277,7 +1643,7 @@ void FloatValue::InternalSwap(FloatValue* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata FloatValue::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_proto_2fSceneLoader_2eproto_getter, &descriptor_table_proto_2fSceneLoader_2eproto_once,
-      file_level_metadata_proto_2fSceneLoader_2eproto[3]);
+      file_level_metadata_proto_2fSceneLoader_2eproto[4]);
 }
 
 // ===================================================================
@@ -1317,7 +1683,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Empty::GetClassData() const { 
 ::PROTOBUF_NAMESPACE_ID::Metadata Empty::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_proto_2fSceneLoader_2eproto_getter, &descriptor_table_proto_2fSceneLoader_2eproto_once,
-      file_level_metadata_proto_2fSceneLoader_2eproto[4]);
+      file_level_metadata_proto_2fSceneLoader_2eproto[5]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -1329,6 +1695,10 @@ Arena::CreateMaybeMessage< ::VertexData >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::ObjectData*
 Arena::CreateMaybeMessage< ::ObjectData >(Arena* arena) {
   return Arena::CreateMessageInternal< ::ObjectData >(arena);
+}
+template<> PROTOBUF_NOINLINE ::TextureData*
+Arena::CreateMaybeMessage< ::TextureData >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::TextureData >(arena);
 }
 template<> PROTOBUF_NOINLINE ::IntValue*
 Arena::CreateMaybeMessage< ::IntValue >(Arena* arena) {

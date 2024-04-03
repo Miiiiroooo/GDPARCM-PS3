@@ -20,6 +20,15 @@ message ObjectData
 	VertexData vData = 3;
 }
 
+message TextureData
+{
+	string textureName = 1;
+	int32 width = 2;
+	int32 height = 3;
+	bool hasAlpha = 4;
+	bytes textureBytes = 5;
+}
+
 message IntValue
 {
 	int32 value = 1;
@@ -39,5 +48,6 @@ message Empty
 service SceneLoader
 {
 	rpc LoadObjectsInScene(IntValue) returns (stream ObjectData);
+	rpc LoadTexturesInScene(IntValue) returns (stream TextureData);
 	rpc GetSceneProgress(IntValue) returns (FloatValue);
 }

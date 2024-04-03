@@ -1,6 +1,8 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include <map>
+#include <algorithm>
 #include <glm/gtc/type_ptr.hpp>
 
 #define TINYOBJLOADER_IMPLEMENTATION
@@ -14,6 +16,9 @@
 #include "../common-classes/opengl/OrthoCamera.h"
 #include "../common-classes/opengl/PerspectiveCamera.h"
 #include "../common-classes/Utils.h"
+
+#include <grpcpp/grpcpp.h>
+#include "../proto/SceneLoader.grpc.pb.h"
 
 
 #pragma region Global Variables
@@ -54,6 +59,126 @@ void PassLightingData(GLuint& shaderProgram);
 #pragma endregion
 
 
+class SceneViewer
+{
+public: 
+    SceneViewer(std::shared_ptr< grpc::Channel> channel) : stub(SceneLoader::NewStub(channel))
+    {
+
+    }
+
+    void LoadTexturesInScene(int id)
+    {
+        IntValue sceneID; 
+        sceneID.set_value(id);
+
+        //grpc::ClientContext context; 
+        //std::unique_ptr<grpc::ClientReader<TextureData>> reader(stub->LoadTexturesInScene(&context, sceneID)); 
+
+        //TextureData texData;
+        //while (reader->Read(&texData))
+        //{
+        //    Texture* newTexture = new Texture("");
+
+        //    GLint imageFormat = texData.hasalpha() ? GL_RGBA : GL_RGB;
+        //    const char* tex_bytes_to_char = texData.texturebytes().c_str();
+        //    unsigned char* tex_bytes = reinterpret_cast<unsigned char*>(const_cast<char*>(tex_bytes_to_char));
+
+        //   /* unsigned char* tex_bytes = new unsigned char[texData.texturebytes().length() + 1];
+        //    strcpy_s((char*)tex_bytes, texData.texturebytes().length() + 1, texData.texturebytes().c_str());*/
+        //    newTexture->LoadTextureData(texData.width(), texData.height(), imageFormat, tex_bytes);
+
+        //    texturesList.push_back(newTexture);
+        //}
+
+        //grpc::Status status = reader->Finish();  
+        //if (status.ok()) 
+        //{
+        //    std::cout << "CONNECTION SUCCESS\n"; 
+        //}
+        //else
+        //{
+        //    std::cout << "FAIL TO RECEVIVE " << status.error_code() << " " << status.error_message() << " " << status.error_details() << "\n"; 
+        //}
+
+
+        Texture* texture = new Texture("../3D/amumu.png");
+        texture->LoadTexture(GL_RGBA);
+        texture->GetTextureBytes(); // from this point, tex_bytes will have an error on the string which makes it impossible to convert into anything else
+
+       /* const char* tex_bytes_to_char = reinterpret_cast<char const*>(texture->GetTextureBytes());  
+        std::string* tex_bytes_to_str = new std::string(tex_bytes_to_char, strlen(tex_bytes_to_char));  // bytes in proto are usually represented as strings
+
+        const char* tex_bytes_to_char2 = tex_bytes_to_str->c_str();  
+        unsigned char* tex_bytes = reinterpret_cast<unsigned char*>(const_cast<char*>(tex_bytes_to_char)); 
+
+        int width = texture->GetWidth();
+        int height = texture->GetHeight();  
+        texture->LoadTextureData(width, height, GL_RGBA, tex_bytes); */
+        texturesList.push_back(texture);
+    }
+
+    void LoadObjectsInScene(int id)
+    {
+        std::map<int, std::vector<float>> objDataMap; 
+
+        IntValue sceneID;
+        sceneID.set_value(id);
+
+        grpc::ClientContext context;
+        std::unique_ptr<grpc::ClientReader<ObjectData>> reader(stub->LoadObjectsInScene(&context, sceneID));
+
+        ObjectData objData; 
+        while (reader->Read(&objData))
+        {
+            std::vector<float> vertexData = {
+                objData.vdata().vx(),
+                objData.vdata().vy(),
+                objData.vdata().vz(),
+                objData.vdata().nx(),
+                objData.vdata().ny(),
+                objData.vdata().nz(),
+                objData.vdata().u(),
+                objData.vdata().v()
+            };
+
+            objDataMap[objData.vdataindex()] = vertexData;
+        }
+
+        grpc::Status status = reader->Finish();
+        if (status.ok())
+        {
+            ModelReference* ref = new ModelReference(""); 
+            std::vector<float> fullVertexData;
+
+            for (auto pair : objDataMap)
+            {
+                fullVertexData.insert(fullVertexData.end(), pair.second.begin(), pair.second.end());
+            }
+
+            ref->LoadModelData(fullVertexData);
+            modelReferencesList.push_back(ref);
+            
+            Model3D* model = new Model3D(ref, texturesList.front());
+            model->transform.position = glm::vec3(0.f, 0.f, 10.f);
+            model->transform.Rotate(glm::vec3(0.f, 180.f, 0.f));
+            model->transform.scale = glm::vec3(0.05f, 0.05f, 0.05f);
+            modelsList.push_back(model);
+
+            std::cout << "SUCCESS MODEL CREATED\n";
+        }
+        else
+        {
+            std::cout << "FAIL TO RECEVIVE " << status.error_code() << " " << status.error_message()  << " " << status.error_details() << "\n";
+        }
+    }
+
+
+private:
+    std::unique_ptr<SceneLoader::Stub> stub;
+};
+
+
 int main(void)
 {
     // Initialize program
@@ -69,31 +194,35 @@ int main(void)
     LoadShaders(shaderPathsList);
 
 
-    // Load 3d object references
-    std::vector<std::string> objPathsList = {
-        "../3D/amumu.obj",
-    };
-    LoadObjects(objPathsList);
+    //// Load 3d object references
+    //std::vector<std::string> objPathsList = {
+    //    "../3D/amumu.obj",
+    //};
+    //LoadObjects(objPathsList);
 
+    //// Load textures
+    //std::vector<std::pair<std::string, GLuint>> textureInfoList = { 
+    //    {"../3D/amumu.png", GL_RGBA}, 
+    //};
+    //LoadTextures(textureInfoList); 
 
-    // Load textures
-    std::vector<std::pair<std::string, GLuint>> textureInfoList = {
-        {"../3D/amumu.png", GL_RGBA},
-    };
-    LoadTextures(textureInfoList);
+    //// Create new models
+    //std::vector<std::pair<int, int>> objTextureMap = {
+    //    {0, 0},
+    //};
+    //std::vector<glm::vec3> modelsInfoList = {
+    //    // amumu
+    //    glm::vec3(0.f, 0.f, 10.f),
+    //    glm::vec3(0.f, 180.f, 0.f),
+    //    glm::vec3(0.05f, 0.05f, 0.05f),
+    //    glm::vec3(1.f, 1.f, 1.f),
+    //};
+    //CreateModels(objTextureMap, modelsInfoList);
 
-    // Create new models
-    std::vector<std::pair<int, int>> objTextureMap = {
-        {0, 0},
-    };
-    std::vector<glm::vec3> modelsInfoList = {
-        // amumu
-        glm::vec3(0.f, 0.f, 10.f),
-        glm::vec3(0.f, 180.f, 0.f),
-        glm::vec3(0.05f, 0.05f, 0.05f),
-        glm::vec3(1.f, 1.f, 1.f),
-    };
-    CreateModels(objTextureMap, modelsInfoList);
+    std::string server_adr = "localhost:50052";
+    SceneViewer viewer(grpc::CreateChannel(server_adr, grpc::InsecureChannelCredentials()));
+    viewer.LoadTexturesInScene(0); 
+    viewer.LoadObjectsInScene(0);
 
 
     // Create Lights
@@ -108,9 +237,9 @@ int main(void)
         // first-person
         glm::vec3(0.f, 0.f, 0.f),
         glm::vec3(0.f, 0.f, 0.f),
-        modelsList[0]->transform.position
+        modelsList[0]->transform.localForward,
     };
-    CreateCameras(camerasInfoList);
+    CreateCameras(camerasInfoList); 
 
 
     while (!glfwWindowShouldClose(window))

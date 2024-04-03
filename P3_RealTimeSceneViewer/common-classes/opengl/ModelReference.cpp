@@ -34,12 +34,8 @@ bool ModelReference::LoadModel()
             fullVertexData.push_back(attributes.texcoords[vData.texcoord_index * 2 + 0]); 
             fullVertexData.push_back(attributes.texcoords[vData.texcoord_index * 2 + 1]); 
         }
-
-        GLFWwindow* window = glfwGetCurrentContext();
-        if (window != NULL)
-        {
-            SetupBufferObjects();
-        }
+        
+        SetupBufferObjects();
 
         return true; 
     }
@@ -56,9 +52,9 @@ void ModelReference::LoadModelData(std::vector<float> data)
 {
     for (int i = 0; i < data.size(); i++)
     {
-        fullVertexData[i] = (GLfloat)data[i];
+        fullVertexData.push_back((GLfloat)data[i]);
     }
-
+    
     SetupBufferObjects();
 }
 
@@ -80,6 +76,12 @@ void ModelReference::DeleteBufferObjects()
 
 void ModelReference::SetupBufferObjects()
 {
+    GLFWwindow* window = glfwGetCurrentContext(); 
+    if (window == NULL) 
+    { 
+        return;
+    }
+
     // Generate references
     glGenVertexArrays(1, &VAO); 
     glGenBuffers(1, &VBO); 
