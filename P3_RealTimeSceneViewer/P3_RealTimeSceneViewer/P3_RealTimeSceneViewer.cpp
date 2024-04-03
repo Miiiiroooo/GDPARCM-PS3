@@ -8,10 +8,10 @@
 #include<glm/gtc/type_ptr.hpp>
 
 #define TINYOBJLOADER_IMPLEMENTATION
-#include"../../common-classes/tiny_obj_loader.h"
+#include"tiny_obj_loader.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-#include"../../common-classes/stb_image.h"
+#include "stb_image.h"
 
 //DearIMGUI Includes
 #include "imgui.h"
@@ -22,6 +22,12 @@
 #include <iostream>
 
 //Created Classes Includes
+#include "opengl/PerspectiveCamera.h"
+#include "UIManager.h"
+
+//UI
+#include "MainMenuPanel.h"
+#include "EngineProfiler.h"
 
 using namespace std;
 
@@ -65,10 +71,6 @@ int main()
 
     glEnable(GL_DEPTH_TEST);
 
-#pragma endregion
-
-#pragma region IMGUI INIT
-
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
@@ -77,31 +79,44 @@ int main()
     ImGui_ImplOpenGL3_Init();
 
 #pragma endregion
+
     //Time
     float delta = 0;
     float lastTime = glfwGetTime();
 
 
+    //UI
+    MainMenuPanel* scenePanel = new MainMenuPanel("ScenePanel");
+    EngineProfiler* profiler = new EngineProfiler("Engine Profiler");
+    //UIManager::getInstance()->initialize(window);
+
+    //GameObject Declarations
+    PerspectiveCamera camera;
+
+
     //Main Loop
     while (!glfwWindowShouldClose(window))
     {
-        /* Pre Start of Loop */
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-        ImGui::ShowDemoWindow(); // Show demo window! :)
-
         /*Calculate Delta Time*/
         GLfloat currTime = glfwGetTime();
         delta = currTime - lastTime;
 
-       /*Start of Loop*/
 
+        /* Pre Start of Loop */
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
 
+        /*Start of Loop*/
 
+        /* Update */
+        //UIManager::getInstance()->draw();
+        profiler->UpdateFPS(delta);
 
+        /* Draw */
+        scenePanel->draw();
+        profiler->draw();
 
 
         /*End of Loop*/
@@ -118,9 +133,7 @@ int main()
     }
     
     /*On ShutDown*/
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
+    //UIManager::getInstance()->destroy();
 
     glfwDestroyWindow(window);
     glfwTerminate();

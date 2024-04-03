@@ -18,7 +18,7 @@ class SceneLoaderImpl final : public SceneLoader::Service
 public:
 	grpc::Status LoadModelsInScene(grpc::ServerContext* context, const IntValue* request, grpc::ServerWriter<ModelData>* writer) override 
 	{
-		std::cout << "BOUT TO LOAD MODEL\n";
+		std::cout << "LOADING VERTICES\n";
 
 		ModelReference* ref = new ModelReference("../3D/amumu.obj"); 
 		ref->LoadModel(); 
@@ -57,8 +57,8 @@ public:
 
 	grpc::Status LoadTexturesInScene(grpc::ServerContext* context, const IntValue* request, grpc::ServerWriter<TextureData>* writer) override
 	{
-		std::cout << "BOUT TO LOAD TEXTURE\n";
-
+		std::cout << "LOADING TEXTURE\n";
+		
 		Texture* texture = new Texture("../3D/amumu.png");
 		texture->LoadTexture(GL_RGBA);
 		unsigned char* tex_bytes = texture->GetTextureBytes();
@@ -114,6 +114,7 @@ public:
 	{
 		return grpc::Status::OK;
 	}
+
 };
 
 
