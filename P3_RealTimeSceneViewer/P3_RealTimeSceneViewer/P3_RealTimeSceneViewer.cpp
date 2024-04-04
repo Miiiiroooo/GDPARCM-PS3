@@ -23,6 +23,8 @@
 
 //Created Classes Includes
 #include "opengl/PerspectiveCamera.h"
+#include "opengl/Shader.h"
+#include "opengl/Light.h"
 #include "UIManager.h"
 
 //UI
@@ -31,10 +33,26 @@
 
 using namespace std;
 
-//User Input (idk if needed)
-//void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-//void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
-//void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+#pragma region Global Variables
+// Shaders, Models, Textures, Lights, Cameras, the Skybox, and the Player
+std::vector<Shader*> shadersList;
+std::vector<Light*> lightsList;
+std::vector<Camera*> camerasList;
+Camera* mainCamera;
+
+// Time
+float timeSinceStart = 0.f;
+float oldTimeSinceStart = 0.f;
+float deltaTime = 0.f;
+
+// Projection
+float fov = 90.f;
+const float width = 600;
+const float height = 600;
+#pragma endregion
+
+//Function Declarations
+void LoadShaders(const std::vector<std::pair<std::string, std::string>>& shaderPathsList);
 
 int main()
 {
@@ -93,6 +111,12 @@ int main()
     //GameObject Declarations
     PerspectiveCamera camera;
 
+    // Load shaders 
+    std::vector<std::pair<std::string, std::string>> shaderPathsList = {
+        {"Shaders/default.vert", "Shaders/default.frag"},
+    };
+    LoadShaders(shaderPathsList);
+
 
     //Main Loop
     while (!glfwWindowShouldClose(window))
@@ -137,5 +161,18 @@ int main()
 
     glfwDestroyWindow(window);
     glfwTerminate();
+}
+
+void LoadShaders(const std::vector<std::pair<std::string, std::string>>& shaderPathsList)
+{
+    for (std::pair<std::string, std::string> pair : shaderPathsList)
+    {
+        std::string vert = pair.first;
+        std::string frag = pair.second;
+
+        Shader* shader = new Shader();
+        shader->InitializeProgram(vert, frag);
+        shadersList.push_back(shader);
+    }
 }
 
