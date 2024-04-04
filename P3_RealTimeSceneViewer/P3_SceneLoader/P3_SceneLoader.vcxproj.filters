@@ -77,6 +77,9 @@
     <ClCompile Include="..\proto\SceneLoader.pb.cc">
       <Filter>proto</Filter>
     </ClCompile>
+    <ClCompile Include="SceneLoaderImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common-classes\opengl\Model3D.h">
@@ -124,10 +127,17 @@
     <ClInclude Include="..\proto\SceneLoader.pb.h">
       <Filter>proto</Filter>
     </ClInclude>
+    <ClInclude Include="SceneLoaderImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLoadProgress.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\proto\SceneLoader.proto">
       <Filter>proto</Filter>
     </None>
+    <None Include="SceneLoaderData.json" />
   </ItemGroup>
 </Project>

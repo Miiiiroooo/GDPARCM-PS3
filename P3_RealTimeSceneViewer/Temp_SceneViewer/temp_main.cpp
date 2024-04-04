@@ -3,6 +3,7 @@
 #include <chrono>
 #include <map>
 #include <algorithm>
+#include <thread>
 #include <glm/gtc/type_ptr.hpp>
 
 #define TINYOBJLOADER_IMPLEMENTATION
@@ -19,6 +20,7 @@
 
 #include <grpcpp/grpcpp.h>
 #include "../proto/SceneLoader.grpc.pb.h"
+#include "SceneViewerClient.h"
 
 
 #pragma region Global Variables
@@ -59,124 +61,6 @@ void PassLightingData(GLuint& shaderProgram);
 #pragma endregion
 
 
-class SceneViewer
-{
-public: 
-    SceneViewer(std::shared_ptr< grpc::Channel> channel) : stub(SceneLoader::NewStub(channel))
-    {
-
-    }
-
-    void LoadTexturesInScene(int id)
-    {
-        GLubyte* pixels = NULL;
-        GLint imageFormat;
-        int width;
-        int height; 
-
-        
-        IntValue sceneID; 
-        sceneID.set_value(id);
-
-        grpc::ClientContext context;  
-        std::unique_ptr<grpc::ClientReader<TextureData>> reader(stub->LoadTexturesInScene(&context, sceneID)); 
-
-        TextureData texData;
-        while (reader->Read(&texData))
-        {
-            width = texData.width(); 
-            height = texData.height(); 
-            imageFormat = texData.hasalpha() ? GL_RGBA : GL_RGB; 
-            unsigned bytePerPixel = texData.hasalpha() ? 4 : 3; 
-            int index = texData.pixelindex() * bytePerPixel;
-
-            if (pixels == NULL) 
-            {
-                pixels = new GLubyte[width * height * bytePerPixel]; 
-            }
-
-            pixels[index] = texData.pixeldata().r();
-            pixels[index+1] = texData.pixeldata().g(); 
-            pixels[index+2] = texData.pixeldata().b();
-            pixels[index+3] = texData.pixeldata().a(); 
-        }
-
-        grpc::Status status = reader->Finish();  
-        if (status.ok()) 
-        {
-            Texture* newTexture = new Texture("");  
-            newTexture->LoadTextureData(texData.width(), texData.height(), imageFormat, pixels);  
-            texturesList.push_back(newTexture);  
-
-            std::cout << "TEXTURE CREATED\n"; 
-        }
-        else
-        {
-            std::cout << "FAIL TO RECEIVE TEXTURE " << status.error_code() << " " << status.error_message() << " " << status.error_details() << "\n"; 
-        }
-    }
-
-    void LoadObjectsInScene(int id)
-    {
-        std::map<int, std::vector<float>> modelDataMap; 
-
-        IntValue sceneID;
-        sceneID.set_value(id);
-
-        grpc::ClientContext context;
-        std::unique_ptr<grpc::ClientReader<ModelData>> reader(stub->LoadModelsInScene(&context, sceneID)); 
-
-        ModelData modelData;  
-        while (reader->Read(&modelData)) 
-        {
-            std::vector<float> vertexData = { 
-                modelData.vdata().position().x(),
-                modelData.vdata().position().y(), 
-                modelData.vdata().position().z(),
-                modelData.vdata().normals().x(),
-                modelData.vdata().normals().y(), 
-                modelData.vdata().normals().z(), 
-                modelData.vdata().u(), 
-                modelData.vdata().v() 
-            };
-
-            modelDataMap[modelData.vdataindex()] = vertexData;
-        }
-
-        grpc::Status status = reader->Finish();
-        if (status.ok())
-        {
-            ModelReference* ref = new ModelReference(""); 
-            std::vector<float> fullVertexData;
-
-            for (auto pair : modelDataMap)
-            {
-                fullVertexData.insert(fullVertexData.end(), pair.second.begin(), pair.second.end());
-            }
-
-            ref->LoadModelData(fullVertexData);
-            modelReferencesList.push_back(ref);
-            
-            Model3D* model = new Model3D(ref, texturesList.front());
-            model->transform.position = glm::vec3(0.f, 0.f, 10.f);
-            model->transform.Rotate(glm::vec3(0.f, 180.f, 0.f));
-            model->transform.scale = glm::vec3(0.05f, 0.05f, 0.05f);
-            modelsList.push_back(model);
-
-            std::cout << "SUCCESS MODEL CREATED\n";
-        }
-        else
-        {
-            std::cout << "FAIL TO RECEVIVE MODEL " << status.error_code() << " " << status.error_message()  << " " << status.error_details() << "\n";
-        }
-    }
-
-
-private:
-    std::unique_ptr<SceneLoader::Stub> stub;
-};
-
-
 int main(void)
 {
     // Initialize program
@@ -192,35 +76,64 @@ int main(void)
     LoadShaders(shaderPathsList);
 
 
-    //// Load 3d object references
+    // THESE ARE THE IMPORTANT ONES
+    Scene* scene1 = new Scene(1); 
+
+    std::string server_adr = "localhost:50052"; 
+    SceneViewerClient client(grpc::CreateChannel(server_adr, grpc::InsecureChannelCredentials())); 
+    client.scenesList.push_back(scene1); 
+    client.LoadModelsInScene(1); 
+    client.LoadTexturesInScene(1); 
+    client.LoadObjectsInScene(1); 
+    // END
+
+
     //std::vector<std::string> objPathsList = {
     //    "../3D/amumu.obj",
+    //    "../3D/baron.obj",
+    //    "../3D/veigar.obj",
+    //    "../3D/khazix.obj"
     //};
     //LoadObjects(objPathsList);
 
-    //// Load textures
-    //std::vector<std::pair<std::string, GLuint>> textureInfoList = { 
-    //    {"../3D/amumu.png", GL_RGBA}, 
+    //std::vector<std::pair<std::string, GLuint>> textureInfoList = {
+    //    {"../3D/amumu.png", GL_RGBA},
+    //    {"../3D/baron.png", GL_RGBA},
+    //    {"../3D/veigar.png", GL_RGBA},
+    //    {"../3D/khazix.png", GL_RGBA}
     //};
-    //LoadTextures(textureInfoList); 
+    //LoadTextures(textureInfoList);
 
     //// Create new models
     //std::vector<std::pair<int, int>> objTextureMap = {
-    //    {0, 0},
+    //    {0, 0},      
+    //    {1, 1},
+    //    {2, 2},
+    //    {3, 3}
     //};
     //std::vector<glm::vec3> modelsInfoList = {
-    //    // amumu
-    //    glm::vec3(0.f, 0.f, 10.f),
+    //    // Amumu
+    //    glm::vec3(0.f, 0.f, 15.f),
     //    glm::vec3(0.f, 180.f, 0.f),
-    //    glm::vec3(0.05f, 0.05f, 0.05f),
+    //    glm::vec3(0.03f, 0.03f, 0.03f),
+    //    glm::vec3(1.f, 1.f, 1.f),
+    //    // barorn
+    //    glm::vec3(5.f, 0.f, 15.f),
+    //    glm::vec3(0.f, 180.f, 0.f),
+    //    glm::vec3(0.02f, 0.02f, 0.02f), 
+    //    glm::vec3(1.f, 1.f, 1.f),        
+    //    // braum
+    //    glm::vec3(-5.f, 0.f, 15.f),
+    //    glm::vec3(0.f, 180.f, 0.f),
+    //    glm::vec3(0.02f, 0.02f, 0.02f),
+    //    glm::vec3(1.f, 1.f, 1.f),
+    //    // willump
+    //    glm::vec3(-10.f, 0.f, 15.f),
+    //    glm::vec3(0.f, 180.f, 0.f),
+    //    glm::vec3(0.015f, 0.015f, 0.015f),
     //    glm::vec3(1.f, 1.f, 1.f),
     //};
     //CreateModels(objTextureMap, modelsInfoList);
-
-    std::string server_adr = "localhost:50052";
-    SceneViewer viewer(grpc::CreateChannel(server_adr, grpc::InsecureChannelCredentials()));
-    viewer.LoadTexturesInScene(0); 
-    viewer.LoadObjectsInScene(0);
 
 
     // Create Lights
@@ -235,7 +148,7 @@ int main(void)
         // first-person
         glm::vec3(0.f, 0.f, 0.f),
         glm::vec3(0.f, 0.f, 0.f),
-        modelsList[0]->transform.localForward,
+        glm::vec3(0.f, 0.f, 10.f),
     };
     CreateCameras(camerasInfoList); 
 
@@ -251,7 +164,7 @@ int main(void)
 
 
         // Iterate through modelsList
-        for (Model3D* model : modelsList)
+        for (Model3D* model : scene1->objectsList)
         {
             glm::mat4 transformationMatrix = model->GetTransformationMatrix();
             glm::mat4 viewMatrix = CreateViewMatrix();
@@ -316,7 +229,7 @@ void LoadObjects(const std::vector<std::string>& objPathsList)
 {
     for (std::string path : objPathsList)
     {
-        ModelReference* reference = new ModelReference(path);
+        ModelReference* reference = new ModelReference("", path);
         reference->LoadModel();
         modelReferencesList.push_back(reference);
     }
@@ -326,7 +239,7 @@ void LoadTextures(const std::vector<std::pair<std::string, GLuint>>& textureInfo
 {
     for (std::pair<std::string, GLint> info : textureInfoList)
     {
-        Texture* texture = new Texture(info.first.c_str()); // pass in file path
+        Texture* texture = new Texture("", info.first.c_str()); // pass in file path
         texture->LoadTexture(info.second);                  // pass in image format
         texturesList.push_back(texture);
     }

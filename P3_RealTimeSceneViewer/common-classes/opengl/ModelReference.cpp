@@ -1,7 +1,12 @@
 #include "ModelReference.h"
 #include <iostream>
 
-ModelReference::ModelReference(std::string modelPath) : modelPath (modelPath)
+ModelReference::ModelReference(std::string modelName, std::string modelPath) : modelName(modelName), modelPath(modelPath)
+{
+
+}
+
+ModelReference::ModelReference(std::string modelName) : modelName(modelName), modelPath("")
 {
 
 }
@@ -13,6 +18,12 @@ ModelReference::~ModelReference()
 
 bool ModelReference::LoadModel()
 {
+    if (modelPath == "")
+    {
+        std::cout << "model path not specified\n";
+        return false;
+    }
+
     std::string warning, error;
 
     if (tinyobj::LoadObj(&attributes, &shapes, &materials, &warning, &error, modelPath.c_str())) 
@@ -36,6 +47,7 @@ bool ModelReference::LoadModel()
         }
         
         SetupBufferObjects();
+        CleanupPartialDataMap();
 
         return true; 
     }
@@ -48,14 +60,36 @@ bool ModelReference::LoadModel()
     }
 }
 
-void ModelReference::LoadModelData(std::vector<float> data)
+void ModelReference::LoadModelData()
 {
-    for (int i = 0; i < data.size(); i++)
+    for (auto pair : partialVertexDataMap)
     {
-        fullVertexData.push_back((GLfloat)data[i]);
+        fullVertexData.insert(fullVertexData.end(), pair.second.begin(), pair.second.end());
     }
-    
+
     SetupBufferObjects();
+    CleanupPartialDataMap();
+}
+
+void ModelReference::InsertPartialData(int index, std::vector<float> partialData)
+{
+    partialVertexDataMap[index] = partialData;
+}
+
+//void ModelReference::LoadModelData(std::vector<float> data)
+//{
+//    for (int i = 0; i < data.size(); i++)
+//    {
+//        fullVertexData.push_back((GLfloat)data[i]);
+//    }
+//
+//    SetupBufferObjects();
+//    CleanupPartialDataMap();
+//}
+
+std::string ModelReference::GetModelName()
+{
+    return modelName;
 }
 
 std::vector<GLfloat>& ModelReference::GetFullVertexData()
@@ -106,4 +140,9 @@ void ModelReference::SetupBufferObjects()
     // Unbind the buffers objects
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+}
+
+void ModelReference::CleanupPartialDataMap()
+{
+    partialVertexDataMap.clear();
 }

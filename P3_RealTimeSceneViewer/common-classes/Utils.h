@@ -14,6 +14,10 @@ public:
 	template<typename MainClass, typename ToConvert>
 	static ToConvert* ConvertTo(MainClass* ptr);
 
+	static int GetRandomInt(int min, int max);
+	static float GetRandomFloat(float min, float max);
+
+
 public:
 	static const glm::vec3 WORLD_FORWARD;
 	static const glm::vec3 WORLD_UP;

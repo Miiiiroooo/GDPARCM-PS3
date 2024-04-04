@@ -1,7 +1,7 @@
 #include "Texture.h"
 #include "../stb_image.h"
 
-Texture::Texture(const char* imagePath) : imagePath (imagePath)
+Texture::Texture(std::string textureName, const char* imagePath) : textureName(textureName), imagePath(imagePath)
 {
     width = 0;
     height = 0;
@@ -11,24 +11,64 @@ Texture::Texture(const char* imagePath) : imagePath (imagePath)
     texture = NULL;
 }
 
+Texture::Texture(std::string textureName, int width, int height) : textureName(textureName), width(width), height(height)
+{
+    imagePath = NULL; 
+    colorChannels = GL_RGB; 
+    tex_bytes = NULL; 
+    pixels = NULL; 
+    texture = NULL;
+}
+
 Texture::~Texture()
 {
-
+    if (pixels != NULL)
+    {
+        delete pixels;
+    }
 }
 
 void Texture::LoadTexture(GLint imageFormat)
 {
+    if (imagePath == NULL)
+    {
+        return;
+    }
+
     stbi_set_flip_vertically_on_load(true);
     tex_bytes = stbi_load(imagePath, &width, &height, &colorChannels, 0);
     SetupOpenGLTexture(imageFormat); 
 }
 
-void Texture::LoadTextureData(int width, int height, GLint imageFormat, GLubyte* pixels)
+void Texture::LoadTextureData(GLint imageFormat) 
 {
-    this->width = width;
-    this->height = height;
-    this->pixels = pixels;
-    SetupOpenGLTexture(imageFormat);
+    SetupOpenGLTexture(imageFormat); 
+}
+
+void Texture::InsertPartialData(int index, unsigned bytesPerPixel, unsigned int r, unsigned int g, unsigned int b, unsigned int a)
+{
+    if (pixels == NULL)
+    {
+        pixels = new GLubyte[width * height * bytesPerPixel];
+    }
+
+    pixels[index] = r;
+    pixels[index+1] = g;
+    pixels[index+2] = b;
+    pixels[index+3] = a;
+}
+
+//void Texture::LoadTextureData(int width, int height, GLint imageFormat, GLubyte* pixels)
+//{
+//    this->width = width;
+//    this->height = height;
+//    this->pixels = pixels;
+//    SetupOpenGLTexture(imageFormat);
+//}
+
+std::string Texture::GetTextureName()
+{
+    return textureName;
 }
 
 GLuint& Texture::GetTexture()

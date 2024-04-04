@@ -1,0 +1,119 @@
+{
+    "Scene1" :
+    {
+        "Models" :
+        {
+            "Amumu" : "../3D/amumu.obj",
+            "Baron" : "../3D/baron.obj",
+            "Khazix" : "../3D/khazix.obj",
+            "Veigar" : "../3D/veigar.obj"
+        },
+
+        "Textures" :
+        {
+            "Amumu" : "../3D/amumu.png",
+            "Baron" : "../3D/baron.png",
+            "Khazix" : "../3D/khazix.png",
+            "Veigar" : "../3D/veigar.png"
+        },
+
+        "Objects" :
+        {
+            "Number" : [5, 9],
+
+            "Positions" :
+            {
+                "randX" : [-15.0, 15.0],
+                "randY" : [0.0, 0.0],
+                "randZ" : [10.0, 30.0]
+            },
+
+            "Rotations" :
+            {
+                "randX" : [0.0, 0.0],
+                "randY" : [0.0, 359.0],
+                "randZ" : [0.0, 90.0]
+            },
+
+            "Scalings" :
+            {
+                "Amumu" : [0.03, 0.03, 0.03],
+                "Baron" : [0.02, 0.02, 0.02],
+                "Khazix" : [0.015, 0.015, 0.015],
+                "Veigar" : [0.02, 0.02, 0.02]
+            }
+        }
+    },
+
+    "Scene2" :
+    {
+        "Models" :
+        {
+
+        },
+
+        "Textures" :
+        {
+
+        },
+
+        "Objects" :
+        {
+
+        }
+    },
+
+    "Scene3" : 
+    {
+        "Models" :
+        {
+
+        },
+
+        "Textures" :
+        {
+
+        },
+
+        "Objects" :
+        {
+
+        }
+    },
+
+    "Scene4" :
+    {
+        "Models" :
+        {
+
+        },
+
+        "Textures" :
+        {
+
+        },
+
+        "Objects" :
+        {
+
+        }
+    },
+
+    "Scene5" :
+    {
+        "Models" :
+        {
+
+        },
+
+        "Textures" :
+        {
+
+        },
+
+        "Objects" :
+        {
+
+        }
+    }
+}
