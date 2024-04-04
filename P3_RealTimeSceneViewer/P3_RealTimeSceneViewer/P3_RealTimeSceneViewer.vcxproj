@@ -159,10 +159,14 @@
     <ClCompile Include="..\proto\SceneLoader.grpc.pb.cc" />
     <ClCompile Include="..\proto\SceneLoader.pb.cc" />
     <ClCompile Include="AUIPanel.cpp" />
+    <ClCompile Include="CameraObject.cpp" />
     <ClCompile Include="EngineProfiler.cpp" />
+    <ClCompile Include="LightObject.cpp" />
     <ClCompile Include="MainMenuPanel.cpp" />
     <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="P3_RealTimeSceneViewer.cpp" />
+    <ClCompile Include="PerspectiveCameraObject.cpp" />
+    <ClCompile Include="ShaderObject.cpp" />
     <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -197,9 +201,13 @@
     <ClInclude Include="..\proto\SceneLoader.grpc.pb.h" />
     <ClInclude Include="..\proto\SceneLoader.pb.h" />
     <ClInclude Include="AUIPanel.h" />
+    <ClInclude Include="CameraObject.h" />
     <ClInclude Include="EngineProfiler.h" />
+    <ClInclude Include="LightObject.h" />
     <ClInclude Include="MainMenuPanel.h" />
     <ClInclude Include="ModelObject.h" />
+    <ClInclude Include="PerspectiveCameraObject.h" />
+    <ClInclude Include="ShaderObject.h" />
     <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <ItemGroup>

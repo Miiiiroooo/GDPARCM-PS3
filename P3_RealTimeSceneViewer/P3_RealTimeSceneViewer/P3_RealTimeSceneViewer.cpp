@@ -7,12 +7,6 @@
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
 
-#define TINYOBJLOADER_IMPLEMENTATION
-#include"tiny_obj_loader.h"
-
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-
 //DearIMGUI Includes
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -20,42 +14,44 @@
 
 //Base Includes
 #include <iostream>
+#include<unordered_map>
+
+//GRPC
+#include <grpcpp/grpcpp.h>
+#include "../proto/SceneLoader.grpc.pb.h"
 
 //Created Classes Includes
-#include "opengl/PerspectiveCamera.h"
-#include "opengl/Shader.h"
-#include "opengl/Light.h"
 #include "UIManager.h"
+/*
+#include "ModelObject.h"
+#include "LightObject.h"
+#include "PerspectiveCameraObject.h"
+#include "ShaderObject.h"
+*/
 
 //UI
 #include "MainMenuPanel.h"
 #include "EngineProfiler.h"
+#include "PerspectiveCameraObject.h"
+
+//Definitions
+#define TINYOBJLOADER_IMPLEMENTATION
+#include"tiny_obj_loader.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 using namespace std;
 
-#pragma region Global Variables
-// Shaders, Models, Textures, Lights, Cameras, the Skybox, and the Player
-std::vector<Shader*> shadersList;
-std::vector<Light*> lightsList;
-std::vector<Camera*> camerasList;
-Camera* mainCamera;
+//Forward Declarations
 
-// Time
-float timeSinceStart = 0.f;
-float oldTimeSinceStart = 0.f;
-float deltaTime = 0.f;
 
-// Projection
-float fov = 90.f;
-const float width = 600;
-const float height = 600;
-#pragma endregion
+//Global Variables
 
-//Function Declarations
-void LoadShaders(const std::vector<std::pair<std::string, std::string>>& shaderPathsList);
 
 int main()
 {
+
 #pragma region GLFW Init
     float width = 800;
     float height = 800;
@@ -80,13 +76,6 @@ int main()
 
     glViewport(0, 0, width, height);
 
-    /*
-    * Needed for User Inputs
-    glfwSetKeyCallback(window, keyCallback);
-    glfwSetMouseButtonCallback(window, mouse_button_callback);
-    glfwSetCursorPosCallback(window, mouse_callback);
-    */
-
     glEnable(GL_DEPTH_TEST);
 
     IMGUI_CHECKVERSION();
@@ -109,14 +98,7 @@ int main()
     //UIManager::getInstance()->initialize(window);
 
     //GameObject Declarations
-    PerspectiveCamera camera;
-
-    // Load shaders 
-    std::vector<std::pair<std::string, std::string>> shaderPathsList = {
-        {"Shaders/default.vert", "Shaders/default.frag"},
-    };
-    LoadShaders(shaderPathsList);
-
+    PerspectiveCameraObject camera;
 
     //Main Loop
     while (!glfwWindowShouldClose(window))
@@ -138,10 +120,10 @@ int main()
         //UIManager::getInstance()->draw();
         profiler->UpdateFPS(delta);
 
+
         /* Draw */
         scenePanel->draw();
         profiler->draw();
-
 
         /*End of Loop*/
         ImGui::Render();
@@ -162,17 +144,3 @@ int main()
     glfwDestroyWindow(window);
     glfwTerminate();
 }
-
-void LoadShaders(const std::vector<std::pair<std::string, std::string>>& shaderPathsList)
-{
-    for (std::pair<std::string, std::string> pair : shaderPathsList)
-    {
-        std::string vert = pair.first;
-        std::string frag = pair.second;
-
-        Shader* shader = new Shader();
-        shader->InitializeProgram(vert, frag);
-        shadersList.push_back(shader);
-    }
-}
-
