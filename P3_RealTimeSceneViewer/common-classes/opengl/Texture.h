@@ -1,16 +1,21 @@
 #pragma once
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <string>
+#include <vector>
 
 class Texture
 {
 public:
-	Texture(const char* imagePath);
+	Texture(std::string textureName, const char* imagePath);
+	Texture(std::string textureName, int width, int height);
 	~Texture();
 
 	void LoadTexture(GLint imageFormat);
-	void LoadTextureData(int width, int height, GLint imageFormat, GLubyte* pixels);
+	void LoadTextureData(GLint imageFormat);
+	void InsertPartialData(int index, unsigned bytesPerPixel, unsigned int r, unsigned int g, unsigned int b, unsigned int a);
 
+	std::string GetTextureName();
 	GLuint& GetTexture();
 	int GetWidth();
 	int GetHeight();
@@ -21,6 +26,8 @@ private:
 
 
 private:
+	std::string textureName;
+
 	int width;
 	int height;
 	int colorChannels;

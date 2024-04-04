@@ -12,7 +12,7 @@ public:
 	static ThreadPoolScheduler* GetInstance();
 	~ThreadPoolScheduler();
 
-	void Initialize();
+	void Initialize(int reduceThreads);
 	void StartScheduler();
 	void StopScheduler();
 	void ScheduleTask(AWorkerTask* task);

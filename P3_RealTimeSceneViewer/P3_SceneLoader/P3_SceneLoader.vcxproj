@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLFW_INCLUDE_NONE;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/Libs/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Libs/include;$(SolutionDir)/Libs/rapidjson/include;$(SolutionDir)/common-classes</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -122,6 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Libs/include;$(SolutionDir)/Libs/rapidjson/include;$(SolutionDir)/common-classes</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,7 +145,11 @@
     <ClCompile Include="..\common-classes\Utils.cpp" />
     <ClCompile Include="..\proto\SceneLoader.grpc.pb.cc" />
     <ClCompile Include="..\proto\SceneLoader.pb.cc" />
+    <ClCompile Include="SceneLoaderImpl.cpp" />
     <ClCompile Include="SceneLoader_main.cpp" />
+    <ClCompile Include="ServerSemaphore.cpp" />
+    <ClCompile Include="StreamTextureTask.cpp" />
+    <ClCompile Include="StreamVertexDataTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common-classes\multithreading\IETSemaphore.h" />
@@ -162,9 +167,15 @@
     <ClInclude Include="..\common-classes\Utils.h" />
     <ClInclude Include="..\proto\SceneLoader.grpc.pb.h" />
     <ClInclude Include="..\proto\SceneLoader.pb.h" />
+    <ClInclude Include="SceneLoaderImpl.h" />
+    <ClInclude Include="SceneLoadProgress.h" />
+    <ClInclude Include="ServerSemaphore.h" />
+    <ClInclude Include="StreamTextureTask.h" />
+    <ClInclude Include="StreamVertexDataTask.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\proto\SceneLoader.proto" />
+    <None Include="SceneLoaderData.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
