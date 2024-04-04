@@ -40,9 +40,9 @@ ThreadPoolScheduler::~ThreadPoolScheduler()
 	}
 }
 
-void ThreadPoolScheduler::Initialize()
+void ThreadPoolScheduler::Initialize(int reduceThreads)
 {
-	maxWorkers = std::thread::hardware_concurrency() * 2;
+	maxWorkers = std::thread::hardware_concurrency() * 2 - reduceThreads;
 	isRunning = false;
 
 	for (int i = 0; i < maxWorkers; i++)

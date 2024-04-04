@@ -6,11 +6,18 @@
 #include <cmath>
 #include <iostream>
 #include "SceneLoaderImpl.h"
+#include "multithreading/ThreadPoolScheduler.h"
 
 int main()
 {
 	srand(time(0));
 
+	// Initialize Scheduler
+	ThreadPoolScheduler::GetInstance()->Initialize(2+5); 
+	ThreadPoolScheduler::GetInstance()->StartScheduler(); 
+	ThreadPoolScheduler::GetInstance()->start();
+
+	// Initialize Server
 	std::string server_adr = "localhost:50052"; 
 	SceneLoaderImpl loader;  
 

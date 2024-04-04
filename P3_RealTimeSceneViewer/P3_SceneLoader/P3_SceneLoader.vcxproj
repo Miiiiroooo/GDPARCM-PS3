@@ -147,6 +147,9 @@
     <ClCompile Include="..\proto\SceneLoader.pb.cc" />
     <ClCompile Include="SceneLoaderImpl.cpp" />
     <ClCompile Include="SceneLoader_main.cpp" />
+    <ClCompile Include="ServerSemaphore.cpp" />
+    <ClCompile Include="StreamTextureTask.cpp" />
+    <ClCompile Include="StreamVertexDataTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common-classes\multithreading\IETSemaphore.h" />
@@ -166,6 +169,9 @@
     <ClInclude Include="..\proto\SceneLoader.pb.h" />
     <ClInclude Include="SceneLoaderImpl.h" />
     <ClInclude Include="SceneLoadProgress.h" />
+    <ClInclude Include="ServerSemaphore.h" />
+    <ClInclude Include="StreamTextureTask.h" />
+    <ClInclude Include="StreamVertexDataTask.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\proto\SceneLoader.proto" />

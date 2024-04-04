@@ -16,5 +16,9 @@ public:
 	grpc::Status GetSceneProgress(grpc::ServerContext* context, const IntValue* request, FloatValue* response) override;
 
 private:
+	void ResetSceneProgress(int id);
+
+
+private:
 	std::unordered_map<int, SceneLoadProgress> scenesProgressMap;
 };
