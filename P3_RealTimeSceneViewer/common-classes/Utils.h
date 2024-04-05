@@ -3,6 +3,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <random>
 
 
 class Utils
@@ -16,6 +17,8 @@ public:
 
 	static int GetRandomInt(int min, int max);
 	static float GetRandomFloat(float min, float max);
+	static int GetRandomInt(int min, int max, std::mt19937* gen);
+	static float GetRandomFloat(float min, float max, std::mt19937* gen);
 
 
 public:

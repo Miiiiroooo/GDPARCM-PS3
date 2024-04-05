@@ -2,16 +2,12 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include"../../common-classes/stb_image.h"
 
-#include <chrono>
-#include <cmath>
 #include <iostream>
 #include "SceneLoaderImpl.h"
 #include "multithreading/ThreadPoolScheduler.h"
 
 int main()
 {
-	srand(time(0));
-
 	// Initialize Scheduler
 	ThreadPoolScheduler::GetInstance()->Initialize(2+5); 
 	ThreadPoolScheduler::GetInstance()->StartScheduler(); 

@@ -7,7 +7,7 @@
 class StreamTextureTask : public AWorkerTask
 {
 public:
-	StreamTextureTask(int sceneID, int max, std::string textureName, std::string texturePath, grpc::ServerWriter<TextureData>* writer);
+	StreamTextureTask(int sceneID, int maxBatchSize, int maxThreads, std::string textureName, std::string texturePath, grpc::ServerWriter<TextureData>* writer);
 	~StreamTextureTask();
 
 	void ExecuteTask() override;
@@ -15,7 +15,8 @@ public:
 
 private:
 	int sceneID;
-	int max;
+	int maxBatchSize;
+	int maxThreads;
 	std::string textureName;
 	std::string texturePath;
 	std::binary_semaphore* guard;
