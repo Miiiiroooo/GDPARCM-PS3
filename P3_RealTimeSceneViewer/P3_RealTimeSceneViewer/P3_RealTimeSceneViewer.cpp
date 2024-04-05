@@ -22,12 +22,17 @@
 
 //Created Classes Includes
 #include "UIManager.h"
+#include "SceneManager.h"
 #include "Scene.h"
 #include "SceneViewerClient.h"
 #include "ModelObject.h"
 #include "LightObject.h"
 #include "PerspectiveCameraObject.h"
 #include "ShaderObject.h"
+
+//Threading
+#include "multithreading/ThreadPoolScheduler.h"
+#include "LoadSceneTask.h"
 
 //UI
 #include "MainMenuPanel.h"
@@ -125,22 +130,49 @@ int main()
 
     //GameObject Declarations
     PerspectiveCameraObject camera;
+    ShaderObject* shader = new ShaderObject("Shaders/shader.vert", "Shaders/shader.frag");
+
     LightObject light;
     light.SetLightPosition(glm::vec3(0, 5, 5));
     light.SetLightBrightness(100);
     light.SetLightColor(1.0f, 1.0f, 1.0f);
 
-    Scene* scene1 = new Scene(1);
+
+    //Scenes & Client
+    /*Scene* scene1 = new Scene(1);
 
     std::string server_adr = "localhost:50052";
     SceneViewerClient client(grpc::CreateChannel(server_adr, grpc::InsecureChannelCredentials()));
     client.scenesList.push_back(scene1);
     client.LoadModelsInScene(1);
     client.LoadTexturesInScene(1);
-    client.LoadObjectsInScene(1);
+    client.LoadObjectsInScene(1);*/
 
-    ShaderObject* shader = new ShaderObject("Shaders/shader.vert", "Shaders/shader.frag");
-    cout << "Models: " << scene1->modelsList.size() << endl;
+    /*std::vector<Scene*> scenesList = {
+       new Scene(1),
+       new Scene(2)
+    };*/
+
+  
+
+    ThreadPoolScheduler::GetInstance()->Initialize(2);
+    ThreadPoolScheduler::GetInstance()->StartScheduler();
+    ThreadPoolScheduler::GetInstance()->start();
+
+    std::string server_adr = "localhost:50052";
+    SceneViewerClient client(grpc::CreateChannel(server_adr, grpc::InsecureChannelCredentials()));
+
+    SceneManager::initialize(2, &client);
+
+    for (auto scene : SceneManager::getInstance()->GetSceneList())
+    {
+        client.scenesList.push_back(scene);
+        LoadSceneTask* task = new LoadSceneTask(scene->id, &client);
+        ThreadPoolScheduler::GetInstance()->ScheduleTask(task);
+    }
+    
+
+
     //Main Loop
     while (!glfwWindowShouldClose(window))
     {
@@ -166,14 +198,8 @@ int main()
         scenePanel->draw();
         profiler->draw();
 
-       
-        for (int i = 0; i < scene1->modelsList.size(); i++)
-        {
-            shader->UseShader();
-            scene1->modelsList[i]->Draw(shader->GetShaderProgram(), camera, light);
-        }
-       /* model->Draw(shader->GetShaderProgram(), camera, light);
-        baron->Draw(shader->GetShaderProgram(), camera, light);*/
+        SceneManager::getInstance()->Draw(shader, camera, light);
+ 
 
         /*End of Loop*/
         ImGui::Render();
@@ -188,9 +214,7 @@ int main()
         lastTime = currTime; // delta time
     }
     
-    /*On ShutDown*/
-    //model->DeleteBuffers();
-    //baron->DeleteBuffers();
+    SceneManager::getInstance()->UnloadAllScenes();
 
     glfwDestroyWindow(window);
     glfwTerminate();

@@ -70,10 +70,6 @@ void ModelObject::SetupModel(string path)
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
 
-    Transform = glm::translate(identity_matrix4, glm::vec3(0, 0, 0)); // x,y,z
-    //scale
-    Transform = glm::scale(Transform, glm::vec3(1.f, 1.f, 1.f)); // x,y,z
-
     loadedModel = true;
 }
 
@@ -167,10 +163,6 @@ void ModelObject::LoadModelData()
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
-
-    Transform = glm::translate(identity_matrix4, glm::vec3(0, 0, 0)); // x,y,z
-    //scale
-    Transform = glm::scale(Transform, glm::vec3(1.f, 1.f, 1.f)); // x,y,z
 
     loadedModel = true;
 

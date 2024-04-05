@@ -1,5 +1,6 @@
 #include "MainMenuPanel.h"
 #include "stb_image.h"
+#include "SceneManager.h"
 
 MainMenuPanel::MainMenuPanel(std::string name) : AUIPanel::AUIPanel(name) 
 {
@@ -21,27 +22,52 @@ MainMenuPanel::MainMenuPanel(std::string name) : AUIPanel::AUIPanel(name)
 
 void MainMenuPanel::draw()
 {
-    ImGui::SetNextWindowSize(ImVec2(800, 210));
+    ImGui::SetNextWindowSize(ImVec2(800, 220));
     ImGui::SetNextWindowPos(ImVec2(0, 0));
     ImGui::Begin("Scene Bar", NULL, ImGuiWindowFlags_NoResize);
 
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 2; ++i) {
         ImGui::BeginGroup();
+
+        //Cache Scene
+        Scene* scene = SceneManager::getInstance()->GetSceneByID(i + 1);
 
         // Image
         ImGui::Image((void*)sceneThumbnails[i], ImVec2(150, 100)); // Replace your_image_texture_id with your actual image texture ID
 
         // Progress bar
-        float progress = 0.1f; // Replace with your actual loading progress
+        float progress = scene->loadingProgress; // i + 1 -> Scene IDs start at 1
         int percentage = static_cast<int>(progress * 100);
         std::string progressText = std::to_string(percentage) + "%";
 
         ImGui::ProgressBar(progress, ImVec2(150, 15), progressText.c_str());
 
         // Button
-        if (ImGui::Button("Load", ImVec2(150, 20))) {
-            // Add logic to start loading process for this image
+        if (ImGui::Button(("Select##" + std::to_string(i)).c_str(), ImVec2(150, 20))) {
+            SceneManager::getInstance()->OpenSingleScene(i + 1);
         }
+
+        if (scene->isAlreadyLoaded)
+        {
+            if (ImGui::Button(("X##" + std::to_string(i)).c_str(), ImVec2(150, 20))) {
+                SceneManager::getInstance()->UnloadSingleScene(i + 1);
+            }
+        }
+        else
+        {
+            if (scene->isLoading)
+            {
+                ImGui::Dummy(ImVec2(150, 20));
+            }
+            else
+            {
+                if (ImGui::Button(("Load Scene##" + std::to_string(i)).c_str(), ImVec2(150, 20))) {
+                    SceneManager::getInstance()->LoadSingleScene(i + 1);
+                }
+            }
+           
+        }
+        
 
         ImGui::EndGroup();
 
@@ -55,7 +81,7 @@ void MainMenuPanel::draw()
     // Center align the "Load All" button
     ImGui::SetCursorPosX((ImGui::GetWindowWidth() - 100) * 0.5f); // Adjust the button width as needed
     if (ImGui::Button("Load All", ImVec2(100, 20))) {
-        // Add logic to start loading process for all images
+        SceneManager::getInstance()->UnloadAllScenes();
     }
 
     ImGui::End();

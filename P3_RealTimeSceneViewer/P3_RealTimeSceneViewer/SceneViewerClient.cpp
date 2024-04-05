@@ -59,17 +59,24 @@ void SceneViewerClient::LoadModelsInScene(int id)
             currentScene->modelsList.push_back(ref);
             ref->InsertPartialData(modelData.vdataindex(), vertexData);
         }
+
+        if (currentScene->loadingProgress < 0.40f)
+        {
+            currentScene->loadingProgress += 0.00001f;
+        }
+     
     }
 
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
-        for (auto ref : currentScene->modelsList)
+        currentScene->loadingProgress = 0.40f;
+        /*for (auto ref : currentScene->modelsList)
         {
             ref->LoadModelData();
-        }
+        }*/
 
-        std::cout << "SUCCESS: MODELS CREATED\n";
+        std::cout << "SUCCESS: MODELS CREATED ON SCENE" << std::to_string(id) << "\n";
     }
     else
     {
@@ -116,35 +123,44 @@ void SceneViewerClient::LoadTexturesInScene(int id)
             return x->GetModelName() == name;
             });
 
+        ModelObject* ref = NULL;
         if (textureItr != currentScene->modelsList.end())
         {
-            ModelObject* ref = *textureItr;
-            ref->InsertPartialTextureData(width, height, index, bytePerPixel, texData.pixeldata().r(), texData.pixeldata().g(), texData.pixeldata().b(), texData.pixeldata().a());
-           
+            ref = *textureItr;
         }
         /*else
         {
-            Texture* ref = new Texture(name, width, height);
+            ref = new Texture(name, width, height);
             currentScene->texturesList.push_back(ref);
-            ref->InsertPartialData(index, bytePerPixel, texData.pixeldata().r(), texData.pixeldata().g(), texData.pixeldata().b(), texData.pixeldata().a());
         }*/
+
+        for (int i = 0; i < texData.pixeldatabatch_size(); i++)
+        {
+            PixelData pixel = texData.pixeldatabatch(i);
+            ref->InsertPartialTextureData(width, height, index + i * bytePerPixel, bytePerPixel, pixel.r(), pixel.g(), pixel.b(), pixel.a());
+        }
 
         if (!textureColorChannels.contains(name))
         {
             textureColorChannels[name] = imageFormat;
+        }
+
+        if (currentScene->loadingProgress < 0.90f)
+        {
+            currentScene->loadingProgress += 0.000004f;
         }
     }
 
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
-        for (auto ref : currentScene->modelsList)
+        currentScene->loadingProgress = 0.90f;
+        /*for (auto ref : currentScene->modelsList)
         {
-            ref->LoadTextureData(GL_RGBA);
-            cout << "Found Model: " << ref->GetModelName() << endl;
-        }
+            ref->LoadTextureData(textureColorChannels[ref->GetModelName()]);
+        }*/
 
-        std::cout << "SUCCESS: TEXTURES CREATED\n";
+        std::cout << "SUCCESS: TEXTURES CREATED ON SCENE" << std::to_string(id) << "\n";
     }
     else
     {
@@ -184,29 +200,16 @@ void SceneViewerClient::LoadObjectsInScene(int id)
             });
         ModelObject* model = *modelItr;
 
-        /*auto textureItr = std::find_if(currentScene->modelsList.begin(), currentScene->modelsList.end(), [&](ModelObject* x) {
-            return x->GetModelName() == objData.texturename();
-            });
-
-        Texture* texture = *textureItr;
-       
-
-        Model3D* obj = new Model3D(model, texture);
-         */
-
         model->SetPosition(glm::vec3(objData.position().x(), objData.position().y(), objData.position().z()));
         model->SetScale(glm::vec3(objData.scale().x(), objData.scale().y(), objData.scale().z()));
-        //model->transform.position = glm::vec3(objData.position().x(), objData.position().y(), objData.position().z());
-        //obj->transform.Rotate(glm::vec3(objData.rotation().x(), objData.rotation().y(), objData.rotation().z()));
-        //model->SetScale(glm::vec3(objData.scale().x(), objData.scale().y(), objData.scale().z()));
-        //obj->transform.scale = glm::vec3(objData.scale().x(), objData.scale().y(), objData.scale().z());
-        //currentScene->objectsList.push_back(obj);
     }
 
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
-        std::cout << "SUCCESS: OBJECTS CREATED\n";
+        currentScene->isAlreadyLoaded = true;
+        currentScene->loadingProgress = 1.f;
+        std::cout << "SUCCESS: OBJECTS CREATED ON SCENE" << std::to_string(id) << "\n";
     }
     else
     {

@@ -162,11 +162,13 @@
     <ClCompile Include="CameraObject.cpp" />
     <ClCompile Include="EngineProfiler.cpp" />
     <ClCompile Include="LightObject.cpp" />
+    <ClCompile Include="LoadSceneTask.cpp" />
     <ClCompile Include="MainMenuPanel.cpp" />
     <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="P3_RealTimeSceneViewer.cpp" />
     <ClCompile Include="PerspectiveCameraObject.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneViewerClient.cpp" />
     <ClCompile Include="ShaderObject.cpp" />
     <ClCompile Include="UIManager.cpp" />
@@ -206,10 +208,12 @@
     <ClInclude Include="CameraObject.h" />
     <ClInclude Include="EngineProfiler.h" />
     <ClInclude Include="LightObject.h" />
+    <ClInclude Include="LoadSceneTask.h" />
     <ClInclude Include="MainMenuPanel.h" />
     <ClInclude Include="ModelObject.h" />
     <ClInclude Include="PerspectiveCameraObject.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneViewerClient.h" />
     <ClInclude Include="ShaderObject.h" />
     <ClInclude Include="UIManager.h" />

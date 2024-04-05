@@ -42,6 +42,10 @@ public:
     void InsertPartialTextureData(float width, float height, int index, unsigned bytesPerPixel, unsigned int r, unsigned int g, unsigned int b, unsigned int a);
     void LoadTextureData(GLint imageFormat);
 
+    //Loaded Bools
+    bool loadedModel = false;
+    bool loadedTexture = false;
+
 private: 
     string name;
 
@@ -78,8 +82,6 @@ private:
     glm::mat4 ScaleMatrix = glm::mat4(1.0f);
     glm::mat4 RotationMatrix = glm::mat4(1.0f);
 
-    //Loaded Bools
-    bool loadedModel = false;
-    bool loadedTexture = false;
+    
 };
 
