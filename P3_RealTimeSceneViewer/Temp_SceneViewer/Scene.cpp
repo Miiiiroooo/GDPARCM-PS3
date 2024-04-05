@@ -3,12 +3,28 @@
 Scene::Scene(int id) : id(id)
 {
 	isAlreadyLoaded = false;
+	isDirty = true;
 	loadingProgress = 0.f;
 }
 
 Scene::~Scene()
 {
 	UnloadScene();
+}
+
+void Scene::LoadAllResourcesToOpenGL()
+{
+	for (auto model : modelsList)
+	{
+		model->LoadModelData();
+	}
+
+	for (auto texture : texturesList)
+	{
+		texture->LoadTextureData(GL_RGBA); 
+	}
+
+	isDirty = false;
 }
 
 void Scene::UnloadScene()
@@ -36,4 +52,7 @@ void Scene::UnloadScene()
 
 	objectsList.clear(); 
 	objectsList.shrink_to_fit(); 
+
+	isAlreadyLoaded = false;
+	isDirty = true;
 }

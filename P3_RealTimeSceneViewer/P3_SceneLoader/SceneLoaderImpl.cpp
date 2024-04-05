@@ -50,7 +50,7 @@ grpc::Status SceneLoaderImpl::LoadModelsInScene(grpc::ServerContext* context, co
 		ServerSemaphore::sceneProgressSem.release(); 
 	}
 
-	std::cout << "STATUS OK \n";
+	std::cout << "STATUS OK ON " << sceneID_str << "\n";
 
 	return grpc::Status::OK;
 }
@@ -94,7 +94,7 @@ grpc::Status SceneLoaderImpl::LoadTexturesInScene(grpc::ServerContext* context, 
 		ServerSemaphore::sceneProgressSem.release();
 	}
 
-	std::cout << "STATUS OK \n";
+	std::cout << "STATUS OK ON " << sceneID_str << "\n";
 
 	return grpc::Status::OK;
 }
@@ -115,11 +115,12 @@ grpc::Status SceneLoaderImpl::LoadObjectsInScene(grpc::ServerContext* context, c
 
 	// Initialize random values
 	rapidjson::Value& objDataPtr = doc[sceneID_str.c_str()]["Objects"];
-	InitializeRandomizers(sceneID); 
+	InitializeRandomizers(sceneID);
+	std::mt19937* gen = randGeneratorsMap[sceneID]; 
 
 	int minNum = objDataPtr["Number"][0].GetInt();
 	int maxNum = objDataPtr["Number"][1].GetInt();
-	int randNum = Utils::GetRandomInt(minNum, maxNum);
+	int randNum = Utils::GetRandomInt(minNum, maxNum, gen);
 
 	ServerSemaphore::sceneProgressSem.acquire();
 	scenesProgressMap[sceneID].objectsMaxProgress = randNum;
@@ -139,7 +140,7 @@ grpc::Status SceneLoaderImpl::LoadObjectsInScene(grpc::ServerContext* context, c
 	float minRotZ = objDataPtr["Rotations"]["randZ"][0].GetFloat();
 	float maxRotZ = objDataPtr["Rotations"]["randZ"][1].GetFloat();
 
-	std::cout << "LOADING OBJECTS ON" << sceneID << "\n";
+	std::cout << "LOADING OBJECTS ON " << sceneID_str << "\n";
 
 
 	// Initialize each object based on random values
@@ -153,14 +154,12 @@ grpc::Status SceneLoaderImpl::LoadObjectsInScene(grpc::ServerContext* context, c
 		}
 
 		// Prepare to stream the data of the object
-		int randModelIndex = Utils::GetRandomInt(0, modelNamesList.size() - 1);
+		int randModelIndex = Utils::GetRandomInt(0, modelNamesList.size() - 1, gen); 
 		std::string modelName = modelNamesList[randModelIndex];
 
 		float scaleX = objDataPtr["Scalings"][modelName.c_str()][0].GetFloat();
 		float scaleY = objDataPtr["Scalings"][modelName.c_str()][1].GetFloat();
 		float scaleZ = objDataPtr["Scalings"][modelName.c_str()][2].GetFloat();
-
-		std::mt19937* gen = randGeneratorsMap[sceneID];
 
 		Vector3* pos = new Vector3();
 		pos->set_x(Utils::GetRandomFloat(minPosX, maxPosX, gen));
@@ -192,7 +191,7 @@ grpc::Status SceneLoaderImpl::LoadObjectsInScene(grpc::ServerContext* context, c
 		ServerSemaphore::sceneProgressSem.release();
 	}
 
-	std::cout << "STATUS OK \n";
+	std::cout << "STATUS OK ON " << sceneID_str << "\n";
 
 	return grpc::Status::OK; 
 }

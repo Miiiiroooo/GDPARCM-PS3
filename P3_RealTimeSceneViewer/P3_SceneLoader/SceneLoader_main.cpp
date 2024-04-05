@@ -20,9 +20,9 @@ int main()
 	grpc::ServerBuilder builder; 
 
 	std::cout << "SETTING UP SERVER\n"; 
-	grpc::ResourceQuota newQuota; 
+	/*grpc::ResourceQuota newQuota; 
 	newQuota.SetMaxThreads(5); 
-	builder.SetResourceQuota(newQuota); 
+	builder.SetResourceQuota(newQuota); */
 	builder.AddListeningPort(server_adr, grpc::InsecureServerCredentials()); 
 	builder.RegisterService(&loader); 
 

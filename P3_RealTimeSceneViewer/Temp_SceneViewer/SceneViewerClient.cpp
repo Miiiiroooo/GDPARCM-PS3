@@ -64,12 +64,12 @@ void SceneViewerClient::LoadModelsInScene(int id)
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
-        for (auto ref : currentScene->modelsList)
+        /*for (auto ref : currentScene->modelsList)
         {
             ref->LoadModelData();
-        }
+        }*/
 
-        std::cout << "SUCCESS: MODELS CREATED\n";
+        std::cout << "SUCCESS: MODELS CREATED ON SCENE" << std::to_string(id) << "\n";
     }
     else
     {
@@ -142,12 +142,12 @@ void SceneViewerClient::LoadTexturesInScene(int id)
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
-        for (auto ref : currentScene->texturesList)
+        /*for (auto ref : currentScene->texturesList)
         {
             ref->LoadTextureData(textureColorChannels[ref->GetTextureName()]);
-        }
+        }*/
 
-        std::cout << "SUCCESS: TEXTURES CREATED\n";
+        std::cout << "SUCCESS: TEXTURES CREATED ON SCENE" << std::to_string(id) << "\n";
     }
     else
     {
@@ -204,7 +204,7 @@ void SceneViewerClient::LoadObjectsInScene(int id)
     {
         currentScene->isAlreadyLoaded = true;
         currentScene->loadingProgress = 100.f;
-        std::cout << "SUCCESS: OBJECTS CREATED\n";
+        std::cout << "SUCCESS: OBJECTS CREATED ON SCENE" << std::to_string(id) << "\n";
     }
     else
     {
