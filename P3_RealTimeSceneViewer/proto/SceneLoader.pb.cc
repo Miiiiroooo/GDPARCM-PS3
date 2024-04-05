@@ -84,8 +84,8 @@ struct PixelDataDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PixelDataDefaultTypeInternal _PixelData_default_instance_;
 PROTOBUF_CONSTEXPR TextureData::TextureData(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.texturename_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.pixeldata_)*/nullptr
+    /*decltype(_impl_.pixeldatabatch_)*/{}
+  , /*decltype(_impl_.texturename_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.width_)*/0
   , /*decltype(_impl_.height_)*/0
   , /*decltype(_impl_.hasalpha_)*/false
@@ -208,7 +208,7 @@ const uint32_t TableStruct_proto_2fSceneLoader_2eproto::offsets[] PROTOBUF_SECTI
   PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.height_),
   PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.hasalpha_),
   PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.pixelindex_),
-  PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.pixeldata_),
+  PROTOBUF_FIELD_OFFSET(::TextureData, _impl_.pixeldatabatch_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::ObjectData, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -273,25 +273,25 @@ const char descriptor_table_protodef_proto_2fSceneLoader_2eproto[] PROTOBUF_SECT
   "\"N\n\tModelData\022\021\n\tmodelName\030\001 \001(\t\022\022\n\nvDat"
   "aIndex\030\002 \001(\005\022\032\n\005vData\030\003 \001(\0132\013.VertexData"
   "\"7\n\tPixelData\022\t\n\001r\030\001 \001(\r\022\t\n\001g\030\002 \001(\r\022\t\n\001b"
-  "\030\003 \001(\r\022\t\n\001a\030\004 \001(\r\"\206\001\n\013TextureData\022\023\n\013tex"
+  "\030\003 \001(\r\022\t\n\001a\030\004 \001(\r\"\213\001\n\013TextureData\022\023\n\013tex"
   "tureName\030\001 \001(\t\022\r\n\005width\030\002 \001(\005\022\016\n\006height\030"
   "\003 \001(\005\022\020\n\010hasAlpha\030\004 \001(\010\022\022\n\npixelIndex\030\005 "
-  "\001(\005\022\035\n\tpixelData\030\006 \001(\0132\n.PixelData\"\205\001\n\nO"
-  "bjectData\022\021\n\tmodelName\030\001 \001(\t\022\023\n\013textureN"
-  "ame\030\002 \001(\t\022\032\n\010position\030\003 \001(\0132\010.Vector3\022\032\n"
-  "\010rotation\030\004 \001(\0132\010.Vector3\022\027\n\005scale\030\005 \001(\013"
-  "2\010.Vector3\"\031\n\010IntValue\022\r\n\005value\030\001 \001(\005\"\033\n"
-  "\nFloatValue\022\r\n\005value\030\001 \001(\002\"\007\n\005Empty2\311\001\n\013"
-  "SceneLoader\022,\n\021LoadModelsInScene\022\t.IntVa"
-  "lue\032\n.ModelData0\001\0220\n\023LoadTexturesInScene"
-  "\022\t.IntValue\032\014.TextureData0\001\022.\n\022LoadObjec"
-  "tsInScene\022\t.IntValue\032\013.ObjectData0\001\022*\n\020G"
-  "etSceneProgress\022\t.IntValue\032\013.FloatValueb"
-  "\006proto3"
+  "\001(\005\022\"\n\016pixelDataBatch\030\006 \003(\0132\n.PixelData\""
+  "\205\001\n\nObjectData\022\021\n\tmodelName\030\001 \001(\t\022\023\n\013tex"
+  "tureName\030\002 \001(\t\022\032\n\010position\030\003 \001(\0132\010.Vecto"
+  "r3\022\032\n\010rotation\030\004 \001(\0132\010.Vector3\022\027\n\005scale\030"
+  "\005 \001(\0132\010.Vector3\"\031\n\010IntValue\022\r\n\005value\030\001 \001"
+  "(\005\"\033\n\nFloatValue\022\r\n\005value\030\001 \001(\002\"\007\n\005Empty"
+  "2\311\001\n\013SceneLoader\022,\n\021LoadModelsInScene\022\t."
+  "IntValue\032\n.ModelData0\001\0220\n\023LoadTexturesIn"
+  "Scene\022\t.IntValue\032\014.TextureData0\001\022.\n\022Load"
+  "ObjectsInScene\022\t.IntValue\032\013.ObjectData0\001"
+  "\022*\n\020GetSceneProgress\022\t.IntValue\032\013.FloatV"
+  "alueb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_proto_2fSceneLoader_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_proto_2fSceneLoader_2eproto = {
-    false, false, 847, descriptor_table_protodef_proto_2fSceneLoader_2eproto,
+    false, false, 852, descriptor_table_protodef_proto_2fSceneLoader_2eproto,
     "proto/SceneLoader.proto",
     &descriptor_table_proto_2fSceneLoader_2eproto_once, nullptr, 0, 9,
     schemas, file_default_instances, TableStruct_proto_2fSceneLoader_2eproto::offsets,
@@ -1432,13 +1432,8 @@ void PixelData::InternalSwap(PixelData* other) {
 
 class TextureData::_Internal {
  public:
-  static const ::PixelData& pixeldata(const TextureData* msg);
 };
 
-const ::PixelData&
-TextureData::_Internal::pixeldata(const TextureData* msg) {
-  return *msg->_impl_.pixeldata_;
-}
 TextureData::TextureData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -1449,8 +1444,8 @@ TextureData::TextureData(const TextureData& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   TextureData* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.texturename_){}
-    , decltype(_impl_.pixeldata_){nullptr}
+      decltype(_impl_.pixeldatabatch_){from._impl_.pixeldatabatch_}
+    , decltype(_impl_.texturename_){}
     , decltype(_impl_.width_){}
     , decltype(_impl_.height_){}
     , decltype(_impl_.hasalpha_){}
@@ -1466,9 +1461,6 @@ TextureData::TextureData(const TextureData& from)
     _this->_impl_.texturename_.Set(from._internal_texturename(), 
       _this->GetArenaForAllocation());
   }
-  if (from._internal_has_pixeldata()) {
-    _this->_impl_.pixeldata_ = new ::PixelData(*from._impl_.pixeldata_);
-  }
   ::memcpy(&_impl_.width_, &from._impl_.width_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.pixelindex_) -
     reinterpret_cast<char*>(&_impl_.width_)) + sizeof(_impl_.pixelindex_));
@@ -1480,8 +1472,8 @@ inline void TextureData::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.texturename_){}
-    , decltype(_impl_.pixeldata_){nullptr}
+      decltype(_impl_.pixeldatabatch_){arena}
+    , decltype(_impl_.texturename_){}
     , decltype(_impl_.width_){0}
     , decltype(_impl_.height_){0}
     , decltype(_impl_.hasalpha_){false}
@@ -1505,8 +1497,8 @@ TextureData::~TextureData() {
 
 inline void TextureData::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.pixeldatabatch_.~RepeatedPtrField();
   _impl_.texturename_.Destroy();
-  if (this != internal_default_instance()) delete _impl_.pixeldata_;
 }
 
 void TextureData::SetCachedSize(int size) const {
@@ -1519,11 +1511,8 @@ void TextureData::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  _impl_.pixeldatabatch_.Clear();
   _impl_.texturename_.ClearToEmpty();
-  if (GetArenaForAllocation() == nullptr && _impl_.pixeldata_ != nullptr) {
-    delete _impl_.pixeldata_;
-  }
-  _impl_.pixeldata_ = nullptr;
   ::memset(&_impl_.width_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.pixelindex_) -
       reinterpret_cast<char*>(&_impl_.width_)) + sizeof(_impl_.pixelindex_));
@@ -1578,11 +1567,16 @@ const char* TextureData::_InternalParse(const char* ptr, ::_pbi::ParseContext* c
         } else
           goto handle_unusual;
         continue;
-      // .PixelData pixelData = 6;
+      // repeated .PixelData pixelDataBatch = 6;
       case 6:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
-          ptr = ctx->ParseMessage(_internal_mutable_pixeldata(), ptr);
-          CHK_(ptr);
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_pixeldatabatch(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<50>(ptr));
         } else
           goto handle_unusual;
         continue;
@@ -1649,11 +1643,12 @@ uint8_t* TextureData::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(5, this->_internal_pixelindex(), target);
   }
 
-  // .PixelData pixelData = 6;
-  if (this->_internal_has_pixeldata()) {
+  // repeated .PixelData pixelDataBatch = 6;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_pixeldatabatch_size()); i < n; i++) {
+    const auto& repfield = this->_internal_pixeldatabatch(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(6, _Internal::pixeldata(this),
-        _Internal::pixeldata(this).GetCachedSize(), target, stream);
+        InternalWriteMessage(6, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1672,18 +1667,18 @@ size_t TextureData::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  // repeated .PixelData pixelDataBatch = 6;
+  total_size += 1UL * this->_internal_pixeldatabatch_size();
+  for (const auto& msg : this->_impl_.pixeldatabatch_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
   // string textureName = 1;
   if (!this->_internal_texturename().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_texturename());
-  }
-
-  // .PixelData pixelData = 6;
-  if (this->_internal_has_pixeldata()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.pixeldata_);
   }
 
   // int32 width = 2;
@@ -1724,12 +1719,9 @@ void TextureData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PR
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  _this->_impl_.pixeldatabatch_.MergeFrom(from._impl_.pixeldatabatch_);
   if (!from._internal_texturename().empty()) {
     _this->_internal_set_texturename(from._internal_texturename());
-  }
-  if (from._internal_has_pixeldata()) {
-    _this->_internal_mutable_pixeldata()->::PixelData::MergeFrom(
-        from._internal_pixeldata());
   }
   if (from._internal_width() != 0) {
     _this->_internal_set_width(from._internal_width());
@@ -1762,6 +1754,7 @@ void TextureData::InternalSwap(TextureData* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.pixeldatabatch_.InternalSwap(&other->_impl_.pixeldatabatch_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.texturename_, lhs_arena,
       &other->_impl_.texturename_, rhs_arena
@@ -1769,9 +1762,9 @@ void TextureData::InternalSwap(TextureData* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(TextureData, _impl_.pixelindex_)
       + sizeof(TextureData::_impl_.pixelindex_)
-      - PROTOBUF_FIELD_OFFSET(TextureData, _impl_.pixeldata_)>(
-          reinterpret_cast<char*>(&_impl_.pixeldata_),
-          reinterpret_cast<char*>(&other->_impl_.pixeldata_));
+      - PROTOBUF_FIELD_OFFSET(TextureData, _impl_.width_)>(
+          reinterpret_cast<char*>(&_impl_.width_),
+          reinterpret_cast<char*>(&other->_impl_.width_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata TextureData::GetMetadata() const {

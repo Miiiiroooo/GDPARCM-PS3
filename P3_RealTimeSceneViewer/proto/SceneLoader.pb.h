@@ -941,13 +941,31 @@ class TextureData final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kPixelDataBatchFieldNumber = 6,
     kTextureNameFieldNumber = 1,
-    kPixelDataFieldNumber = 6,
     kWidthFieldNumber = 2,
     kHeightFieldNumber = 3,
     kHasAlphaFieldNumber = 4,
     kPixelIndexFieldNumber = 5,
   };
+  // repeated .PixelData pixelDataBatch = 6;
+  int pixeldatabatch_size() const;
+  private:
+  int _internal_pixeldatabatch_size() const;
+  public:
+  void clear_pixeldatabatch();
+  ::PixelData* mutable_pixeldatabatch(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::PixelData >*
+      mutable_pixeldatabatch();
+  private:
+  const ::PixelData& _internal_pixeldatabatch(int index) const;
+  ::PixelData* _internal_add_pixeldatabatch();
+  public:
+  const ::PixelData& pixeldatabatch(int index) const;
+  ::PixelData* add_pixeldatabatch();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::PixelData >&
+      pixeldatabatch() const;
+
   // string textureName = 1;
   void clear_texturename();
   const std::string& texturename() const;
@@ -961,24 +979,6 @@ class TextureData final :
   inline PROTOBUF_ALWAYS_INLINE void _internal_set_texturename(const std::string& value);
   std::string* _internal_mutable_texturename();
   public:
-
-  // .PixelData pixelData = 6;
-  bool has_pixeldata() const;
-  private:
-  bool _internal_has_pixeldata() const;
-  public:
-  void clear_pixeldata();
-  const ::PixelData& pixeldata() const;
-  PROTOBUF_NODISCARD ::PixelData* release_pixeldata();
-  ::PixelData* mutable_pixeldata();
-  void set_allocated_pixeldata(::PixelData* pixeldata);
-  private:
-  const ::PixelData& _internal_pixeldata() const;
-  ::PixelData* _internal_mutable_pixeldata();
-  public:
-  void unsafe_arena_set_allocated_pixeldata(
-      ::PixelData* pixeldata);
-  ::PixelData* unsafe_arena_release_pixeldata();
 
   // int32 width = 2;
   void clear_width();
@@ -1024,8 +1024,8 @@ class TextureData final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::PixelData > pixeldatabatch_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr texturename_;
-    ::PixelData* pixeldata_;
     int32_t width_;
     int32_t height_;
     bool hasalpha_;
@@ -2355,94 +2355,44 @@ inline void TextureData::set_pixelindex(int32_t value) {
   // @@protoc_insertion_point(field_set:TextureData.pixelIndex)
 }
 
-// .PixelData pixelData = 6;
-inline bool TextureData::_internal_has_pixeldata() const {
-  return this != internal_default_instance() && _impl_.pixeldata_ != nullptr;
+// repeated .PixelData pixelDataBatch = 6;
+inline int TextureData::_internal_pixeldatabatch_size() const {
+  return _impl_.pixeldatabatch_.size();
 }
-inline bool TextureData::has_pixeldata() const {
-  return _internal_has_pixeldata();
+inline int TextureData::pixeldatabatch_size() const {
+  return _internal_pixeldatabatch_size();
 }
-inline void TextureData::clear_pixeldata() {
-  if (GetArenaForAllocation() == nullptr && _impl_.pixeldata_ != nullptr) {
-    delete _impl_.pixeldata_;
-  }
-  _impl_.pixeldata_ = nullptr;
+inline void TextureData::clear_pixeldatabatch() {
+  _impl_.pixeldatabatch_.Clear();
 }
-inline const ::PixelData& TextureData::_internal_pixeldata() const {
-  const ::PixelData* p = _impl_.pixeldata_;
-  return p != nullptr ? *p : reinterpret_cast<const ::PixelData&>(
-      ::_PixelData_default_instance_);
+inline ::PixelData* TextureData::mutable_pixeldatabatch(int index) {
+  // @@protoc_insertion_point(field_mutable:TextureData.pixelDataBatch)
+  return _impl_.pixeldatabatch_.Mutable(index);
 }
-inline const ::PixelData& TextureData::pixeldata() const {
-  // @@protoc_insertion_point(field_get:TextureData.pixelData)
-  return _internal_pixeldata();
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::PixelData >*
+TextureData::mutable_pixeldatabatch() {
+  // @@protoc_insertion_point(field_mutable_list:TextureData.pixelDataBatch)
+  return &_impl_.pixeldatabatch_;
 }
-inline void TextureData::unsafe_arena_set_allocated_pixeldata(
-    ::PixelData* pixeldata) {
-  if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.pixeldata_);
-  }
-  _impl_.pixeldata_ = pixeldata;
-  if (pixeldata) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:TextureData.pixelData)
+inline const ::PixelData& TextureData::_internal_pixeldatabatch(int index) const {
+  return _impl_.pixeldatabatch_.Get(index);
 }
-inline ::PixelData* TextureData::release_pixeldata() {
-  
-  ::PixelData* temp = _impl_.pixeldata_;
-  _impl_.pixeldata_ = nullptr;
-#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  if (GetArenaForAllocation() == nullptr) { delete old; }
-#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
-  if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  }
-#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
-  return temp;
+inline const ::PixelData& TextureData::pixeldatabatch(int index) const {
+  // @@protoc_insertion_point(field_get:TextureData.pixelDataBatch)
+  return _internal_pixeldatabatch(index);
 }
-inline ::PixelData* TextureData::unsafe_arena_release_pixeldata() {
-  // @@protoc_insertion_point(field_release:TextureData.pixelData)
-  
-  ::PixelData* temp = _impl_.pixeldata_;
-  _impl_.pixeldata_ = nullptr;
-  return temp;
+inline ::PixelData* TextureData::_internal_add_pixeldatabatch() {
+  return _impl_.pixeldatabatch_.Add();
 }
-inline ::PixelData* TextureData::_internal_mutable_pixeldata() {
-  
-  if (_impl_.pixeldata_ == nullptr) {
-    auto* p = CreateMaybeMessage<::PixelData>(GetArenaForAllocation());
-    _impl_.pixeldata_ = p;
-  }
-  return _impl_.pixeldata_;
+inline ::PixelData* TextureData::add_pixeldatabatch() {
+  ::PixelData* _add = _internal_add_pixeldatabatch();
+  // @@protoc_insertion_point(field_add:TextureData.pixelDataBatch)
+  return _add;
 }
-inline ::PixelData* TextureData::mutable_pixeldata() {
-  ::PixelData* _msg = _internal_mutable_pixeldata();
-  // @@protoc_insertion_point(field_mutable:TextureData.pixelData)
-  return _msg;
-}
-inline void TextureData::set_allocated_pixeldata(::PixelData* pixeldata) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  if (message_arena == nullptr) {
-    delete _impl_.pixeldata_;
-  }
-  if (pixeldata) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(pixeldata);
-    if (message_arena != submessage_arena) {
-      pixeldata = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, pixeldata, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  _impl_.pixeldata_ = pixeldata;
-  // @@protoc_insertion_point(field_set_allocated:TextureData.pixelData)
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::PixelData >&
+TextureData::pixeldatabatch() const {
+  // @@protoc_insertion_point(field_list:TextureData.pixelDataBatch)
+  return _impl_.pixeldatabatch_;
 }
 
 // -------------------------------------------------------------------

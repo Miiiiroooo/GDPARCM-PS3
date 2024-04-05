@@ -155,6 +155,7 @@
     <ClCompile Include="..\common-classes\Utils.cpp" />
     <ClCompile Include="..\proto\SceneLoader.grpc.pb.cc" />
     <ClCompile Include="..\proto\SceneLoader.pb.cc" />
+    <ClCompile Include="LoadSceneTask.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneViewerClient.cpp" />
     <ClCompile Include="temp_main.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="..\common-classes\Utils.h" />
     <ClInclude Include="..\proto\SceneLoader.grpc.pb.h" />
     <ClInclude Include="..\proto\SceneLoader.pb.h" />
+    <ClInclude Include="LoadSceneTask.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneViewerClient.h" />
   </ItemGroup>

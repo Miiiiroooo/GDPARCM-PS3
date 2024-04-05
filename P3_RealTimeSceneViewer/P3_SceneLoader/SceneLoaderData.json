@@ -19,7 +19,7 @@
 
         "Objects" :
         {
-            "Number" : [5, 9],
+            "Number" : [10, 20],
 
             "Positions" :
             {
@@ -49,17 +49,36 @@
     {
         "Models" :
         {
-
+            "Kaisa" : "../3D/kaisa.obj"
         },
 
         "Textures" :
         {
-
+            "Kaisa" : "../3D/kaisa.png"
         },
 
         "Objects" :
         {
+            "Number" : [12, 15],
 
+            "Positions" :
+            {
+                "randX" : [-10.0, 10.0],
+                "randY" : [-5.0, 5.0],
+                "randZ" : [15.0, 50.0]
+            },
+
+            "Rotations" :
+            {
+                "randX" : [0.0, 0.0],
+                "randY" : [0.0, 359.0],
+                "randZ" : [0.0, 0.0]
+            },
+
+            "Scalings" :
+            {
+                "Kaisa" : [0.02, 0.02, 0.02]
+            }
         }
     },
 

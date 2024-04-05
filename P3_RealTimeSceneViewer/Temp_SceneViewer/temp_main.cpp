@@ -21,6 +21,8 @@
 #include <grpcpp/grpcpp.h>
 #include "../proto/SceneLoader.grpc.pb.h"
 #include "SceneViewerClient.h"
+#include "multithreading/ThreadPoolScheduler.h"
+#include "LoadSceneTask.h"
 
 
 #pragma region Global Variables
@@ -77,14 +79,29 @@ int main(void)
 
 
     // THESE ARE THE IMPORTANT ONES
-    Scene* scene1 = new Scene(1); 
+    std::vector<Scene*> scenesList = {
+        new Scene(1),
+        new Scene(2),
+    };
+
+    ThreadPoolScheduler::GetInstance()->Initialize(2); 
+    ThreadPoolScheduler::GetInstance()->StartScheduler(); 
+    ThreadPoolScheduler::GetInstance()->start(); 
 
     std::string server_adr = "localhost:50052"; 
     SceneViewerClient client(grpc::CreateChannel(server_adr, grpc::InsecureChannelCredentials())); 
-    client.scenesList.push_back(scene1); 
-    client.LoadModelsInScene(1); 
-    client.LoadTexturesInScene(1); 
-    client.LoadObjectsInScene(1); 
+
+    /*client.scenesList.push_back(scenesList[0]);
+    client.LoadModelsInScene(1);
+    client.LoadTexturesInScene(1);
+    client.LoadObjectsInScene(1);*/
+
+    for (auto scene : scenesList)
+    {
+        client.scenesList.push_back(scene); 
+        LoadSceneTask* task = new LoadSceneTask(scene->id, &client);
+        ThreadPoolScheduler::GetInstance()->ScheduleTask(task);
+    }    
     // END
 
 
@@ -164,19 +181,31 @@ int main(void)
 
 
         // Iterate through modelsList
-        for (Model3D* model : scene1->objectsList)
+        for (auto scene : scenesList) 
         {
-            glm::mat4 transformationMatrix = model->GetTransformationMatrix();
-            glm::mat4 viewMatrix = CreateViewMatrix();
+            if (!scene->isAlreadyLoaded)
+            {
+                continue;
+            }
 
-            ComputeVerticesWithShaders(shadersList[0]->GetShaderProgram(), transformationMatrix, viewMatrix);
-            ComputeFragmentsWithShaders(shadersList[0]->GetShaderProgram(), model->texture, model->color);
+            if (scene->isDirty)
+            {
+                scene->LoadAllResourcesToOpenGL();
+            }
 
-            glUseProgram(shadersList[0]->GetShaderProgram());
-            glBindVertexArray(model->objRef->GetVAO());
-            glDrawArrays(GL_TRIANGLES, 0, model->objRef->GetFullVertexData().size() / 8);
+            for (Model3D* model : scene->objectsList) 
+            {
+                glm::mat4 transformationMatrix = model->GetTransformationMatrix(); 
+                glm::mat4 viewMatrix = CreateViewMatrix(); 
+
+                ComputeVerticesWithShaders(shadersList[0]->GetShaderProgram(), transformationMatrix, viewMatrix); 
+                ComputeFragmentsWithShaders(shadersList[0]->GetShaderProgram(), model->texture, model->color); 
+
+                glUseProgram(shadersList[0]->GetShaderProgram()); 
+                glBindVertexArray(model->objRef->GetVAO()); 
+                glDrawArrays(GL_TRIANGLES, 0, model->objRef->GetFullVertexData().size() / 8); 
+            }
         }
-
 
         glfwSwapBuffers(window);
         glfwPollEvents();

@@ -64,12 +64,12 @@ void SceneViewerClient::LoadModelsInScene(int id)
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
-        for (auto ref : currentScene->modelsList)
+        /*for (auto ref : currentScene->modelsList)
         {
             ref->LoadModelData();
-        }
+        }*/
 
-        std::cout << "SUCCESS: MODELS CREATED\n";
+        std::cout << "SUCCESS: MODELS CREATED ON SCENE" << std::to_string(id) << "\n";
     }
     else
     {
@@ -109,23 +109,28 @@ void SceneViewerClient::LoadTexturesInScene(int id)
         float width = texData.width();
         float height = texData.height();
         GLint imageFormat = texData.hasalpha() ? GL_RGBA : GL_RGB;
-        unsigned bytePerPixel = texData.hasalpha() ? 4 : 3;
-        int index = texData.pixelindex() * bytePerPixel;
+        unsigned bytesPerPixel = texData.hasalpha() ? 4 : 3; 
+        int index = texData.pixelindex() * bytesPerPixel; 
 
         auto textureItr = std::find_if(currentScene->texturesList.begin(), currentScene->texturesList.end(), [&](Texture* x) { 
             return x->GetTextureName() == name; 
             });
 
+        Texture* ref = NULL;
         if (textureItr != currentScene->texturesList.end())
         {
-            Texture* ref = *textureItr;
-            ref->InsertPartialData(index, bytePerPixel, texData.pixeldata().r(), texData.pixeldata().g(), texData.pixeldata().b(), texData.pixeldata().a());
+            ref = *textureItr;
         }
         else
         {
-            Texture* ref = new Texture(name, width, height);
+            ref = new Texture(name, width, height);
             currentScene->texturesList.push_back(ref); 
-            ref->InsertPartialData(index, bytePerPixel, texData.pixeldata().r(), texData.pixeldata().g(), texData.pixeldata().b(), texData.pixeldata().a()); 
+        }
+
+        for (int i = 0; i < texData.pixeldatabatch_size(); i++)
+        {
+            PixelData pixel = texData.pixeldatabatch(i);
+            ref->InsertPartialData(index + i * bytesPerPixel, bytesPerPixel, pixel.r(), pixel.g(), pixel.b(), pixel.a()); 
         }
 
         if (!textureColorChannels.contains(name))
@@ -137,12 +142,12 @@ void SceneViewerClient::LoadTexturesInScene(int id)
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
-        for (auto ref : currentScene->texturesList)
+        /*for (auto ref : currentScene->texturesList)
         {
             ref->LoadTextureData(textureColorChannels[ref->GetTextureName()]);
-        }
+        }*/
 
-        std::cout << "SUCCESS: TEXTURES CREATED\n";
+        std::cout << "SUCCESS: TEXTURES CREATED ON SCENE" << std::to_string(id) << "\n";
     }
     else
     {
@@ -197,7 +202,9 @@ void SceneViewerClient::LoadObjectsInScene(int id)
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
-        std::cout << "SUCCESS: OBJECTS CREATED\n";
+        currentScene->isAlreadyLoaded = true;
+        currentScene->loadingProgress = 100.f;
+        std::cout << "SUCCESS: OBJECTS CREATED ON SCENE" << std::to_string(id) << "\n";
     }
     else
     {

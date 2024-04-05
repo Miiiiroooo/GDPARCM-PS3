@@ -1,10 +1,10 @@
 #include "StreamTextureTask.h"
 #include "opengl/Texture.h"
 
-StreamTextureTask::StreamTextureTask(int sceneID, int max, std::string textureName, std::string texturePath, grpc::ServerWriter<TextureData>* writer)
-	: sceneID(sceneID), max(max), textureName(textureName), texturePath(texturePath), writer(writer)
+StreamTextureTask::StreamTextureTask(int sceneID, int maxBatchSize, int maxThreads, std::string textureName, std::string texturePath, grpc::ServerWriter<TextureData>* writer)
+	: sceneID(sceneID), maxBatchSize(maxBatchSize), maxThreads(maxThreads), textureName(textureName), texturePath(texturePath), writer(writer)
 {
-	switch (sceneID)
+	/*switch (sceneID)
 	{
 		case 1:
 			guard = &ServerSemaphore::streamTextureGuardSem1;
@@ -29,7 +29,7 @@ StreamTextureTask::StreamTextureTask(int sceneID, int max, std::string textureNa
 		default:
 			delete this;
 			break;
-	}
+	}*/
 }
 
 StreamTextureTask::~StreamTextureTask()
@@ -44,40 +44,49 @@ void StreamTextureTask::ExecuteTask()
 	unsigned char* tex_bytes = texture->GetTextureBytes(); 
 
 	int width = texture->GetWidth(); 
-	int height = texture->GetHeight(); 
+	int height = texture->GetHeight();
+	unsigned bytesPerPixel = 4;
 
 	int index = 0;
 	for (int i = 0; i < width; i++)
 	{
-		for (int j = 0; j < height; j++)
+		for (int j = 0; j < height; j += maxBatchSize)
 		{
-			unsigned bytePerPixel = 4;
-			unsigned char* pixelOffset = tex_bytes + (j + width * i) * bytePerPixel;
-			unsigned int r = (unsigned int)(pixelOffset[0] & 0xff);
-			unsigned int g = (unsigned int)(pixelOffset[1] & 0xff);
-			unsigned int b = (unsigned int)(pixelOffset[2] & 0xff);
-			unsigned int a = (unsigned int)(pixelOffset[3] & 0xff);
-
-			PixelData* pixelData = new PixelData();
-			pixelData->set_r(r);
-			pixelData->set_g(g);
-			pixelData->set_b(b);
-			pixelData->set_a(a);
+			unsigned char* pixelOffset = tex_bytes + (j + width * i) * bytesPerPixel;
 
 			TextureData textureData = TextureData();
-			textureData.set_texturename(textureName); 
+			textureData.set_texturename(textureName);
 			textureData.set_width(width);
 			textureData.set_height(height);
 			textureData.set_hasalpha(true);
 			textureData.set_pixelindex(index);
-			textureData.set_allocated_pixeldata(pixelData);
+
+			for (int k = 0; k < maxBatchSize * bytesPerPixel; k += bytesPerPixel)
+			{
+				if (j + textureData.pixeldatabatch_size() == height)
+				{
+					break;
+				}
+
+				unsigned int r = (unsigned int)(pixelOffset[k] & 0xff);
+				unsigned int g = (unsigned int)(pixelOffset[k + 1] & 0xff);
+				unsigned int b = (unsigned int)(pixelOffset[k + 2] & 0xff);
+				unsigned int a = (unsigned int)(pixelOffset[k + 3] & 0xff);
+
+				PixelData* pixelData = textureData.add_pixeldatabatch();
+				pixelData->set_r(r);
+				pixelData->set_g(g);
+				pixelData->set_b(b);
+				pixelData->set_a(a);
+			}
+
 			writer->Write(textureData);
 
-			index++;
+			index += maxBatchSize;
 		}
 	}
 
-	guard->acquire();
+	/*guard->acquire();
 	if (!ServerSemaphore::finishedStreamTextureMap.contains(sceneID))
 	{
 		ServerSemaphore::finishedStreamTextureMap[sceneID] = 1;
@@ -91,7 +100,7 @@ void StreamTextureTask::ExecuteTask()
 	{
 		finishedSem->release();
 	}
-	guard->release();
+	guard->release();*/
 
 	delete this;
 }

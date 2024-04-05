@@ -1,11 +1,10 @@
 #include "SceneLoaderImpl.h"
-#include <rapidjson/document.h>
 #include <rapidjson/filereadstream.h>
-
 #include "multithreading/ThreadPoolScheduler.h"
 #include "StreamTextureTask.h"
 #include "ServerSemaphore.h"
 #include "Utils.h"
+
 
 SceneLoaderImpl::SceneLoaderImpl()
 {
@@ -15,32 +14,22 @@ SceneLoaderImpl::SceneLoaderImpl()
 grpc::Status SceneLoaderImpl::LoadModelsInScene(grpc::ServerContext* context, const IntValue* request, grpc::ServerWriter<ModelData>* writer)
 {
 	// Parse JSON data for loading
-	ServerSemaphore::jsonFileSem.acquire();
-	FILE* inFile; 
-	fopen_s(&inFile, "SceneLoaderData.json", "rb"); 
-	assert(inFile != NULL); 
-
-	char readBuffer[4096]; 
-	rapidjson::FileReadStream jsonFile(inFile, readBuffer, sizeof(readBuffer)); 
-	rapidjson::Document doc; 
-
-	doc.ParseStream(jsonFile); 
-	fclose(inFile); 
-	ServerSemaphore::jsonFileSem.release();
+	rapidjson::Document doc = ParseJSONData(); 
 
 	// Assign max progress with scene ID
-	std::string sceneID = "Scene" + std::to_string(request->value());
-	rapidjson::Value& model_itr = doc[sceneID.c_str()]["Models"];
+	std::string sceneID_str = "Scene" + std::to_string(request->value());
+	rapidjson::Value& model_itr = doc[sceneID_str.c_str()]["Models"];
 
 	ResetSceneProgress(request->value()); // ensure all previous data is wiped
 	ServerSemaphore::sceneProgressSem.acquire(); 
 	scenesProgressMap[request->value()].modelsMaxProgress = model_itr.GetObj().MemberCount();  
 	ServerSemaphore::sceneProgressSem.release(); 
 
-	std::cout << "LOADING MODELS ON" << sceneID << "\n";
+	std::cout << "LOADING MODELS ON " << sceneID_str << "\n";
 	
+
 	// Loop through each models from JSON data
-	for (rapidjson::Value::ConstMemberIterator data_itr = doc[sceneID.c_str()]["Models"].MemberBegin(); data_itr != doc[sceneID.c_str()]["Models"].MemberEnd(); ++data_itr)
+	for (rapidjson::Value::ConstMemberIterator data_itr = doc[sceneID_str.c_str()]["Models"].MemberBegin(); data_itr != doc[sceneID_str.c_str()]["Models"].MemberEnd(); ++data_itr)
 	{
 		// Check if server did not meet the deadline OR client suddenly disconnected
 		if (context->IsCancelled())
@@ -53,35 +42,7 @@ grpc::Status SceneLoaderImpl::LoadModelsInScene(grpc::ServerContext* context, co
 		std::string modelName = data_itr->name.GetString();
 		std::string modelPath = data_itr->value.GetString();
 		
-		ModelReference* ref = new ModelReference(modelName, modelPath);
-		ref->LoadModel(); 
-		std::vector<float> data = ref->GetFullVertexData(); 
-
-		for (int i = 0; i < data.size(); i += 8) 
-		{
-			Vector3* pos = new Vector3();  
-			pos->set_x(data[i]);  
-			pos->set_y(data[i + 1]);  
-			pos->set_z(data[i + 2]);  
-
-			Vector3* normals = new Vector3();  
-			normals->set_x(data[i + 3]);  
-			normals->set_y(data[i + 4]);  
-			normals->set_z(data[i + 5]); 
-
-			VertexData* vData = new VertexData();  
-			vData->set_allocated_position(pos);  
-			vData->set_allocated_normals(normals);  
-			vData->set_u(data[i + 6]);  
-			vData->set_v(data[i + 7]);  
-
-			ModelData mData;  
-			mData.set_modelname(modelName); 
-			mData.set_vdataindex(i / 8);  
-			mData.set_allocated_vdata(vData);  
-
-			writer->Write(mData);  
-		}
+		StreamModels(modelName, modelPath, writer);
 
 		// Update progress
 		ServerSemaphore::sceneProgressSem.acquire(); 
@@ -89,7 +50,7 @@ grpc::Status SceneLoaderImpl::LoadModelsInScene(grpc::ServerContext* context, co
 		ServerSemaphore::sceneProgressSem.release(); 
 	}
 
-	std::cout << "STATUS OK \n";
+	std::cout << "STATUS OK ON " << sceneID_str << "\n";
 
 	return grpc::Status::OK;
 }
@@ -97,32 +58,22 @@ grpc::Status SceneLoaderImpl::LoadModelsInScene(grpc::ServerContext* context, co
 grpc::Status SceneLoaderImpl::LoadTexturesInScene(grpc::ServerContext* context, const IntValue* request, grpc::ServerWriter<TextureData>* writer)
 {
 	// Parse JSON data for loading
-	ServerSemaphore::jsonFileSem.acquire();
-	FILE* inFile; 
-	fopen_s(&inFile, "SceneLoaderData.json", "rb"); 
-	assert(inFile != NULL);
-
-	char readBuffer[4096];
-	rapidjson::FileReadStream jsonFile(inFile, readBuffer, sizeof(readBuffer));
-	rapidjson::Document doc;
-
-	doc.ParseStream(jsonFile);
-	fclose(inFile);
-	ServerSemaphore::jsonFileSem.release();
+	rapidjson::Document doc = ParseJSONData();
 
 	// Assign max progress with scene ID
-	std::string sceneID = "Scene" + std::to_string(request->value()); 
-	rapidjson::Value& texture_itr = doc[sceneID.c_str()]["Textures"];
+	std::string sceneID_str = "Scene" + std::to_string(request->value()); 
+	rapidjson::Value& texture_itr = doc[sceneID_str.c_str()]["Textures"];
 
 	ServerSemaphore::sceneProgressSem.acquire();
 	int maxTextures = texture_itr.GetObj().MemberCount(); 
 	scenesProgressMap[request->value()].texturesMaxProgress = maxTextures; 
 	ServerSemaphore::sceneProgressSem.release();
 
-	std::cout << "LOADING TEXTURES ON " << sceneID << "\n"; 
+	std::cout << "LOADING TEXTURES ON " << sceneID_str << "\n"; 
+
 
 	// Loop through each textures from JSON data
-	for (rapidjson::Value::ConstMemberIterator data_itr = doc[sceneID.c_str()]["Textures"].MemberBegin(); data_itr != doc[sceneID.c_str()]["Textures"].MemberEnd(); ++data_itr) 
+	for (rapidjson::Value::ConstMemberIterator data_itr = doc[sceneID_str.c_str()]["Textures"].MemberBegin(); data_itr != doc[sceneID_str.c_str()]["Textures"].MemberEnd(); ++data_itr) 
 	{
 		// Check if server did not meet the deadline OR client suddenly disconnected
 		if (context->IsCancelled()) 
@@ -131,53 +82,11 @@ grpc::Status SceneLoaderImpl::LoadTexturesInScene(grpc::ServerContext* context, 
 			return grpc::Status::CANCELLED; 
 		}
 
-		/*std::string textureName = data_itr->name.GetString(); 
-		std::string texturePath = data_itr->value.GetString(); 
-
-		StreamTextureTask* task = new StreamTextureTask(request->value(), maxTextures, textureName, texturePath, writer);
-		ThreadPoolScheduler::GetInstance()->ScheduleTask(task);*/
-
 		// Prepare to stream the data of the texture
 		std::string textureName = data_itr->name.GetString(); 
 		std::string texturePath = data_itr->value.GetString(); 
 
-		Texture* texture = new Texture(textureName, texturePath.c_str()); 
-		texture->LoadTexture(GL_RGBA); 
-		unsigned char* tex_bytes = texture->GetTextureBytes(); 
-
-		int width = texture->GetWidth(); 
-		int height = texture->GetHeight(); 
-
-		int index = 0; 
-		for (int i = 0; i < width; i++) 
-		{
-			for (int j = 0; j < height; j++) 
-			{
-				unsigned bytePerPixel = 4; 
-				unsigned char* pixelOffset = tex_bytes + (j + width * i) * bytePerPixel; 
-				unsigned int r = (unsigned int)(pixelOffset[0] & 0xff); 
-				unsigned int g = (unsigned int)(pixelOffset[1] & 0xff); 
-				unsigned int b = (unsigned int)(pixelOffset[2] & 0xff); 
-				unsigned int a = (unsigned int)(pixelOffset[3] & 0xff); 
-
-				PixelData* pixelData = new PixelData(); 
-				pixelData->set_r(r); 
-				pixelData->set_g(g);  
-				pixelData->set_b(b); 
-				pixelData->set_a(a);  
-
-				TextureData textureData = TextureData();  
-				textureData.set_texturename(textureName); 
-				textureData.set_width(width);  
-				textureData.set_height(height);  
-				textureData.set_hasalpha(true);  
-				textureData.set_pixelindex(index);  
-				textureData.set_allocated_pixeldata(pixelData);  
-				writer->Write(textureData);  
-
-				index++;  
-			}
-		}
+		StreamTextures(textureName, texturePath, writer);
 
 		// Update progress
 		ServerSemaphore::sceneProgressSem.acquire();
@@ -185,28 +94,7 @@ grpc::Status SceneLoaderImpl::LoadTexturesInScene(grpc::ServerContext* context, 
 		ServerSemaphore::sceneProgressSem.release();
 	}
 
-	/*switch (request->value())
-	{
-	case 1:
-		ServerSemaphore::finishedStreamTextureSem1.acquire();
-		break;
-	case 2:
-		ServerSemaphore::finishedStreamTextureSem2.acquire();
-		break;
-	case 3:
-		ServerSemaphore::finishedStreamTextureSem3.acquire();
-		break;
-	case 4:
-		ServerSemaphore::finishedStreamTextureSem4.acquire();
-		break;
-	case 5:
-		ServerSemaphore::finishedStreamTextureSem5.acquire();
-		break;
-	default:
-		break;
-	}*/
-
-	std::cout << "STATUS OK \n";
+	std::cout << "STATUS OK ON " << sceneID_str << "\n";
 
 	return grpc::Status::OK;
 }
@@ -214,36 +102,28 @@ grpc::Status SceneLoaderImpl::LoadTexturesInScene(grpc::ServerContext* context, 
 grpc::Status SceneLoaderImpl::LoadObjectsInScene(grpc::ServerContext* context, const IntValue* request, grpc::ServerWriter<ObjectData>* writer)
 {
 	// Parse JSON data for loading
-	ServerSemaphore::jsonFileSem.acquire(); 
-	FILE* inFile; 
-	fopen_s(&inFile, "SceneLoaderData.json", "rb"); 
-	assert(inFile != NULL); 
-
-	char readBuffer[4096]; 
-	rapidjson::FileReadStream jsonFile(inFile, readBuffer, sizeof(readBuffer)); 
-	rapidjson::Document doc; 
-
-	doc.ParseStream(jsonFile); 
-	fclose(inFile); 
-	ServerSemaphore::jsonFileSem.release(); 
+	rapidjson::Document doc = ParseJSONData();
 
 	// Get all the names of the models in the scene
 	std::vector<std::string> modelNamesList;
-	std::string sceneID = "Scene" + std::to_string(request->value());
-	for (rapidjson::Value::ConstMemberIterator data_itr = doc[sceneID.c_str()]["Models"].MemberBegin(); data_itr != doc[sceneID.c_str()]["Models"].MemberEnd(); ++data_itr)
+	int sceneID = request->value();
+	std::string sceneID_str = "Scene" + std::to_string(sceneID);
+	for (rapidjson::Value::ConstMemberIterator data_itr = doc[sceneID_str.c_str()]["Models"].MemberBegin(); data_itr != doc[sceneID_str.c_str()]["Models"].MemberEnd(); ++data_itr)
 	{
 		modelNamesList.push_back(data_itr->name.GetString());
 	}
 
 	// Initialize random values
-	rapidjson::Value& objDataPtr = doc[sceneID.c_str()]["Objects"];
+	rapidjson::Value& objDataPtr = doc[sceneID_str.c_str()]["Objects"];
+	InitializeRandomizers(sceneID);
+	std::mt19937* gen = randGeneratorsMap[sceneID]; 
 
 	int minNum = objDataPtr["Number"][0].GetInt();
 	int maxNum = objDataPtr["Number"][1].GetInt();
-	int randNum = Utils::GetRandomInt(minNum, maxNum);
+	int randNum = Utils::GetRandomInt(minNum, maxNum, gen);
 
-	ServerSemaphore::sceneProgressSem.acquire(); 
-	scenesProgressMap[request->value()].objectsMaxProgress = randNum;
+	ServerSemaphore::sceneProgressSem.acquire();
+	scenesProgressMap[sceneID].objectsMaxProgress = randNum;
 	ServerSemaphore::sceneProgressSem.release();
 
 	float minPosX = objDataPtr["Positions"]["randX"][0].GetFloat();
@@ -260,57 +140,58 @@ grpc::Status SceneLoaderImpl::LoadObjectsInScene(grpc::ServerContext* context, c
 	float minRotZ = objDataPtr["Rotations"]["randZ"][0].GetFloat();
 	float maxRotZ = objDataPtr["Rotations"]["randZ"][1].GetFloat();
 
-	std::cout << "LOADING OBJECTS ON" << sceneID << "\n";
+	std::cout << "LOADING OBJECTS ON " << sceneID_str << "\n";
+
 
 	// Initialize each object based on random values
 	for (int i = 0; i < randNum; i++)
 	{
 		// Check if server did not meet the deadline OR client suddenly disconnected
-		if (context->IsCancelled()) 
+		if (context->IsCancelled())
 		{
-			ResetSceneProgress(request->value()); 
-			return grpc::Status::CANCELLED; 
+			ResetSceneProgress(sceneID);
+			return grpc::Status::CANCELLED;
 		}
 
 		// Prepare to stream the data of the object
-		int randModelIndex = Utils::GetRandomInt(0, modelNamesList.size() - 1);
+		int randModelIndex = Utils::GetRandomInt(0, modelNamesList.size() - 1, gen); 
 		std::string modelName = modelNamesList[randModelIndex];
 
 		float scaleX = objDataPtr["Scalings"][modelName.c_str()][0].GetFloat();
 		float scaleY = objDataPtr["Scalings"][modelName.c_str()][1].GetFloat();
 		float scaleZ = objDataPtr["Scalings"][modelName.c_str()][2].GetFloat();
 
-		Vector3* pos = new Vector3(); 
-		pos->set_x(Utils::GetRandomFloat(minPosX, maxPosX)); 
-		pos->set_y(Utils::GetRandomFloat(minPosY, maxPosY)); 
-		pos->set_z(Utils::GetRandomFloat(minPosZ, maxPosZ)); 
+		Vector3* pos = new Vector3();
+		pos->set_x(Utils::GetRandomFloat(minPosX, maxPosX, gen));
+		pos->set_y(Utils::GetRandomFloat(minPosY, maxPosY, gen));
+		pos->set_z(Utils::GetRandomFloat(minPosZ, maxPosZ, gen));
 
-		Vector3* rot = new Vector3(); 
-		rot->set_x(Utils::GetRandomFloat(minRotX, maxRotX));
-		rot->set_y(Utils::GetRandomFloat(minRotY, maxRotY)); 
-		rot->set_z(Utils::GetRandomFloat(minRotZ, maxRotZ)); 
+		Vector3* rot = new Vector3();
+		rot->set_x(Utils::GetRandomFloat(minRotX, maxRotX, gen));
+		rot->set_y(Utils::GetRandomFloat(minRotY, maxRotY, gen));
+		rot->set_z(Utils::GetRandomFloat(minRotZ, maxRotZ, gen));
 
-		Vector3* scale = new Vector3(); 
-		scale->set_x(scaleX);  
-		scale->set_y(scaleY);  
-		scale->set_z(scaleZ);  
+		Vector3* scale = new Vector3();
+		scale->set_x(scaleX);
+		scale->set_y(scaleY);
+		scale->set_z(scaleZ);
 
-		ObjectData oData; 
-		oData.set_modelname(modelName);  
+		ObjectData oData;
+		oData.set_modelname(modelName);
 		oData.set_texturename(modelName);
-		oData.set_allocated_position(pos); 
-		oData.set_allocated_rotation(rot); 
-		oData.set_allocated_scale(scale); 
+		oData.set_allocated_position(pos);
+		oData.set_allocated_rotation(rot);
+		oData.set_allocated_scale(scale);
 
-		writer->Write(oData); 
+		writer->Write(oData);
 
 		// Update progress
 		ServerSemaphore::sceneProgressSem.acquire();
-		scenesProgressMap[request->value()].progress++; 
+		scenesProgressMap[sceneID].progress++;
 		ServerSemaphore::sceneProgressSem.release();
 	}
 
-	std::cout << "STATUS OK \n";
+	std::cout << "STATUS OK ON " << sceneID_str << "\n";
 
 	return grpc::Status::OK; 
 }
@@ -357,6 +238,120 @@ grpc::Status SceneLoaderImpl::GetSceneProgress(grpc::ServerContext* context, con
 
 	response->set_value(progressInPercent);  
 	return grpc::Status::OK; 
+}
+
+void SceneLoaderImpl::StreamModels(std::string modelName, std::string modelPath, grpc::ServerWriter<ModelData>* writer)
+{
+	ModelReference* ref = new ModelReference(modelName, modelPath);
+	ref->LoadModel();
+	std::vector<float> data = ref->GetFullVertexData();
+
+	for (int i = 0; i < data.size(); i += 8)
+	{
+		Vector3* pos = new Vector3();
+		pos->set_x(data[i]);
+		pos->set_y(data[i + 1]);
+		pos->set_z(data[i + 2]);
+
+		Vector3* normals = new Vector3();
+		normals->set_x(data[i + 3]);
+		normals->set_y(data[i + 4]);
+		normals->set_z(data[i + 5]);
+
+		VertexData* vData = new VertexData();
+		vData->set_allocated_position(pos);
+		vData->set_allocated_normals(normals);
+		vData->set_u(data[i + 6]);
+		vData->set_v(data[i + 7]);
+
+		ModelData mData;
+		mData.set_modelname(modelName);
+		mData.set_vdataindex(i / 8);
+		mData.set_allocated_vdata(vData);
+
+		writer->Write(mData);
+	}
+}
+
+void SceneLoaderImpl::StreamTextures(std::string textureName, std::string texturePath, grpc::ServerWriter<TextureData>* writer)
+{
+	Texture* texture = new Texture(textureName, texturePath.c_str());
+	texture->LoadTexture(GL_RGBA);
+	unsigned char* tex_bytes = texture->GetTextureBytes();
+
+	int width = texture->GetWidth();
+	int height = texture->GetHeight();
+	unsigned bytesPerPixel = 4;
+
+	int index = 0;
+	for (int i = 0; i < width; i++)
+	{
+		for (int j = 0; j < height; j += BATCH_SIZE_MAX)
+		{
+			unsigned char* pixelOffset = tex_bytes + (j + width * i) * bytesPerPixel;
+
+			TextureData textureData = TextureData();
+			textureData.set_texturename(textureName);
+			textureData.set_width(width);
+			textureData.set_height(height);
+			textureData.set_hasalpha(true);
+			textureData.set_pixelindex(index);
+
+			for (int k = 0; k < BATCH_SIZE_MAX * bytesPerPixel; k += bytesPerPixel)
+			{
+				if (j + textureData.pixeldatabatch_size() == height)
+				{
+					break;
+				}
+
+				unsigned int r = (unsigned int)(pixelOffset[k] & 0xff);
+				unsigned int g = (unsigned int)(pixelOffset[k + 1] & 0xff);
+				unsigned int b = (unsigned int)(pixelOffset[k + 2] & 0xff);
+				unsigned int a = (unsigned int)(pixelOffset[k + 3] & 0xff);
+
+				PixelData* pixelData = textureData.add_pixeldatabatch();
+				pixelData->set_r(r);
+				pixelData->set_g(g);
+				pixelData->set_b(b);
+				pixelData->set_a(a);
+			}
+
+			writer->Write(textureData);
+
+			index += BATCH_SIZE_MAX;
+		}
+	}
+}
+
+rapidjson::Document SceneLoaderImpl::ParseJSONData()
+{
+	rapidjson::Document doc;
+
+	ServerSemaphore::jsonFileSem.acquire();
+	FILE* inFile;
+	fopen_s(&inFile, "SceneLoaderData.json", "rb");
+	assert(inFile != NULL);
+
+	char readBuffer[4096];
+	rapidjson::FileReadStream jsonFile(inFile, readBuffer, sizeof(readBuffer));
+
+	doc.ParseStream(jsonFile);
+	fclose(inFile);
+	ServerSemaphore::jsonFileSem.release();
+
+	return doc;
+}
+
+void SceneLoaderImpl::InitializeRandomizers(int sceneID)
+{
+	if (randDevicesMap.contains(sceneID))
+	{
+		return;
+	}
+
+	std::random_device* rd = new std::random_device();
+	randDevicesMap[sceneID] = rd;
+	randGeneratorsMap[sceneID] = new std::mt19937((*rd)());
 }
 
 void SceneLoaderImpl::ResetSceneProgress(int id)
