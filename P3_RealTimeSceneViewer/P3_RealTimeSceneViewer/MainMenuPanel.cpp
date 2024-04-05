@@ -35,9 +35,8 @@ void MainMenuPanel::draw()
         float progress = 0.1f; // Replace with your actual loading progress
         int percentage = static_cast<int>(progress * 100);
         std::string progressText = std::to_string(percentage) + "%";
-        ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(0.0f, 1.0f, 0.0f, 1.0f)); // Change color to green
+
         ImGui::ProgressBar(progress, ImVec2(150, 15), progressText.c_str());
-        ImGui::PopStyleColor(); // Restore the default color
 
         // Button
         if (ImGui::Button("Load", ImVec2(150, 20))) {

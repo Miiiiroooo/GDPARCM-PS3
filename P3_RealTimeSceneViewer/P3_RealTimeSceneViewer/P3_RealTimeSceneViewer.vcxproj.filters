@@ -28,6 +28,24 @@
     <Filter Include="Engine\UI">
       <UniqueIdentifier>{25b97255-5d61-4ebe-b86a-436e90ce4003}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\3D">
+      <UniqueIdentifier>{a0ffaf82-0b6a-4280-bcb5-0e59858a400c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Networking">
+      <UniqueIdentifier>{eb6e10d8-ece9-4702-9705-1b94e032b1bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scenes">
+      <UniqueIdentifier>{19ae343d-1e00-4751-b605-8c104bdcb2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3D\Camera">
+      <UniqueIdentifier>{af774c25-5360-4b9c-977b-af817fffe692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3D\Light">
+      <UniqueIdentifier>{f1be9499-31b4-4d1b-afc3-52feb61a6e2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3D\Shaders">
+      <UniqueIdentifier>{9277d620-e752-4a7c-bb46-0d9151822c96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Libs\imgui\imgui_impl_opengl3.cpp">
@@ -109,9 +127,6 @@
     <ClCompile Include="..\proto\SceneLoader.pb.cc">
       <Filter>proto</Filter>
     </ClCompile>
-    <ClCompile Include="ModelObject.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="P3_RealTimeSceneViewer.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -126,6 +141,21 @@
     </ClCompile>
     <ClCompile Include="EngineProfiler.cpp">
       <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelObject.cpp">
+      <Filter>Engine\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraObject.cpp">
+      <Filter>Engine\3D\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="PerspectiveCameraObject.cpp">
+      <Filter>Engine\3D\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="LightObject.cpp">
+      <Filter>Engine\3D\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderObject.cpp">
+      <Filter>Engine\3D\Shaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -217,9 +247,6 @@
     <ClInclude Include="..\proto\SceneLoader.pb.h">
       <Filter>proto</Filter>
     </ClInclude>
-    <ClInclude Include="ModelObject.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="AUIPanel.h">
       <Filter>Engine\UI</Filter>
     </ClInclude>
@@ -231,6 +258,21 @@
     </ClInclude>
     <ClInclude Include="EngineProfiler.h">
       <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelObject.h">
+      <Filter>Engine\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraObject.h">
+      <Filter>Engine\3D\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="PerspectiveCameraObject.h">
+      <Filter>Engine\3D\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="LightObject.h">
+      <Filter>Engine\3D\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderObject.h">
+      <Filter>Engine\3D\Shaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

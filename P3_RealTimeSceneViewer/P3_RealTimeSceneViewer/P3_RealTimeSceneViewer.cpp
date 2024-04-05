@@ -7,12 +7,6 @@
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
 
-#define TINYOBJLOADER_IMPLEMENTATION
-#include"tiny_obj_loader.h"
-
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-
 //DearIMGUI Includes
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -20,24 +14,48 @@
 
 //Base Includes
 #include <iostream>
+#include<unordered_map>
+
+//GRPC
+#include <grpcpp/grpcpp.h>
+#include "../proto/SceneLoader.grpc.pb.h"
 
 //Created Classes Includes
-#include "opengl/PerspectiveCamera.h"
 #include "UIManager.h"
+
+#include "ModelObject.h"
+#include "LightObject.h"
+#include "PerspectiveCameraObject.h"
+#include "ShaderObject.h"
+
 
 //UI
 #include "MainMenuPanel.h"
 #include "EngineProfiler.h"
 
+//Definitions
+#define TINYOBJLOADER_IMPLEMENTATION
+#include"tiny_obj_loader.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 using namespace std;
 
-//User Input (idk if needed)
-//void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-//void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
-//void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+//Forward Declarations
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+
+//Global Variables
+unordered_map<string, bool> input;
+bool firstMouse = true;
+double lastX, lastY;
+glm::vec2 mousePos;
 
 int main()
 {
+
 #pragma region GLFW Init
     float width = 800;
     float height = 800;
@@ -62,21 +80,37 @@ int main()
 
     glViewport(0, 0, width, height);
 
-    /*
-    * Needed for User Inputs
-    glfwSetKeyCallback(window, keyCallback);
-    glfwSetMouseButtonCallback(window, mouse_button_callback);
-    glfwSetCursorPosCallback(window, mouse_callback);
-    */
-
     glEnable(GL_DEPTH_TEST);
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
     ImGui::StyleColorsDark();
+
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+    style.Colors[ImGuiCol_Button] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f);
+    style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.8f, 0.8f, 0.8f, 1.0f);
+    style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.5f, 0.5f, 0.5f, 1.0f);
+    style.Colors[ImGuiCol_PlotHistogram] = ImVec4(0.8f, 0.8f, 0.8f, 1.0f);
+
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init();
+
+    //Init Inputs
+    glfwSetKeyCallback(window, keyCallback);
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
+
+    input["W"] = false;
+    input["A"] = false;
+    input["S"] = false;
+    input["D"] = false;
+    input["Space"] = false;
+    input["LShift"] = false;
+    input["mousePressed"] = false;
+
+    mousePos.x = 270;
 
 #pragma endregion
 
@@ -84,15 +118,31 @@ int main()
     float delta = 0;
     float lastTime = glfwGetTime();
 
-
     //UI
     MainMenuPanel* scenePanel = new MainMenuPanel("ScenePanel");
     EngineProfiler* profiler = new EngineProfiler("Engine Profiler");
     //UIManager::getInstance()->initialize(window);
 
     //GameObject Declarations
-    PerspectiveCamera camera;
+    PerspectiveCameraObject camera;
+    LightObject light;
+    light.SetLightPosition(glm::vec3(0, 5, 5));
+    light.SetLightBrightness(100);
+    light.SetLightColor(1.0f, 1.0f, 1.0f);
 
+    ModelObject* model = new ModelObject();
+    model->SetupModel("../3D/amumu.obj");
+    model->SetupTexture("../3D/amumu.png", GL_RGBA);
+    model->SetPosition(glm::vec3(-3, 0, 0));
+    model->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+
+    ModelObject* baron = new ModelObject();
+    baron->SetupModel("../3D/baron.obj");
+    baron->SetupTexture("../3D/baron.png", GL_RGBA);
+    baron->SetPosition(glm::vec3(0, 0, 0));
+    baron->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+
+    ShaderObject* shader = new ShaderObject("Shaders/shader.vert", "Shaders/shader.frag");
 
     //Main Loop
     while (!glfwWindowShouldClose(window))
@@ -109,6 +159,7 @@ int main()
         ImGui::NewFrame();
 
         /*Start of Loop*/
+        camera.CameraMovement(input, mousePos, delta);
 
         /* Update */
         //UIManager::getInstance()->draw();
@@ -118,6 +169,9 @@ int main()
         scenePanel->draw();
         profiler->draw();
 
+        shader->UseShader();
+        model->Draw(shader->GetShaderProgram(), camera, light);
+        baron->Draw(shader->GetShaderProgram(), camera, light);
 
         /*End of Loop*/
         ImGui::Render();
@@ -137,5 +191,109 @@ int main()
 
     glfwDestroyWindow(window);
     glfwTerminate();
+
 }
 
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+
+    if (key == GLFW_KEY_W && action == GLFW_PRESS)
+    {
+        input["W"] = true;
+    }
+    else if (key == GLFW_KEY_W && action == GLFW_RELEASE)
+    {
+        input["W"] = false;
+    }
+
+    if (key == GLFW_KEY_A && action == GLFW_PRESS)
+    {
+        input["A"] = true;
+    }
+    else if (key == GLFW_KEY_A && action == GLFW_RELEASE)
+    {
+        input["A"] = false;
+    }
+
+    if (key == GLFW_KEY_S && action == GLFW_PRESS)
+    {
+        input["S"] = true;
+    }
+    else if (key == GLFW_KEY_S && action == GLFW_RELEASE)
+    {
+        input["S"] = false;
+    }
+
+    if (key == GLFW_KEY_D && action == GLFW_PRESS)
+    {
+        input["D"] = true;
+    }
+    else if (key == GLFW_KEY_D && action == GLFW_RELEASE)
+    {
+        input["D"] = false;
+    }
+
+    if (key == GLFW_KEY_LEFT_SHIFT && action == GLFW_PRESS)
+    {
+        input["LShift"] = true;
+    }
+    else if (key == GLFW_KEY_LEFT_SHIFT && action == GLFW_RELEASE)
+    {
+        input["LShift"] = false;
+    }
+
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+    {
+        input["Space"] = true;
+    }
+    else if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE)
+    {
+        input["Space"] = false;
+    }
+
+}
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+
+    ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
+        input["mousePressed"] = true;
+    }
+    else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+    {
+        input["mousePressed"] = false;
+        firstMouse = true;
+    }
+
+}
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    ImGui_ImplGlfw_CursorPosCallback(window, xpos, ypos);
+
+    if (input["mousePressed"] == true)
+    {
+        if (firstMouse)
+        {
+            lastX = xpos;
+            lastY = ypos;
+            firstMouse = false;
+        }
+
+        float xoffset = xpos - lastX;
+        float yoffset = lastY - ypos;
+        lastX = xpos;
+        lastY = ypos;
+
+        float sensitivity = 0.3f;
+        xoffset *= sensitivity;
+        yoffset *= sensitivity;
+
+        mousePos.x += xoffset;
+        mousePos.y += yoffset;
+
+
+    }
+
+}

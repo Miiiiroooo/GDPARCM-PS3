@@ -20,8 +20,6 @@ void UIManager::initialize(GLFWwindow* window)
 
 void UIManager::destroy()
 {
-	
-
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();

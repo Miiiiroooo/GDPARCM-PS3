@@ -137,33 +137,6 @@ int main()
 	std::unique_ptr<grpc::Server> server(builder.BuildAndStart()); 
 	server->Wait();
 
-
-	/*auto start_time = std::chrono::high_resolution_clock::now();
-
-	for (int i = 0; i < 10; i++)
-	{
-		ModelReference* ref = new ModelReference("../3D/amumu.obj"); 
-		ref->LoadModel(); 
-	}
-
-	ModelReference* ref = new ModelReference("../3D/amumu.obj"); 
-	ref->LoadModel(); 
-	std::vector<float> data = ref->GetFullVertexData(); 
-
-	for (int i = 0; i < data.size(); i++) 
-	{
-		std::cout << data[i] << " "; 
-		if (i % 8 == 7) 
-		{
-			std::cout << "\n"; 
-		}
-	}
-
-	auto end_time = std::chrono::high_resolution_clock::now();
-	auto time = end_time - start_time;
-	std::cout << "\n\nmilliseconds:" << time / std::chrono::milliseconds(1) << "\n";*/
-
-
 	system("pause");
 
 	return 0;
