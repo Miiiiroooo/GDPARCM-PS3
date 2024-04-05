@@ -25,14 +25,14 @@ public:
 
 protected:
 
-    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 Center = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 F = glm::normalize(cameraPos - Center);
+    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+    glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+    glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-    glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
-    glm::vec3 R = glm::normalize(glm::cross(worldUp, F));
-    glm::vec3 U = glm::cross(F, R);
+    glm::vec3 cameraRight = glm::normalize(glm::cross(cameraUp, cameraFront));
+    glm::vec3 U = glm::cross(cameraFront, cameraRight);
 
-    glm::mat4 viewMatrix = glm::lookAt(cameraPos, F, worldUp);
+    glm::mat4 viewMatrix = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+    //glm::mat4 viewMatrix = glm::lookAt(cameraPos, cameraFront, cameraUp);
 };
 

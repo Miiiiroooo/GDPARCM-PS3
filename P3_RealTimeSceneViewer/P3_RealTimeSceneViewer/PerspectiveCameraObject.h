@@ -11,14 +11,13 @@ public:
 	void ApplyProjection(GLuint ShaderProgram);
 	void UpdateViewMatrix(glm::mat4 targetTransform);
 
-
+	void CameraMovement(unordered_map<string, bool> input, glm::vec2 mousePos, float deltaTime);
 	glm::mat4 GetPerspectiveProjection();
 	glm::mat4 perspectiveProjection;
 
 private:
 
-	glm::vec3 offset;
-	glm::mat4 pivot = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
-	float rotationSpeed = 100.f;
+	float MOVEMENT_SPEED = 5.f;
+
 };
 

@@ -16,7 +16,7 @@ glm::mat4 CameraObject::GetViewMatrix()
 
 glm::vec3 CameraObject::GetFront()
 {
-	return this->F;
+	return this->cameraFront;
 }
 
 void CameraObject::ApplyCameraPosition(GLuint ShaderProgram)

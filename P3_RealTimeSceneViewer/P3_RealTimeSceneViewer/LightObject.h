@@ -30,7 +30,7 @@ private:
     glm::vec3 lightColor = glm::vec3(1.f, 1.f, 1.f);
     glm::vec3 directional = glm::vec3(0.f, 0.f, 0.f);;
 
-    float ambientStr = 0.2f;
+    float ambientStr = 0.5f;
     glm::vec3 ambientColor = lightColor;
 
     float specStr = 0.5f;
