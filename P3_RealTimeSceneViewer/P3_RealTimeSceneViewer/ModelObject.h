@@ -13,10 +13,8 @@
 
 #include"tiny_obj_loader.h"
 
+#include <map>
 
-
-
-#include<unordered_map>
 
 using namespace std;
 
@@ -27,6 +25,10 @@ class ModelObject
 {
 public:
     ModelObject();
+    ModelObject(string name);
+
+    string GetModelName();
+
     void SetupModel(string path);
     void SetupTexture(string path, GLuint imageFormat);
     void Draw(GLuint ShaderProgram, PerspectiveCameraObject perspectiveCamera, LightObject light);
@@ -35,13 +37,21 @@ public:
     void SetPosition(glm::vec3 pos);
     void SetScale(glm::vec3 scale);
 
-  
+    void InsertPartialData(int index, std::vector<float> partialData);
+    void LoadModelData();
+    void InsertPartialTextureData(float width, float height, int index, unsigned bytesPerPixel, unsigned int r, unsigned int g, unsigned int b, unsigned int a);
+    void LoadTextureData(GLint imageFormat);
 
 private: 
+    string name;
 
+    //textures
+    GLubyte* pixels;
     GLuint texture;
+    float width;
+    float height;
 
-    std::string Path = "../3D/amumu.obj";
+    std::string Path = "";
     std::vector<tinyobj::shape_t> Shapes;
     std::vector<tinyobj::material_t> Material;
     std::string warning, error;
@@ -52,6 +62,7 @@ private:
 
     std::vector<GLuint> indices;
     std::vector<GLfloat> fullVertexData;
+    std::map<int, std::vector<float>> partialVertexDataMap;
 
     //Texutures
     int img_width, img_height, colorChannels;
@@ -63,6 +74,9 @@ private:
     //Transform
     glm::mat4 identity_matrix4 = glm::mat4(1.0f);
     glm::mat4 Transform;
+    glm::mat4 TranslationMatrix = glm::mat4(1.0f);
+    glm::mat4 ScaleMatrix = glm::mat4(1.0f);
+    glm::mat4 RotationMatrix = glm::mat4(1.0f);
 
     //Loaded Bools
     bool loadedModel = false;

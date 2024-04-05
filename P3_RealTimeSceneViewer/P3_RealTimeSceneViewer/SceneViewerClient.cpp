@@ -8,11 +8,11 @@ SceneViewerClient::SceneViewerClient(std::shared_ptr<grpc::Channel> channel) : s
 
 void SceneViewerClient::LoadModelsInScene(int id)
 {
-    auto sceneItr = std::find_if(scenesList.begin(), scenesList.end(), [&](const Scene* x) { 
+    auto sceneItr = std::find_if(scenesList.begin(), scenesList.end(), [&](const Scene* x) {
         return x->id == id;
         });
 
-    Scene* currentScene = NULL; 
+    Scene* currentScene = NULL;
     if (sceneItr != scenesList.end())
     {
         currentScene = *sceneItr;
@@ -44,20 +44,20 @@ void SceneViewerClient::LoadModelsInScene(int id)
             modelData.vdata().v()
         };
 
-        auto modelItr = std::find_if(currentScene->modelsList.begin(), currentScene->modelsList.end(), [&](ModelReference* x) {
+        auto modelItr = std::find_if(currentScene->modelsList.begin(), currentScene->modelsList.end(), [&](ModelObject* x) {
             return x->GetModelName() == modelData.modelname();
             });
-        
+
         if (modelItr != currentScene->modelsList.end())
         {
-            ModelReference* ref = *modelItr;
+            ModelObject* ref = *modelItr;
             ref->InsertPartialData(modelData.vdataindex(), vertexData);
         }
         else
         {
-            ModelReference* ref = new ModelReference(modelData.modelname());
+            ModelObject* ref = new ModelObject(modelData.modelname());
             currentScene->modelsList.push_back(ref);
-            ref->InsertPartialData(modelData.vdataindex(), vertexData); 
+            ref->InsertPartialData(modelData.vdataindex(), vertexData);
         }
     }
 
@@ -80,24 +80,24 @@ void SceneViewerClient::LoadModelsInScene(int id)
 void SceneViewerClient::LoadTexturesInScene(int id)
 {
     auto sceneItr = std::find_if(scenesList.begin(), scenesList.end(), [&](const Scene* x) {
-        return x->id == id; 
+        return x->id == id;
         });
 
-    Scene* currentScene = NULL; 
-    if (sceneItr != scenesList.end()) 
+    Scene* currentScene = NULL;
+    if (sceneItr != scenesList.end())
     {
-        currentScene = *sceneItr; 
+        currentScene = *sceneItr;
     }
     else
     {
-        std::cout << "SCENE(" << id << ") DOES NOT EXIST"; 
+        std::cout << "SCENE(" << id << ") DOES NOT EXIST";
         return;
-    } 
+    }
 
-    std::map<std::string, GLint> textureColorChannels; 
+    std::map<std::string, GLint> textureColorChannels;
 
     IntValue sceneID;
-    sceneID.set_value(id); 
+    sceneID.set_value(id);
 
     grpc::ClientContext context;
     std::unique_ptr<grpc::ClientReader<TextureData>> reader(stub->LoadTexturesInScene(&context, sceneID));
@@ -112,21 +112,22 @@ void SceneViewerClient::LoadTexturesInScene(int id)
         unsigned bytePerPixel = texData.hasalpha() ? 4 : 3;
         int index = texData.pixelindex() * bytePerPixel;
 
-        auto textureItr = std::find_if(currentScene->texturesList.begin(), currentScene->texturesList.end(), [&](Texture* x) { 
-            return x->GetTextureName() == name; 
+        auto textureItr = std::find_if(currentScene->modelsList.begin(), currentScene->modelsList.end(), [&](ModelObject* x) {
+            return x->GetModelName() == name;
             });
 
-        if (textureItr != currentScene->texturesList.end())
+        if (textureItr != currentScene->modelsList.end())
         {
-            Texture* ref = *textureItr;
-            ref->InsertPartialData(index, bytePerPixel, texData.pixeldata().r(), texData.pixeldata().g(), texData.pixeldata().b(), texData.pixeldata().a());
+            ModelObject* ref = *textureItr;
+            ref->InsertPartialTextureData(width, height, index, bytePerPixel, texData.pixeldata().r(), texData.pixeldata().g(), texData.pixeldata().b(), texData.pixeldata().a());
+           
         }
-        else
+        /*else
         {
             Texture* ref = new Texture(name, width, height);
-            currentScene->texturesList.push_back(ref); 
-            ref->InsertPartialData(index, bytePerPixel, texData.pixeldata().r(), texData.pixeldata().g(), texData.pixeldata().b(), texData.pixeldata().a()); 
-        }
+            currentScene->texturesList.push_back(ref);
+            ref->InsertPartialData(index, bytePerPixel, texData.pixeldata().r(), texData.pixeldata().g(), texData.pixeldata().b(), texData.pixeldata().a());
+        }*/
 
         if (!textureColorChannels.contains(name))
         {
@@ -137,9 +138,10 @@ void SceneViewerClient::LoadTexturesInScene(int id)
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
-        for (auto ref : currentScene->texturesList)
+        for (auto ref : currentScene->modelsList)
         {
-            ref->LoadTextureData(textureColorChannels[ref->GetTextureName()]);
+            ref->LoadTextureData(GL_RGBA);
+            cout << "Found Model: " << ref->GetModelName() << endl;
         }
 
         std::cout << "SUCCESS: TEXTURES CREATED\n";
@@ -147,23 +149,23 @@ void SceneViewerClient::LoadTexturesInScene(int id)
     else
     {
         std::cout << "FAIL TO RECEIVE TEXTURE " << status.error_code() << " " << status.error_message() << " " << status.error_details() << "\n";
-    } 
+    }
 }
 
 void SceneViewerClient::LoadObjectsInScene(int id)
 {
     auto sceneItr = std::find_if(scenesList.begin(), scenesList.end(), [&](const Scene* x) {
-        return x->id == id; 
+        return x->id == id;
         });
-    
-    Scene* currentScene = NULL; 
-    if (sceneItr != scenesList.end()) 
-    { 
-        currentScene = *sceneItr; 
+
+    Scene* currentScene = NULL;
+    if (sceneItr != scenesList.end())
+    {
+        currentScene = *sceneItr;
     }
     else
     {
-        std::cout << "SCENE(" << id << ") DOES NOT EXIST"; 
+        std::cout << "SCENE(" << id << ") DOES NOT EXIST";
         return;
     }
 
@@ -177,21 +179,28 @@ void SceneViewerClient::LoadObjectsInScene(int id)
     ObjectData objData;
     while (reader->Read(&objData))
     {
-        auto modelItr = std::find_if(currentScene->modelsList.begin(), currentScene->modelsList.end(), [&](ModelReference* x) {
+        auto modelItr = std::find_if(currentScene->modelsList.begin(), currentScene->modelsList.end(), [&](ModelObject* x) {
             return x->GetModelName() == objData.modelname();
             });
-        ModelReference* model = *modelItr;
+        ModelObject* model = *modelItr;
 
-        auto textureItr = std::find_if(currentScene->texturesList.begin(), currentScene->texturesList.end(), [&](Texture* x) {
-            return x->GetTextureName() == objData.texturename();
+        /*auto textureItr = std::find_if(currentScene->modelsList.begin(), currentScene->modelsList.end(), [&](ModelObject* x) {
+            return x->GetModelName() == objData.texturename();
             });
+
         Texture* texture = *textureItr;
+       
 
         Model3D* obj = new Model3D(model, texture);
-        obj->transform.position = glm::vec3(objData.position().x(), objData.position().y(), objData.position().z()); 
-        obj->transform.Rotate(glm::vec3(objData.rotation().x(), objData.rotation().y(), objData.rotation().z())); 
-        obj->transform.scale = glm::vec3(objData.scale().x(), objData.scale().y(), objData.scale().z()); 
-        currentScene->objectsList.push_back(obj); 
+         */
+
+        model->SetPosition(glm::vec3(objData.position().x(), objData.position().y(), objData.position().z()));
+        model->SetScale(glm::vec3(objData.scale().x(), objData.scale().y(), objData.scale().z()));
+        //model->transform.position = glm::vec3(objData.position().x(), objData.position().y(), objData.position().z());
+        //obj->transform.Rotate(glm::vec3(objData.rotation().x(), objData.rotation().y(), objData.rotation().z()));
+        //model->SetScale(glm::vec3(objData.scale().x(), objData.scale().y(), objData.scale().z()));
+        //obj->transform.scale = glm::vec3(objData.scale().x(), objData.scale().y(), objData.scale().z());
+        //currentScene->objectsList.push_back(obj);
     }
 
     grpc::Status status = reader->Finish();

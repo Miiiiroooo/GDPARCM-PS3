@@ -34,9 +34,6 @@
     <Filter Include="Networking">
       <UniqueIdentifier>{eb6e10d8-ece9-4702-9705-1b94e032b1bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Scenes">
-      <UniqueIdentifier>{19ae343d-1e00-4751-b605-8c104bdcb2dd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\3D\Camera">
       <UniqueIdentifier>{af774c25-5360-4b9c-977b-af817fffe692}</UniqueIdentifier>
     </Filter>
@@ -45,6 +42,9 @@
     </Filter>
     <Filter Include="Engine\3D\Shaders">
       <UniqueIdentifier>{9277d620-e752-4a7c-bb46-0d9151822c96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene">
+      <UniqueIdentifier>{19ae343d-1e00-4751-b605-8c104bdcb2dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +156,12 @@
     </ClCompile>
     <ClCompile Include="ShaderObject.cpp">
       <Filter>Engine\3D\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneViewerClient.cpp">
+      <Filter>Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Engine\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +279,12 @@
     </ClInclude>
     <ClInclude Include="ShaderObject.h">
       <Filter>Engine\3D\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneViewerClient.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Engine\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

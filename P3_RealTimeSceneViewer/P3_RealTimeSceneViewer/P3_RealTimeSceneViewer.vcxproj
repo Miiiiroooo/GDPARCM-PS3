@@ -166,6 +166,8 @@
     <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="P3_RealTimeSceneViewer.cpp" />
     <ClCompile Include="PerspectiveCameraObject.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneViewerClient.cpp" />
     <ClCompile Include="ShaderObject.cpp" />
     <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
@@ -207,6 +209,8 @@
     <ClInclude Include="MainMenuPanel.h" />
     <ClInclude Include="ModelObject.h" />
     <ClInclude Include="PerspectiveCameraObject.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneViewerClient.h" />
     <ClInclude Include="ShaderObject.h" />
     <ClInclude Include="UIManager.h" />
   </ItemGroup>

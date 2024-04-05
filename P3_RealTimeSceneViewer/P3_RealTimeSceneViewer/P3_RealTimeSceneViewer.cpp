@@ -22,12 +22,12 @@
 
 //Created Classes Includes
 #include "UIManager.h"
-
+#include "Scene.h"
+#include "SceneViewerClient.h"
 #include "ModelObject.h"
 #include "LightObject.h"
 #include "PerspectiveCameraObject.h"
 #include "ShaderObject.h"
-
 
 //UI
 #include "MainMenuPanel.h"
@@ -130,20 +130,17 @@ int main()
     light.SetLightBrightness(100);
     light.SetLightColor(1.0f, 1.0f, 1.0f);
 
-    ModelObject* model = new ModelObject();
-    model->SetupModel("../3D/amumu.obj");
-    model->SetupTexture("../3D/amumu.png", GL_RGBA);
-    model->SetPosition(glm::vec3(-3, 0, 0));
-    model->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+    Scene* scene1 = new Scene(1);
 
-    ModelObject* baron = new ModelObject();
-    baron->SetupModel("../3D/baron.obj");
-    baron->SetupTexture("../3D/baron.png", GL_RGBA);
-    baron->SetPosition(glm::vec3(0, 0, 0));
-    baron->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+    std::string server_adr = "localhost:50052";
+    SceneViewerClient client(grpc::CreateChannel(server_adr, grpc::InsecureChannelCredentials()));
+    client.scenesList.push_back(scene1);
+    client.LoadModelsInScene(1);
+    client.LoadTexturesInScene(1);
+    client.LoadObjectsInScene(1);
 
     ShaderObject* shader = new ShaderObject("Shaders/shader.vert", "Shaders/shader.frag");
-
+    cout << "Models: " << scene1->modelsList.size() << endl;
     //Main Loop
     while (!glfwWindowShouldClose(window))
     {
@@ -169,9 +166,14 @@ int main()
         scenePanel->draw();
         profiler->draw();
 
-        shader->UseShader();
-        model->Draw(shader->GetShaderProgram(), camera, light);
-        baron->Draw(shader->GetShaderProgram(), camera, light);
+       
+        for (int i = 0; i < scene1->modelsList.size(); i++)
+        {
+            shader->UseShader();
+            scene1->modelsList[i]->Draw(shader->GetShaderProgram(), camera, light);
+        }
+       /* model->Draw(shader->GetShaderProgram(), camera, light);
+        baron->Draw(shader->GetShaderProgram(), camera, light);*/
 
         /*End of Loop*/
         ImGui::Render();
@@ -187,7 +189,8 @@ int main()
     }
     
     /*On ShutDown*/
-    //UIManager::getInstance()->destroy();
+    //model->DeleteBuffers();
+    //baron->DeleteBuffers();
 
     glfwDestroyWindow(window);
     glfwTerminate();
@@ -292,7 +295,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 
         mousePos.x += xoffset;
         mousePos.y += yoffset;
-
 
     }
 
