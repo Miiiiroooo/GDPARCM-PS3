@@ -12,6 +12,9 @@ public:
 	void SetLoadingProgress(float value);
 
 	void LoadAllResourcesToOpenGL();
+	void UnloadModels();
+	void UnloadTextures();
+	void UnloadObjects();
 	void UnloadScene();
 
 

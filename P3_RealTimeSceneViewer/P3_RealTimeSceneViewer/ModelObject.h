@@ -51,31 +51,22 @@ public:
 private: 
     string name;
 
-    //textures
+    // texture
     GLubyte* pixels;
     GLuint texture;
     float width;
     float height;
 
+    // model
     std::string Path = "";
     std::vector<tinyobj::shape_t> Shapes;
     std::vector<tinyobj::material_t> Material;
     std::string warning, error;
-
     tinyobj::attrib_t Attributes;
-
-    bool Success;
 
     std::vector<GLuint> indices;
     std::vector<GLfloat> fullVertexData;
     std::map<int, std::vector<float>> partialVertexDataMap;
-
-    //Texutures
-    int img_width, img_height, colorChannels;
-    unsigned char* tex_bytes;
-
-    //Buffers
-    GLuint VAO, VBO;
 
     //Transform
     glm::mat4 identity_matrix4 = glm::mat4(1.0f);
@@ -83,7 +74,14 @@ private:
     glm::mat4 TranslationMatrix = glm::mat4(1.0f);
     glm::mat4 ScaleMatrix = glm::mat4(1.0f);
     glm::mat4 RotationMatrix = glm::mat4(1.0f);
-
     
+    bool Success;
+
+    //Texutures
+    int img_width, img_height, colorChannels;
+    unsigned char* tex_bytes;
+
+    //Buffers
+    GLuint VAO, VBO;
 };
 

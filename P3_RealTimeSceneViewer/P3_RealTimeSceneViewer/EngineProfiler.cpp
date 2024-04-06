@@ -16,7 +16,7 @@ void EngineProfiler::draw()
 
 	ImGuiWindowFlags windowFlags = 0;
 	windowFlags |= ImGuiWindowFlags_NoResize;
-	ImGui::Begin("GDENG03 Engine Profiler", NULL, windowFlags);
+	ImGui::Begin("GDPARCM Profiler", NULL, windowFlags);
 
 	ImGui::Text("Average time per frame: ");
 	ImGui::SameLine();

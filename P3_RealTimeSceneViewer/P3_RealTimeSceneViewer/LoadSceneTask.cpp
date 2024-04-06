@@ -12,9 +12,10 @@ LoadSceneTask::~LoadSceneTask()
 
 void LoadSceneTask::ExecuteTask()
 {
-	client->LoadModelsInScene(sceneID);
-	client->LoadTexturesInScene(sceneID);
-	client->LoadObjectsInScene(sceneID);
+	if (client->LoadModelsInScene(sceneID) && client->LoadTexturesInScene(sceneID) && client->LoadObjectsInScene(sceneID))
+	{
+		std::cout << "ALL RESOURCES IN SCENE " << sceneID << " HAVE BEEN STREAMED PROPERLY";
+	}
 
 	delete this;
 }

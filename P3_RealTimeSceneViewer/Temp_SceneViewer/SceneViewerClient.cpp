@@ -22,6 +22,7 @@ bool SceneViewerClient::LoadModelsInScene(int id)
     else
     {
         std::cout << "SCENE(" << id << ") DOES NOT EXIST";
+        OnRPCFail(currentScene);
         return false;
     }
 
@@ -34,6 +35,7 @@ bool SceneViewerClient::LoadModelsInScene(int id)
         // Check connection
         if (!CheckConnectionToServer())
         {
+            OnRPCFail(currentScene);
             return false;
         }
 
@@ -94,6 +96,8 @@ bool SceneViewerClient::LoadModelsInScene(int id)
         {
             std::cout << "ATTEMPT " << i+1 << " FAILED... CANNOT LOAD MODELS FROM SERVER\n" 
                 << "CODE: " << status.error_code() << "   MESSAGE: " << status.error_message() << "   DETAILS: " << status.error_details() << "\n";
+
+            OnRPCFail(currentScene);
             return false;
         }
     }
@@ -113,7 +117,8 @@ bool SceneViewerClient::LoadTexturesInScene(int id)
     }
     else
     {
-        std::cout << "SCENE(" << id << ") DOES NOT EXIST"; 
+        std::cout << "SCENE(" << id << ") DOES NOT EXIST";
+        OnRPCFail(currentScene);
         return false;
     } 
 
@@ -127,6 +132,7 @@ bool SceneViewerClient::LoadTexturesInScene(int id)
         // Check connection
         if (!CheckConnectionToServer())
         {
+            OnRPCFail(currentScene);
             return false;
         }
 
@@ -175,12 +181,6 @@ bool SceneViewerClient::LoadTexturesInScene(int id)
 
             currentScene->SetLoadingProgress(texData.sceneprogress());
             //std::cout << currentScene->GetLoadingProgress() << "\n";
-
-            // Recheck connection
-            if (!CheckConnectionToServer())
-            {
-                return false;
-            }
         }
 
         // Check status
@@ -199,6 +199,8 @@ bool SceneViewerClient::LoadTexturesInScene(int id)
         {
             std::cout << "ATTEMPT " << i + 1 << " FAILED... CANNOT LOAD TEXTURES FROM SERVER\n"
                 << "CODE: " << status.error_code() << "   MESSAGE: " << status.error_message() << "   DETAILS: " << status.error_details() << "\n";
+
+            OnRPCFail(currentScene);
             return false;
         }
     }
@@ -218,7 +220,8 @@ bool SceneViewerClient::LoadObjectsInScene(int id)
     }
     else
     {
-        std::cout << "SCENE(" << id << ") DOES NOT EXIST"; 
+        std::cout << "SCENE(" << id << ") DOES NOT EXIST";
+        OnRPCFail(currentScene);
         return false;
     }
 
@@ -231,6 +234,7 @@ bool SceneViewerClient::LoadObjectsInScene(int id)
         // Check connection
         if (!CheckConnectionToServer())
         {
+            OnRPCFail(currentScene);
             return false;
         }
 
@@ -262,12 +266,6 @@ bool SceneViewerClient::LoadObjectsInScene(int id)
 
             currentScene->SetLoadingProgress(objData.sceneprogress());
             //std::cout << currentScene->GetLoadingProgress() << "\n";
-
-            // Recheck connection
-            if (!CheckConnectionToServer())
-            {
-                return false;
-            }
         }
 
         // Check status
@@ -287,6 +285,8 @@ bool SceneViewerClient::LoadObjectsInScene(int id)
         {
             std::cout << "ATTEMPT " << i + 1 << " FAILED... CANNOT LOAD OBJECTS FROM SERVER\n" 
                 << "CODE: " << status.error_code() << "   MESSAGE: " << status.error_message() << "   DETAILS: " << status.error_details() << "\n";
+
+            OnRPCFail(currentScene);
             return false;
         }
     }
@@ -319,4 +319,11 @@ bool SceneViewerClient::CheckConnectionToServer()
     {
         return true;
     }*/
+}
+
+void SceneViewerClient::OnRPCFail(Scene* currentScene)
+{
+    currentScene->SetLoadingProgress(0.0f);
+    currentScene->areResourcesStreamed = false;
+    currentScene->isDirty = true;
 }

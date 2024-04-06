@@ -38,6 +38,37 @@ void Scene::LoadAllResourcesToOpenGL()
 	isDirty = false;
 }
 
+void Scene::UnloadModels()
+{
+	for (int i = unloadedModelsList.size() - 1; i >= 0; i--)
+	{
+		//unloadedModelsList[i]->DeleteBuffers(); 
+		delete unloadedModelsList[i];
+	}
+
+	unloadedModelsList.clear();
+	unloadedModelsList.shrink_to_fit();
+}
+
+void Scene::UnloadTextures()
+{
+	UnloadModels();
+}
+
+void Scene::UnloadObjects()
+{
+	UnloadModels();
+
+	for (int i = modelList.size() - 1; i >= 0; i--)
+	{
+		modelList[i]->DeleteBuffers();
+		delete modelList[i];
+	}
+
+	modelList.clear();
+	modelList.shrink_to_fit();
+}
+
 void Scene::UnloadScene()
 {
 	for (size_t i = 0; i < modelList.size(); i++)

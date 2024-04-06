@@ -14,6 +14,7 @@ public:
 
 private:
 	bool CheckConnectionToServer();
+	void OnRPCFail(Scene* currentScene);
 
 
 public:
