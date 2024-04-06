@@ -28,6 +28,7 @@ public:
 
 private:
 	std::vector<GLuint> sceneThumbnails;
+	std::vector<GLuint> sceneSelectedThumbnails;
 	GLuint loadTexture(const char* path);
 
 	std::vector<Scene*> savedScenes;
