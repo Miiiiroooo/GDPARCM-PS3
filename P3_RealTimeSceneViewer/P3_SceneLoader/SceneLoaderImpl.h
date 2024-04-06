@@ -15,14 +15,14 @@ public:
 	grpc::Status LoadModelsInScene(grpc::ServerContext* context, const IntValue* request, grpc::ServerWriter<ModelData>* writer) override;
 	grpc::Status LoadTexturesInScene(grpc::ServerContext* context, const IntValue* request, grpc::ServerWriter<TextureData>* writer) override;
 	grpc::Status LoadObjectsInScene(grpc::ServerContext* context, const IntValue* request, grpc::ServerWriter<ObjectData>* writer) override;
-	grpc::Status GetSceneProgress(grpc::ServerContext* context, const IntValue* request, FloatValue* response) override;
 
 private:
-	void StreamModels(std::string modelName, std::string modelPath, grpc::ServerWriter<ModelData>* writer);
-	void StreamTextures(std::string textureName, std::string texturePath, grpc::ServerWriter<TextureData>* writer);
+	void StreamModels(int sceneID, std::string modelName, std::string modelPath, grpc::ServerWriter<ModelData>* writer);
+	void StreamTextures(int sceneID, std::string textureName, std::string texturePath, grpc::ServerWriter<TextureData>* writer);
 
 	rapidjson::Document ParseJSONData();
 	void InitializeRandomizers(int sceneID);
+	float GetSceneProgress(int id);
 	void ResetSceneProgress(int id);
 
 

@@ -107,6 +107,9 @@
     <ClCompile Include="LoadSceneTask.cpp">
       <Filter>Source Files\MultiThreading\Tasks</Filter>
     </ClCompile>
+    <ClCompile Include="ClientSemaphore.cpp">
+      <Filter>Source Files\MultiThreading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common-classes\stb_image.h">
@@ -183,6 +186,9 @@
     </ClInclude>
     <ClInclude Include="LoadSceneTask.h">
       <Filter>Header Files\MultiThreading\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientSemaphore.h">
+      <Filter>Header Files\MultiThreading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

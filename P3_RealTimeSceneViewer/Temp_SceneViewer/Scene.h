@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <semaphore>
 #include "opengl/Model3D.h"
 
 class Scene
@@ -8,17 +9,30 @@ public:
 	Scene(int id);
 	~Scene();
 
+	float GetLoadingProgress();
+	void SetLoadingProgress(float value);
+
 	void LoadAllResourcesToOpenGL();
 	void UnloadScene();
 
 
 public:
 	int id;
-	bool isAlreadyLoaded;
+	bool areResourcesStreamed;
 	bool isDirty;
-	float loadingProgress;
 
-	std::vector<ModelReference*> modelRef;
-	std::vector<Texture*> texturesList;
+	bool isActive;
+	bool isLoading;
+
+	const int MAX_SETUP_BUFFERS_IN_MAIN = 3;
+
+	std::vector<ModelReference*> unloadedModelsList;
+	std::vector<ModelReference*> loadedModelsList;
+	std::vector<Texture*> unloadedTexturesList;
+	std::vector<Texture*> loadedTexturesList;
 	std::vector<Model3D*> objectsList;
+
+private:
+	float loadingProgress;
+	std::binary_semaphore* progressSem;
 };

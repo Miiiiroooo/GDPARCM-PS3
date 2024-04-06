@@ -42,7 +42,7 @@ grpc::Status SceneLoaderImpl::LoadModelsInScene(grpc::ServerContext* context, co
 		std::string modelName = data_itr->name.GetString();
 		std::string modelPath = data_itr->value.GetString();
 		
-		StreamModels(modelName, modelPath, writer);
+		StreamModels(request->value(), modelName, modelPath, writer);
 
 		// Update progress
 		ServerSemaphore::sceneProgressSem.acquire(); 
@@ -86,7 +86,7 @@ grpc::Status SceneLoaderImpl::LoadTexturesInScene(grpc::ServerContext* context, 
 		std::string textureName = data_itr->name.GetString(); 
 		std::string texturePath = data_itr->value.GetString(); 
 
-		StreamTextures(textureName, texturePath, writer);
+		StreamTextures(request->value(), textureName, texturePath, writer);
 
 		// Update progress
 		ServerSemaphore::sceneProgressSem.acquire();
@@ -153,6 +153,15 @@ grpc::Status SceneLoaderImpl::LoadObjectsInScene(grpc::ServerContext* context, c
 			return grpc::Status::CANCELLED;
 		}
 
+		// Update progress
+		ServerSemaphore::sceneProgressSem.acquire(); 
+		scenesProgressMap[sceneID].progress++;  
+		ServerSemaphore::sceneProgressSem.release(); 
+
+		float progress = GetSceneProgress(sceneID); // progress of already loaded objects
+		//std::cout << progress << "\n";
+
+
 		// Prepare to stream the data of the object
 		int randModelIndex = Utils::GetRandomInt(0, modelNamesList.size() - 1, gen); 
 		std::string modelName = modelNamesList[randModelIndex];
@@ -182,13 +191,9 @@ grpc::Status SceneLoaderImpl::LoadObjectsInScene(grpc::ServerContext* context, c
 		oData.set_allocated_position(pos);
 		oData.set_allocated_rotation(rot);
 		oData.set_allocated_scale(scale);
+		oData.set_sceneprogress(progress);
 
 		writer->Write(oData);
-
-		// Update progress
-		ServerSemaphore::sceneProgressSem.acquire();
-		scenesProgressMap[sceneID].progress++;
-		ServerSemaphore::sceneProgressSem.release();
 	}
 
 	std::cout << "STATUS OK ON " << sceneID_str << "\n";
@@ -196,51 +201,7 @@ grpc::Status SceneLoaderImpl::LoadObjectsInScene(grpc::ServerContext* context, c
 	return grpc::Status::OK; 
 }
 
-grpc::Status SceneLoaderImpl::GetSceneProgress(grpc::ServerContext* context, const IntValue* request, FloatValue* response)
-{
-	int id = request->value();
-	float progressInPercent = 0;
-
-	ServerSemaphore::sceneProgressSem.acquire(); 
-	SceneLoadProgress progressData = scenesProgressMap[id];
-	int currentProgress = progressData.progress;
-	int maxModels = progressData.modelsMaxProgress;
-	int maxTextures = progressData.texturesMaxProgress;
-	int maxObjects = progressData.objectsMaxProgress;
-	ServerSemaphore::sceneProgressSem.release();
-
-	if (maxModels == -1)
-	{
-		response->set_value(progressInPercent); 
-		return grpc::Status::OK;
-	}
-
-	float total = maxModels;
-	progressInPercent += ((float)currentProgress / total) * 33.f; 
-
-	if (maxTextures == -1)
-	{
-		response->set_value(progressInPercent); 
-		return grpc::Status::OK; 
-	}
-
-	total = maxModels + maxTextures;
-	progressInPercent += ((float)currentProgress / total) * 33.f;
-
-	if (maxObjects == -1) 
-	{
-		response->set_value(progressInPercent); 
-		return grpc::Status::OK; 
-	}
-
-	total = maxModels + maxTextures + maxObjects; 
-	progressInPercent += ((float)currentProgress / total) * 34.f;
-
-	response->set_value(progressInPercent);  
-	return grpc::Status::OK; 
-}
-
-void SceneLoaderImpl::StreamModels(std::string modelName, std::string modelPath, grpc::ServerWriter<ModelData>* writer)
+void SceneLoaderImpl::StreamModels(int sceneID, std::string modelName, std::string modelPath, grpc::ServerWriter<ModelData>* writer)
 {
 	ModelReference* ref = new ModelReference(modelName, modelPath);
 	ref->LoadModel();
@@ -248,6 +209,13 @@ void SceneLoaderImpl::StreamModels(std::string modelName, std::string modelPath,
 
 	for (int i = 0; i < data.size(); i += 8)
 	{
+		float progress = GetSceneProgress(sceneID); // progress of already loaded models
+		ServerSemaphore::sceneProgressSem.acquire();
+		int maxModels = scenesProgressMap[sceneID].modelsMaxProgress; 
+		ServerSemaphore::sceneProgressSem.release();
+		progress += (float)i / (float)data.size() * (1.f / (float)maxModels) * 30.f;
+		//std::cout << progress << "\n";
+
 		Vector3* pos = new Vector3();
 		pos->set_x(data[i]);
 		pos->set_y(data[i + 1]);
@@ -268,12 +236,13 @@ void SceneLoaderImpl::StreamModels(std::string modelName, std::string modelPath,
 		mData.set_modelname(modelName);
 		mData.set_vdataindex(i / 8);
 		mData.set_allocated_vdata(vData);
+		mData.set_sceneprogress(progress);
 
 		writer->Write(mData);
 	}
 }
 
-void SceneLoaderImpl::StreamTextures(std::string textureName, std::string texturePath, grpc::ServerWriter<TextureData>* writer)
+void SceneLoaderImpl::StreamTextures(int sceneID, std::string textureName, std::string texturePath, grpc::ServerWriter<TextureData>* writer)
 {
 	Texture* texture = new Texture(textureName, texturePath.c_str());
 	texture->LoadTexture(GL_RGBA);
@@ -288,6 +257,13 @@ void SceneLoaderImpl::StreamTextures(std::string textureName, std::string textur
 	{
 		for (int j = 0; j < height; j += BATCH_SIZE_MAX)
 		{
+			float progress = GetSceneProgress(sceneID); // progress of already loaded textures
+			ServerSemaphore::sceneProgressSem.acquire(); 
+			int maxTextures = scenesProgressMap[sceneID].texturesMaxProgress; 
+			ServerSemaphore::sceneProgressSem.release(); 
+			progress += (float)(i * height + j) / (float)(width * height) * (1.f / maxTextures) * 30.f;
+			//std::cout << progress << "\n";
+
 			unsigned char* pixelOffset = tex_bytes + (j + width * i) * bytesPerPixel;
 
 			TextureData textureData = TextureData();
@@ -296,6 +272,7 @@ void SceneLoaderImpl::StreamTextures(std::string textureName, std::string textur
 			textureData.set_height(height);
 			textureData.set_hasalpha(true);
 			textureData.set_pixelindex(index);
+			textureData.set_sceneprogress(progress);
 
 			for (int k = 0; k < BATCH_SIZE_MAX * bytesPerPixel; k += bytesPerPixel)
 			{
@@ -352,6 +329,50 @@ void SceneLoaderImpl::InitializeRandomizers(int sceneID)
 	std::random_device* rd = new std::random_device();
 	randDevicesMap[sceneID] = rd;
 	randGeneratorsMap[sceneID] = new std::mt19937((*rd)());
+}
+
+float SceneLoaderImpl::GetSceneProgress(int id)
+{
+	ServerSemaphore::sceneProgressSem.acquire(); 
+	SceneLoadProgress progressData = scenesProgressMap[id]; 
+	int currentProgress = progressData.progress; 
+	int maxModels = progressData.modelsMaxProgress; 
+	int maxTextures = progressData.texturesMaxProgress; 
+	int maxObjects = progressData.objectsMaxProgress; 
+	ServerSemaphore::sceneProgressSem.release(); 
+
+
+	float progressInPercent = 0;
+	if (maxModels == -1) 
+	{
+		return progressInPercent;
+	}
+
+	float total = 0.f; 
+	if (maxTextures == -1)
+	{
+		total = maxModels; 
+
+		progressInPercent = ((float)currentProgress / total) * 30.f;
+		return progressInPercent; 
+	}
+
+	if (maxObjects == -1)
+	{
+		currentProgress -= maxModels;
+		total = maxTextures;
+
+		progressInPercent = 30.f;
+		progressInPercent += ((float)currentProgress / total) * 30.f;
+		return progressInPercent; 
+	}
+	
+	currentProgress -= maxModels + maxTextures;
+	total = maxObjects; 
+
+	progressInPercent = 60.f;
+	progressInPercent += ((float)currentProgress / total) * 30.f;
+	return progressInPercent; 
 }
 
 void SceneLoaderImpl::ResetSceneProgress(int id)

@@ -44,11 +44,11 @@ void SceneViewerClient::LoadModelsInScene(int id)
             modelData.vdata().v()
         };
 
-        auto modelItr = std::find_if(currentScene->modelRef.begin(), currentScene->modelRef.end(), [&](ModelObject* x) {
+        auto modelItr = std::find_if(currentScene->unloadedModelsList.begin(), currentScene->unloadedModelsList.end(), [&](ModelObject* x) {
             return x->GetModelName() == modelData.modelname();
             });
 
-        if (modelItr != currentScene->modelRef.end())
+        if (modelItr != currentScene->unloadedModelsList.end())
         {
             ModelObject* ref = *modelItr;
             ref->InsertPartialData(modelData.vdataindex(), vertexData);
@@ -56,7 +56,7 @@ void SceneViewerClient::LoadModelsInScene(int id)
         else
         {
             ModelObject* ref = new ModelObject(modelData.modelname());
-            currentScene->modelRef.push_back(ref);
+            currentScene->unloadedModelsList.push_back(ref);
             ref->InsertPartialData(modelData.vdataindex(), vertexData);
         }
 
@@ -119,12 +119,12 @@ void SceneViewerClient::LoadTexturesInScene(int id)
         unsigned bytePerPixel = texData.hasalpha() ? 4 : 3;
         int index = texData.pixelindex() * bytePerPixel;
 
-        auto textureItr = std::find_if(currentScene->modelRef.begin(), currentScene->modelRef.end(), [&](ModelObject* x) {
+        auto textureItr = std::find_if(currentScene->unloadedModelsList.begin(), currentScene->unloadedModelsList.end(), [&](ModelObject* x) {
             return x->GetModelName() == name;
             });
 
         ModelObject* ref = NULL;
-        if (textureItr != currentScene->modelRef.end())
+        if (textureItr != currentScene->unloadedModelsList.end())
         {
             ref = *textureItr;
         }
@@ -195,7 +195,7 @@ void SceneViewerClient::LoadObjectsInScene(int id)
     ObjectData objData;
     while (reader->Read(&objData))
     {
-        auto modelItr = std::find_if(currentScene->modelRef.begin(), currentScene->modelRef.end(), [&](ModelObject* x) {
+        auto modelItr = std::find_if(currentScene->unloadedModelsList.begin(), currentScene->unloadedModelsList.end(), [&](ModelObject* x) {
             return x->GetModelName() == objData.modelname();
             });
 
@@ -212,7 +212,7 @@ void SceneViewerClient::LoadObjectsInScene(int id)
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
-        currentScene->isAlreadyLoaded = true;
+        currentScene->areResourcesStreamed = true;
         currentScene->loadingProgress = 1.f;
         std::cout << "SUCCESS: OBJECTS CREATED ON SCENE" << std::to_string(id) << "\n";
     }

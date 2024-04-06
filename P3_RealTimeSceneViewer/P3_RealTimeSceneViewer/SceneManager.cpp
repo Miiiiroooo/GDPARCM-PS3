@@ -65,7 +65,7 @@ bool SceneManager::AllScenesLoaded()
 {
 	for (int i = 0; i < sceneList.size(); i++)
 	{
-		if (!sceneList[i]->isAlreadyLoaded)
+		if (!sceneList[i]->areResourcesStreamed)
 		{
 			return false;
 		}
@@ -80,7 +80,7 @@ void SceneManager::LoadSingleScene(int id)
 	{
 		if (sceneList[i]->id == id)
 		{
-			if (!sceneList[i]->isAlreadyLoaded)
+			if (!sceneList[i]->areResourcesStreamed)
 			{
 				LoadSceneTask* task = new LoadSceneTask(sceneList[i]->id, client);
 				ThreadPoolScheduler::GetInstance()->ScheduleTask(task);
@@ -97,7 +97,7 @@ void SceneManager::UnloadSingleScene(int id)
 	{
 		if (sceneList[i]->id == id)
 		{
-			if (sceneList[i]->isAlreadyLoaded)
+			if (sceneList[i]->areResourcesStreamed)
 			{
 				sceneList[i]->UnloadScene();
 			}
@@ -126,7 +126,7 @@ void SceneManager::Draw(ShaderObject* shader, PerspectiveCameraObject camera, Li
 	{
 		Scene* scene = sceneList[i];
 
-		if (scene->isAlreadyLoaded)
+		if (scene->areResourcesStreamed)
 		{
 
 			if (scene->isDirty)

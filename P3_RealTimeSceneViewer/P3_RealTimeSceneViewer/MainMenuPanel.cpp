@@ -46,7 +46,7 @@ void MainMenuPanel::draw()
         if (ImGui::Button(("Select##" + std::to_string(i)).c_str(), ImVec2(150, 20))) {
             SceneManager::getInstance()->OpenSingleScene(i + 1);
 
-            if (!scene->isAlreadyLoaded)
+            if (!scene->areResourcesStreamed)
             {
                 savedScenes.clear();
                 savedScenes.push_back(scene);
@@ -57,7 +57,7 @@ void MainMenuPanel::draw()
             }
         }
 
-        if (scene->isAlreadyLoaded)
+        if (scene->areResourcesStreamed)
         {
             if (ImGui::Button(("X##" + std::to_string(i)).c_str(), ImVec2(150, 20))) {
                 SceneManager::getInstance()->UnloadSingleScene(i + 1);
@@ -136,7 +136,7 @@ void MainMenuPanel::draw()
         int counter = 0;
         for (int i = 0; i < savedScenes.size(); i++)
         {
-            if (savedScenes[i]->isAlreadyLoaded)
+            if (savedScenes[i]->areResourcesStreamed)
             {
                 counter++;
             }

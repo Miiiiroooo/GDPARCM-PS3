@@ -11,7 +11,6 @@ public:
 	void LoadModelsInScene(int id);
 	void LoadTexturesInScene(int id);
 	void LoadObjectsInScene(int id);
-	void GetSceneProgress(int id);
 
 
 public:
@@ -19,4 +18,6 @@ public:
 
 private:
 	std::unique_ptr<SceneLoader::Stub> stub;
+	const int MAX_RETRIES = 5;
+	const int RETRY_COOLDOWN = 3000; // 3 secs
 };

@@ -3,12 +3,12 @@
 
 ModelReference::ModelReference(std::string modelName, std::string modelPath) : modelName(modelName), modelPath(modelPath)
 {
-
+    isLoaded = false;
 }
 
 ModelReference::ModelReference(std::string modelName) : modelName(modelName), modelPath("")
 {
-
+    isLoaded = false;
 }
 
 ModelReference::~ModelReference()
@@ -76,16 +76,10 @@ void ModelReference::InsertPartialData(int index, std::vector<float> partialData
     partialVertexDataMap[index] = partialData;
 }
 
-//void ModelReference::LoadModelData(std::vector<float> data)
-//{
-//    for (int i = 0; i < data.size(); i++)
-//    {
-//        fullVertexData.push_back((GLfloat)data[i]);
-//    }
-//
-//    SetupBufferObjects();
-//    CleanupPartialDataMap();
-//}
+bool ModelReference::IsModelLoaded()
+{
+    return isLoaded;
+}
 
 std::string ModelReference::GetModelName()
 {
@@ -140,6 +134,9 @@ void ModelReference::SetupBufferObjects()
     // Unbind the buffers objects
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
+    // Update status
+    isLoaded = true;
 }
 
 void ModelReference::CleanupPartialDataMap()

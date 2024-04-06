@@ -3,6 +3,7 @@
 
 Texture::Texture(std::string textureName, const char* imagePath) : textureName(textureName), imagePath(imagePath)
 {
+    isLoaded = false;
     width = 0;
     height = 0;
     colorChannels = GL_RGB;
@@ -13,6 +14,7 @@ Texture::Texture(std::string textureName, const char* imagePath) : textureName(t
 
 Texture::Texture(std::string textureName, int width, int height) : textureName(textureName), width(width), height(height)
 {
+    isLoaded = false;
     imagePath = NULL; 
     colorChannels = GL_RGB; 
     tex_bytes = NULL; 
@@ -58,13 +60,10 @@ void Texture::InsertPartialData(int index, unsigned bytesPerPixel, unsigned int 
     pixels[index+3] = a;
 }
 
-//void Texture::LoadTextureData(int width, int height, GLint imageFormat, GLubyte* pixels)
-//{
-//    this->width = width;
-//    this->height = height;
-//    this->pixels = pixels;
-//    SetupOpenGLTexture(imageFormat);
-//}
+bool Texture::IsTextureLoaded()
+{
+    return isLoaded;
+}
 
 std::string Texture::GetTextureName()
 {
@@ -113,4 +112,6 @@ void Texture::SetupOpenGLTexture(GLint imageFormat)
     {
         stbi_image_free(tex_bytes);
     }
+
+    isLoaded = true;
 }

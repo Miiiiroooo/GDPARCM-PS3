@@ -27,7 +27,9 @@ void SceneViewerClient::LoadModelsInScene(int id)
     IntValue sceneID;
     sceneID.set_value(id);
 
+    std::chrono::time_point deadline = std::chrono::system_clock::now() + std::chrono::seconds(60);
     grpc::ClientContext context;
+    context.set_deadline(deadline);
     std::unique_ptr<grpc::ClientReader<ModelData>> reader(stub->LoadModelsInScene(&context, sceneID));
 
     ModelData modelData;
@@ -44,13 +46,13 @@ void SceneViewerClient::LoadModelsInScene(int id)
             modelData.vdata().v()
         };
 
-        std::cout << "Model Name: " << modelData.modelname() << std::endl;
+        //std::cout << "Model Name: " << modelData.modelname() << std::endl;
 
-        auto modelItr = std::find_if(currentScene->modelRef.begin(), currentScene->modelRef.end(), [&](ModelReference* x) {
+        auto modelItr = std::find_if(currentScene->unloadedModelsList.begin(), currentScene->unloadedModelsList.end(), [&](ModelReference* x) {
             return x->GetModelName() == modelData.modelname();
             });
         
-        if (modelItr != currentScene->modelRef.end())
+        if (modelItr != currentScene->unloadedModelsList.end())
         {
             ModelReference* ref = *modelItr;
             ref->InsertPartialData(modelData.vdataindex(), vertexData);
@@ -58,19 +60,17 @@ void SceneViewerClient::LoadModelsInScene(int id)
         else
         {
             ModelReference* ref = new ModelReference(modelData.modelname());
-            currentScene->modelRef.push_back(ref);
+            currentScene->unloadedModelsList.push_back(ref);
             ref->InsertPartialData(modelData.vdataindex(), vertexData); 
         }
+        
+        currentScene->SetLoadingProgress(modelData.sceneprogress());
+        //std::cout << currentScene->loadingProgress << "\n";
     }
 
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
-        /*for (auto ref : currentScene->modelsList)
-        {
-            ref->LoadModelData();
-        }*/
-
         std::cout << "SUCCESS: MODELS CREATED ON SCENE" << std::to_string(id) << "\n";
     }
     else
@@ -114,19 +114,19 @@ void SceneViewerClient::LoadTexturesInScene(int id)
         unsigned bytesPerPixel = texData.hasalpha() ? 4 : 3; 
         int index = texData.pixelindex() * bytesPerPixel; 
 
-        auto textureItr = std::find_if(currentScene->texturesList.begin(), currentScene->texturesList.end(), [&](Texture* x) { 
+        auto textureItr = std::find_if(currentScene->unloadedTexturesList.begin(), currentScene->unloadedTexturesList.end(), [&](Texture* x) { 
             return x->GetTextureName() == name; 
             });
 
         Texture* ref = NULL;
-        if (textureItr != currentScene->texturesList.end())
+        if (textureItr != currentScene->unloadedTexturesList.end())
         {
             ref = *textureItr;
         }
         else
         {
             ref = new Texture(name, width, height);
-            currentScene->texturesList.push_back(ref); 
+            currentScene->unloadedTexturesList.push_back(ref); 
         }
 
         for (int i = 0; i < texData.pixeldatabatch_size(); i++)
@@ -139,16 +139,14 @@ void SceneViewerClient::LoadTexturesInScene(int id)
         {
             textureColorChannels[name] = imageFormat;
         }
+
+        currentScene->SetLoadingProgress(texData.sceneprogress());
+        //std::cout << currentScene->loadingProgress << "\n";
     }
 
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
-        /*for (auto ref : currentScene->texturesList)
-        {
-            ref->LoadTextureData(textureColorChannels[ref->GetTextureName()]);
-        }*/
-
         std::cout << "SUCCESS: TEXTURES CREATED ON SCENE" << std::to_string(id) << "\n";
     }
     else
@@ -174,7 +172,6 @@ void SceneViewerClient::LoadObjectsInScene(int id)
         return;
     }
 
-
     IntValue sceneID;
     sceneID.set_value(id);
 
@@ -184,12 +181,12 @@ void SceneViewerClient::LoadObjectsInScene(int id)
     ObjectData objData;
     while (reader->Read(&objData))
     {
-        auto modelItr = std::find_if(currentScene->modelRef.begin(), currentScene->modelRef.end(), [&](ModelReference* x) {
+        auto modelItr = std::find_if(currentScene->unloadedModelsList.begin(), currentScene->unloadedModelsList.end(), [&](ModelReference* x) {
             return x->GetModelName() == objData.modelname();
             });
         ModelReference* model = *modelItr;
 
-        auto textureItr = std::find_if(currentScene->texturesList.begin(), currentScene->texturesList.end(), [&](Texture* x) {
+        auto textureItr = std::find_if(currentScene->unloadedTexturesList.begin(), currentScene->unloadedTexturesList.end(), [&](Texture* x) {
             return x->GetTextureName() == objData.texturename();
             });
         Texture* texture = *textureItr;
@@ -198,24 +195,21 @@ void SceneViewerClient::LoadObjectsInScene(int id)
         obj->transform.position = glm::vec3(objData.position().x(), objData.position().y(), objData.position().z()); 
         obj->transform.Rotate(glm::vec3(objData.rotation().x(), objData.rotation().y(), objData.rotation().z())); 
         obj->transform.scale = glm::vec3(objData.scale().x(), objData.scale().y(), objData.scale().z()); 
-        currentScene->objectsList.push_back(obj); 
+        currentScene->objectsList.push_back(obj);
+
+        currentScene->SetLoadingProgress(objData.sceneprogress());
+        //std::cout << currentScene->loadingProgress << "\n";
     }
 
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
-        currentScene->isAlreadyLoaded = true;
-        currentScene->loadingProgress = 100.f;
+        currentScene->areResourcesStreamed = true;
         std::cout << "SUCCESS: OBJECTS CREATED ON SCENE" << std::to_string(id) << "\n";
     }
     else
     {
         std::cout << "FAIL TO RECEIVE TEXTURE " << status.error_code() << " " << status.error_message() << " " << status.error_details() << "\n";
     }
-
-}
-
-void SceneViewerClient::GetSceneProgress(int id)
-{
 
 }

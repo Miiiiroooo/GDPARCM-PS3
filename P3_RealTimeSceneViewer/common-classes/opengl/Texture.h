@@ -14,6 +14,7 @@ public:
 	void LoadTexture(GLint imageFormat);
 	void LoadTextureData(GLint imageFormat);
 	void InsertPartialData(int index, unsigned bytesPerPixel, unsigned int r, unsigned int g, unsigned int b, unsigned int a);
+	bool IsTextureLoaded();
 
 	std::string GetTextureName();
 	GLuint& GetTexture();
@@ -27,6 +28,7 @@ private:
 
 private:
 	std::string textureName;
+	bool isLoaded;
 
 	int width;
 	int height;

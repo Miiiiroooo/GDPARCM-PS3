@@ -14,14 +14,14 @@ public:
 
 public:
 	int id;
-	bool isAlreadyLoaded;
+	bool areResourcesStreamed;
 	bool isDirty;
 	float loadingProgress;
 
 	bool isActive;
 	bool isLoading;
 
-	std::vector<ModelObject*> modelRef;
+	std::vector<ModelObject*> unloadedModelsList;
 	std::vector<ModelObject*> modelList;
 
 };

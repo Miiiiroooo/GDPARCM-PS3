@@ -17,6 +17,7 @@ public:
     bool LoadModel();
     void LoadModelData();
     void InsertPartialData(int index, std::vector<float> partialData);
+    bool IsModelLoaded();
 
     std::string GetModelName();
     std::vector<GLfloat>& GetFullVertexData();
@@ -31,6 +32,7 @@ private:
 private:
     std::string modelName;
     std::string modelPath;
+    bool isLoaded;
 
     tinyobj::attrib_t attributes; 
     std::vector<tinyobj::shape_t> shapes;

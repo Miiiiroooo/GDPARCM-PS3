@@ -24,7 +24,6 @@ static const char* SceneLoader_method_names[] = {
   "/SceneLoader/LoadModelsInScene",
   "/SceneLoader/LoadTexturesInScene",
   "/SceneLoader/LoadObjectsInScene",
-  "/SceneLoader/GetSceneProgress",
 };
 
 std::unique_ptr< SceneLoader::Stub> SceneLoader::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -37,7 +36,6 @@ SceneLoader::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channe
   : channel_(channel), rpcmethod_LoadModelsInScene_(SceneLoader_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_LoadTexturesInScene_(SceneLoader_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_LoadObjectsInScene_(SceneLoader_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
-  , rpcmethod_GetSceneProgress_(SceneLoader_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::ClientReader< ::ModelData>* SceneLoader::Stub::LoadModelsInSceneRaw(::grpc::ClientContext* context, const ::IntValue& request) {
@@ -88,29 +86,6 @@ void SceneLoader::Stub::async::LoadObjectsInScene(::grpc::ClientContext* context
   return ::grpc::internal::ClientAsyncReaderFactory< ::ObjectData>::Create(channel_.get(), cq, rpcmethod_LoadObjectsInScene_, context, request, false, nullptr);
 }
 
-::grpc::Status SceneLoader::Stub::GetSceneProgress(::grpc::ClientContext* context, const ::IntValue& request, ::FloatValue* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::IntValue, ::FloatValue, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetSceneProgress_, context, request, response);
-}
-
-void SceneLoader::Stub::async::GetSceneProgress(::grpc::ClientContext* context, const ::IntValue* request, ::FloatValue* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::IntValue, ::FloatValue, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSceneProgress_, context, request, response, std::move(f));
-}
-
-void SceneLoader::Stub::async::GetSceneProgress(::grpc::ClientContext* context, const ::IntValue* request, ::FloatValue* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSceneProgress_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::FloatValue>* SceneLoader::Stub::PrepareAsyncGetSceneProgressRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::FloatValue, ::IntValue, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetSceneProgress_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::FloatValue>* SceneLoader::Stub::AsyncGetSceneProgressRaw(::grpc::ClientContext* context, const ::IntValue& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncGetSceneProgressRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
 SceneLoader::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       SceneLoader_method_names[0],
@@ -142,16 +117,6 @@ SceneLoader::Service::Service() {
              ::grpc::ServerWriter<::ObjectData>* writer) {
                return service->LoadObjectsInScene(ctx, req, writer);
              }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      SceneLoader_method_names[3],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< SceneLoader::Service, ::IntValue, ::FloatValue, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](SceneLoader::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::IntValue* req,
-             ::FloatValue* resp) {
-               return service->GetSceneProgress(ctx, req, resp);
-             }, this)));
 }
 
 SceneLoader::Service::~Service() {
@@ -175,13 +140,6 @@ SceneLoader::Service::~Service() {
   (void) context;
   (void) request;
   (void) writer;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
-::grpc::Status SceneLoader::Service::GetSceneProgress(::grpc::ServerContext* context, const ::IntValue* request, ::FloatValue* response) {
-  (void) context;
-  (void) request;
-  (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 

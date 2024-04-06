@@ -79,9 +79,10 @@ int main(void)
 
 
     // THESE ARE THE IMPORTANT ONES
+
     std::vector<Scene*> scenesList = {
         new Scene(1),
-        new Scene(2),
+        //new Scene(2),
     };
 
     ThreadPoolScheduler::GetInstance()->Initialize(2); 
@@ -91,17 +92,13 @@ int main(void)
     std::string server_adr = "localhost:50052"; 
     SceneViewerClient client(grpc::CreateChannel(server_adr, grpc::InsecureChannelCredentials())); 
 
-    /*client.scenesList.push_back(scenesList[0]);
-    client.LoadModelsInScene(1);
-    client.LoadTexturesInScene(1);
-    client.LoadObjectsInScene(1);*/
-
     for (auto scene : scenesList)
     {
         client.scenesList.push_back(scene); 
         LoadSceneTask* task = new LoadSceneTask(scene->id, &client);
         ThreadPoolScheduler::GetInstance()->ScheduleTask(task);
     }    
+
     // END
 
 
@@ -183,7 +180,7 @@ int main(void)
         // Iterate through modelsList
         for (auto scene : scenesList) 
         {
-            if (!scene->isAlreadyLoaded)
+            if (!scene->areResourcesStreamed)
             {
                 continue;
             }
