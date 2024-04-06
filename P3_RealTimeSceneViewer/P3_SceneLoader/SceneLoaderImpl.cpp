@@ -216,7 +216,7 @@ void SceneLoaderImpl::StreamModels(int sceneID, std::string modelName, std::stri
 		ServerSemaphore::sceneProgressSem.acquire();
 		int maxModels = scenesProgressMap[sceneID].modelsMaxProgress; 
 		ServerSemaphore::sceneProgressSem.release();
-		progress += (float)i / (float)data.size() * (1.f / (float)maxModels) * 30.f;
+		progress += (float)i / (float)data.size() * (1.f / (float)maxModels) * 33.f;
 		//std::cout << progress << "\n";
 
 		Vector3* pos = new Vector3();
@@ -264,7 +264,7 @@ void SceneLoaderImpl::StreamTextures(int sceneID, std::string textureName, std::
 			ServerSemaphore::sceneProgressSem.acquire(); 
 			int maxTextures = scenesProgressMap[sceneID].texturesMaxProgress; 
 			ServerSemaphore::sceneProgressSem.release(); 
-			progress += (float)(i * height + j) / (float)(width * height) * (1.f / maxTextures) * 30.f;
+			progress += (float)(i * height + j) / (float)(width * height) * (1.f / maxTextures) * 33.f;
 			//std::cout << progress << "\n";
 
 			unsigned char* pixelOffset = tex_bytes + (j + width * i) * bytesPerPixel;
@@ -356,7 +356,7 @@ float SceneLoaderImpl::GetSceneProgress(int id)
 	{
 		total = maxModels; 
 
-		progressInPercent = ((float)currentProgress / total) * 30.f;
+		progressInPercent = ((float)currentProgress / total) * 33.f;
 		return progressInPercent; 
 	}
 
@@ -365,16 +365,16 @@ float SceneLoaderImpl::GetSceneProgress(int id)
 		currentProgress -= maxModels;
 		total = maxTextures;
 
-		progressInPercent = 30.f;
-		progressInPercent += ((float)currentProgress / total) * 30.f;
+		progressInPercent = 33.f;
+		progressInPercent += ((float)currentProgress / total) * 33.f;
 		return progressInPercent; 
 	}
 	
 	currentProgress -= maxModels + maxTextures;
 	total = maxObjects; 
 
-	progressInPercent = 60.f;
-	progressInPercent += ((float)currentProgress / total) * 30.f;
+	progressInPercent = 66.f;
+	progressInPercent += ((float)currentProgress / total) * 33.f;
 	return progressInPercent; 
 }
 
