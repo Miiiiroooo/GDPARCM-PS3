@@ -62,7 +62,7 @@ void SceneViewerClient::LoadModelsInScene(int id)
 
         if (currentScene->loadingProgress < 0.40f)
         {
-            currentScene->loadingProgress += 0.00001f;
+            currentScene->loadingProgress += 0.000004f;
         }
      
     }

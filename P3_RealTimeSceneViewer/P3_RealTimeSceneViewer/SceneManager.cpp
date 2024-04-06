@@ -3,6 +3,7 @@
 #include "LoadSceneTask.h"
 
 #include <iostream>
+#include <thread>
 
 SceneManager* SceneManager::instance = nullptr;
 
@@ -110,11 +111,7 @@ void SceneManager::UnloadAllScenes()
 	for (int i = 0; i < sceneList.size(); i++)
 	{
 		sceneList[i]->UnloadScene();
-		//delete sceneList[i];
 	}
-
-	//sceneList.clear();
-	//sceneList.shrink_to_fit();
 
 	for (auto scene : sceneList)
 	{
@@ -129,18 +126,23 @@ void SceneManager::Draw(ShaderObject* shader, PerspectiveCameraObject camera, Li
 	{
 		Scene* scene = sceneList[i];
 
-		if (scene->isAlreadyLoaded && scene->isActive)
+		if (scene->isAlreadyLoaded)
 		{
+
 			if (scene->isDirty)
 			{
 				scene->LoadAllResourcesToOpenGL();
 			}
-
-			for (int j = 0; j < scene->modelList.size(); j++)
+			
+			if (scene->isActive)
 			{
-				shader->UseShader();
-				scene->modelList[j]->Draw(shader->GetShaderProgram(), camera, light);
+				for (int j = 0; j < scene->modelList.size(); j++)
+				{
+					shader->UseShader();
+					scene->modelList[j]->Draw(shader->GetShaderProgram(), camera, light);
+				}
 			}
+			
 		}
 	}
 }

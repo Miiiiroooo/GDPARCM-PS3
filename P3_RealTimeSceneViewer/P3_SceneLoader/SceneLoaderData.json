@@ -81,8 +81,8 @@
 
             "Scalings" :
             {
-                "Kata"  : [0.03, 0.03, 0.03],
-                "Akali" : [0.03, 0.03, 0.03],
+                "Kata"  : [0.04, 0.04, 0.04],
+                "Akali" : [0.05, 0.05, 0.05],
                 "Kaisa" : [0.015, 0.015, 0.015]
             }
         }
@@ -92,17 +92,42 @@
     {
         "Models" :
         {
-
+              "MF": "../3D/mf.obj",
+              "Ramus": "../3D/ramus.obj",
+              "Renekton": "../3D/renekton.obj"
         },
 
         "Textures" :
         {
-
+              "MF": "../3D/mf.png",
+              "Ramus": "../3D/ramus.png",
+              "Renekton": "../3D/renekton.png"
         },
 
         "Objects" :
         {
+            "Number" : [3, 8],
 
+            "Positions" :
+            {
+                "randX" : [-10.0, 10.0],
+                "randY" : [0.0, 0.0],
+                "randZ" : [-10.0, 10.0]
+            },
+
+            "Rotations" :
+            {
+                "randX" : [0.0, 0.0],
+                "randY" : [0.0, 359.0],
+                "randZ" : [0.0, 0.0]
+            },
+
+            "Scalings" :
+            {
+                "MF"  : [0.04, 0.04, 0.04],
+                "Ramus": [0.03, 0.03, 0.03],
+                "Renekton"  : [0.04, 0.04, 0.04]
+            }
         }
     },
 
@@ -110,17 +135,42 @@
     {
         "Models" :
         {
-
+              "Poppy": "../3D/poppy.obj",
+              "Nocturne": "../3D/nocturne.obj",
+              "Lulu": "../3D/lulu.obj"
         },
 
         "Textures" :
         {
-
+              "Poppy": "../3D/poppy.png",
+              "Nocturne": "../3D/nocturne.png",
+              "Lulu": "../3D/lulu.png"
         },
 
         "Objects" :
         {
+            "Number" : [3, 8],
 
+            "Positions" :
+            {
+                "randX" : [-10.0, 10.0],
+                "randY" : [0.0, 0.0],
+                "randZ" : [-10.0, 10.0]
+            },
+
+            "Rotations" :
+            {
+                "randX" : [0.0, 0.0],
+                "randY" : [0.0, 359.0],
+                "randZ" : [0.0, 0.0]
+            },
+
+            "Scalings" :
+            {
+                "Poppy"  : [0.02, 0.02, 0.02],
+                "Nocturne": [0.03, 0.03, 0.03],
+                "Lulu"  : [0.02, 0.02, 0.02]
+            }
         }
     },
 
@@ -128,17 +178,45 @@
     {
         "Models" :
         {
-
+              "LeeSin": "../3D/ls.obj",
+              "Rengar": "../3D/rengar.obj",
+              "Morgana": "../3D/morgana.obj",
+              "Ryze": "../3D/ryze.obj"
         },
 
         "Textures" :
         {
-
+              "LeeSin": "../3D/ls.png",
+              "Rengar": "../3D/rengar.png",
+              "Morgana": "../3D/morgana.png",
+              "Ryze": "../3D/ryze.png"
         },
 
         "Objects" :
         {
+            "Number" : [3, 8],
 
+            "Positions" :
+            {
+                "randX" : [-10.0, 10.0],
+                "randY" : [0.0, 0.0],
+                "randZ" : [-10.0, 10.0]
+            },
+
+            "Rotations" :
+            {
+                "randX" : [0.0, 0.0],
+                "randY" : [0.0, 359.0],
+                "randZ" : [0.0, 0.0]
+            },
+
+            "Scalings" :
+            {
+                "LeeSin"  : [0.04, 0.04, 0.04],
+                "Rengar": [0.05, 0.05, 0.05],
+                "Morgana": [0.05, 0.05, 0.05],
+                "Ryze"  : [0.015, 0.015, 0.015]
+            }
         }
     }
 }

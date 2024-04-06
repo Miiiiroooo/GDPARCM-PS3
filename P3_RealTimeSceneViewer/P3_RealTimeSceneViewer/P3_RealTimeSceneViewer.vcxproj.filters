@@ -7,9 +7,6 @@
     <Filter Include="Threading">
       <UniqueIdentifier>{a26099ac-777d-4bdc-9d9c-9b8dbe2a1448}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI">
-      <UniqueIdentifier>{9d84d941-1635-4683-841a-aded46fa2dea}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Dependencies">
       <UniqueIdentifier>{b3341937-9181-49c8-b490-86f513163899}</UniqueIdentifier>
     </Filter>

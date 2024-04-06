@@ -155,7 +155,7 @@ int main()
 
    
 
-    ThreadPoolScheduler::GetInstance()->Initialize(2);
+    ThreadPoolScheduler::GetInstance()->Initialize(5);
     ThreadPoolScheduler::GetInstance()->StartScheduler();
     ThreadPoolScheduler::GetInstance()->start();
 
@@ -166,7 +166,7 @@ int main()
 
     cout << "Client Created!" << endl;
 
-    SceneManager::initialize(2, &client);
+    SceneManager::initialize(5, &client);
 
     for (auto scene : SceneManager::getInstance()->GetSceneList())
     {

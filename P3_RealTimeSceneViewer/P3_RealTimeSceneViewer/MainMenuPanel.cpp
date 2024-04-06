@@ -26,7 +26,7 @@ void MainMenuPanel::draw()
     ImGui::SetNextWindowPos(ImVec2(0, 0));
     ImGui::Begin("Scene Bar", NULL, ImGuiWindowFlags_NoResize);
 
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < 5; ++i) {
         ImGui::BeginGroup();
 
         //Cache Scene
@@ -144,8 +144,11 @@ void MainMenuPanel::draw()
 
         if (counter == savedScenes.size())
         {
+            for (size_t i = 0; i < savedScenes.size(); i++)
+            {
+                savedScenes[i]->isActive = true;
+            }
             savedScenes.clear();
-            SceneManager::getInstance()->OpenAllScenes();
         }
 
         ImGui::End();
