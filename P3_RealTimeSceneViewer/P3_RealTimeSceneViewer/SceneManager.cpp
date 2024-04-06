@@ -44,6 +44,35 @@ void SceneManager::OpenSingleScene(int id)
 	}
 }
 
+void SceneManager::OpenAllScenes()
+{
+	for (int i = 0; i < sceneList.size(); i++)
+	{
+		sceneList[i]->isActive = true;
+	}
+}
+
+void SceneManager::CloseAllScenes()
+{
+	for (int i = 0; i < sceneList.size(); i++)
+	{
+		sceneList[i]->isActive = false;
+	}
+}
+
+bool SceneManager::AllScenesLoaded()
+{
+	for (int i = 0; i < sceneList.size(); i++)
+	{
+		if (!sceneList[i]->isAlreadyLoaded)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
 void SceneManager::LoadSingleScene(int id)
 {
 	for (int i = 0; i < sceneList.size(); i++)
@@ -54,6 +83,7 @@ void SceneManager::LoadSingleScene(int id)
 			{
 				LoadSceneTask* task = new LoadSceneTask(sceneList[i]->id, client);
 				ThreadPoolScheduler::GetInstance()->ScheduleTask(task);
+				sceneList[i]->isLoading = true;
 			}
 
 		}

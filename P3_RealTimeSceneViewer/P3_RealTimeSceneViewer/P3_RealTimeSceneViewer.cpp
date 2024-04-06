@@ -153,14 +153,18 @@ int main()
        new Scene(2)
     };*/
 
-  
+   
 
     ThreadPoolScheduler::GetInstance()->Initialize(2);
     ThreadPoolScheduler::GetInstance()->StartScheduler();
     ThreadPoolScheduler::GetInstance()->start();
 
+    cout << "Creating Client..." << endl;
+
     std::string server_adr = "localhost:50052";
     SceneViewerClient client(grpc::CreateChannel(server_adr, grpc::InsecureChannelCredentials()));
+
+    cout << "Client Created!" << endl;
 
     SceneManager::initialize(2, &client);
 
@@ -170,6 +174,8 @@ int main()
         LoadSceneTask* task = new LoadSceneTask(scene->id, &client);
         ThreadPoolScheduler::GetInstance()->ScheduleTask(task);
     }
+
+    cout << "Loading All Scenes" << endl;
     
 
 

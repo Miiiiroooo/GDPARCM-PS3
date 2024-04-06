@@ -22,7 +22,7 @@ MainMenuPanel::MainMenuPanel(std::string name) : AUIPanel::AUIPanel(name)
 
 void MainMenuPanel::draw()
 {
-    ImGui::SetNextWindowSize(ImVec2(800, 220));
+    ImGui::SetNextWindowSize(ImVec2(800, 230));
     ImGui::SetNextWindowPos(ImVec2(0, 0));
     ImGui::Begin("Scene Bar", NULL, ImGuiWindowFlags_NoResize);
 
@@ -45,6 +45,16 @@ void MainMenuPanel::draw()
         // Button
         if (ImGui::Button(("Select##" + std::to_string(i)).c_str(), ImVec2(150, 20))) {
             SceneManager::getInstance()->OpenSingleScene(i + 1);
+
+            if (!scene->isAlreadyLoaded)
+            {
+                savedScenes.clear();
+                savedScenes.push_back(scene);
+            }
+            else 
+            {
+                savedScenes.clear();
+            }
         }
 
         if (scene->isAlreadyLoaded)
@@ -79,12 +89,68 @@ void MainMenuPanel::draw()
     ImGui::Spacing();
 
     // Center align the "Load All" button
-    ImGui::SetCursorPosX((ImGui::GetWindowWidth() - 100) * 0.5f); // Adjust the button width as needed
-    if (ImGui::Button("Load All", ImVec2(100, 20))) {
+    ImGui::SetCursorPosX((ImGui::GetWindowWidth() - 210) * 0.5f); // Adjust the button width as needed
+    if (ImGui::Button("Open All", ImVec2(100, 20))) {
+       
+        if (!SceneManager::getInstance()->AllScenesLoaded())
+        {
+            savedScenes.clear();
+            savedScenes = SceneManager::getInstance()->GetSceneList();
+            SceneManager::getInstance()->CloseAllScenes();
+        }
+        else
+        {
+            savedScenes.clear();
+            SceneManager::getInstance()->OpenAllScenes();
+        }
+    }
+
+    ImGui::SameLine();
+
+    // Center align the "Unload All" button
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 10); // Adjust the spacing between buttons
+    if (ImGui::Button("Unload All", ImVec2(100, 20))) {
         SceneManager::getInstance()->UnloadAllScenes();
     }
 
     ImGui::End();
+
+    if (savedScenes.size() > 0)
+    {
+        ImGui::SetNextWindowSize(ImVec2(300, 50));
+        ImGui::SetNextWindowPos(ImVec2(250, 350));
+        ImGui::Begin("Loading...", NULL, ImGuiWindowFlags_NoResize);
+
+        float progress = 0;
+
+        for (int i = 0; i < savedScenes.size(); i++)
+        {
+            progress += savedScenes[i]->loadingProgress;
+        }
+        progress = progress / savedScenes.size();
+        int percentage = static_cast<int>(progress * 100);
+        std::string progressText = std::to_string(percentage) + "%";
+
+        ImGui::ProgressBar(progress, ImVec2(280, 15), progressText.c_str());
+
+        int counter = 0;
+        for (int i = 0; i < savedScenes.size(); i++)
+        {
+            if (savedScenes[i]->isAlreadyLoaded)
+            {
+                counter++;
+            }
+        }
+
+        if (counter == savedScenes.size())
+        {
+            savedScenes.clear();
+            SceneManager::getInstance()->OpenAllScenes();
+        }
+
+        ImGui::End();
+    }
+    
 }
 
 GLuint MainMenuPanel::loadTexture(const char* path)

@@ -24,6 +24,10 @@ public:
 
 	Scene* GetSceneByID(int id);
 	void OpenSingleScene(int id);
+	void OpenAllScenes();
+	void CloseAllScenes();
+	
+	bool AllScenesLoaded();
 	
 	void LoadSingleScene(int id);
 	void UnloadSingleScene(int id);

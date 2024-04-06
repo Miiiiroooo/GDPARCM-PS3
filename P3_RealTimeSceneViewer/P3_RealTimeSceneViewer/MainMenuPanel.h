@@ -16,6 +16,8 @@
 
 #include <vector>
 
+class Scene;
+
 class MainMenuPanel : public AUIPanel
 {
 public:
@@ -27,5 +29,7 @@ public:
 private:
 	std::vector<GLuint> sceneThumbnails;
 	GLuint loadTexture(const char* path);
+
+	std::vector<Scene*> savedScenes;
 };
 

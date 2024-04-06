@@ -44,6 +44,8 @@ void SceneViewerClient::LoadModelsInScene(int id)
             modelData.vdata().v()
         };
 
+        std::cout << "Model Name: " << modelData.modelname() << std::endl;
+
         auto modelItr = std::find_if(currentScene->modelsList.begin(), currentScene->modelsList.end(), [&](ModelReference* x) {
             return x->GetModelName() == modelData.modelname();
             });

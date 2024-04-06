@@ -49,11 +49,13 @@
     {
         "Models" :
         {
+            "Amumu" : "../3D/amumu.obj",
             "Kaisa" : "../3D/kaisa.obj"
         },
 
         "Textures" :
         {
+            "Amumu" : "../3D/amumu.png",
             "Kaisa" : "../3D/kaisa.png"
         },
 
@@ -77,6 +79,7 @@
 
             "Scalings" :
             {
+                "Amumu" : [0.03, 0.03, 0.03],
                 "Kaisa" : [0.02, 0.02, 0.02]
             }
         }
