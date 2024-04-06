@@ -3,18 +3,18 @@
     {
         "Models" :
         {
-            "Amumu" : "../3D/amumu.obj",
-            "Baron" : "../3D/baron.obj",
-            "Khazix" : "../3D/khazix.obj",
-            "Veigar" : "../3D/veigar.obj"
+            "Amumu" : "3D/amumu.obj",
+            "Baron" : "3D/baron.obj",
+            "Khazix" : "3D/khazix.obj",
+            "Veigar" : "3D/veigar.obj"
         },
 
         "Textures" :
         {
-            "Amumu" : "../3D/amumu.png",
-            "Baron" : "../3D/baron.png",
-            "Khazix" : "../3D/khazix.png",
-            "Veigar" : "../3D/veigar.png"
+            "Amumu" : "3D/amumu.png",
+            "Baron" : "3D/baron.png",
+            "Khazix" : "3D/khazix.png",
+            "Veigar" : "3D/veigar.png"
         },
 
         "Objects" :
@@ -23,9 +23,9 @@
 
             "Positions" :
             {
-                "randX" : [-10.0, 10.0],
+                "randX" : [-15.0, 15.0],
                 "randY" : [0.0, 0.0],
-                "randZ" : [-10.0, 10.0]
+                "randZ" : [10.0, 30.0]
             },
 
             "Rotations" :
@@ -49,16 +49,16 @@
     {
         "Models" :
         {
-            "Kata": "../3D/kata.obj",
-            "Akali" : "../3D/akali.obj",
-            "Kaisa" : "../3D/kaisa.obj"
+            "Kata": "3D/kata.obj",
+            "Akali" : "3D/akali.obj",
+            "Kaisa" : "3D/kaisa.obj"
         },
 
         "Textures" :
         {
-            "Kata" : "../3D/kata.png",
-            "Akali" : "../3D/akali.png",
-            "Kaisa" : "../3D/kaisa.png"
+            "Kata" : "3D/kata.png",
+            "Akali" : "3D/akali.png",
+            "Kaisa" : "3D/kaisa.png"
         },
 
         "Objects" :
@@ -67,9 +67,9 @@
 
             "Positions" :
             {
-                "randX" : [-10.0, 10.0],
+                "randX" : [-20.0, -5.0],
                 "randY" : [0.0, 0.0],
-                "randZ" : [-10.0, 10.0]
+                "randZ" : [-20.0, -5.0]
             },
 
             "Rotations" :
@@ -92,16 +92,16 @@
     {
         "Models" :
         {
-              "MF": "../3D/mf.obj",
-              "Ramus": "../3D/ramus.obj",
-              "Renekton": "../3D/renekton.obj"
+              "MF": "3D/mf.obj",
+              "Ramus": "3D/ramus.obj",
+              "Renekton": "3D/renekton.obj"
         },
 
         "Textures" :
         {
-              "MF": "../3D/mf.png",
-              "Ramus": "../3D/ramus.png",
-              "Renekton": "../3D/renekton.png"
+              "MF": "3D/mf.png",
+              "Ramus": "3D/ramus.png",
+              "Renekton": "3D/renekton.png"
         },
 
         "Objects" :
@@ -110,9 +110,9 @@
 
             "Positions" :
             {
-                "randX" : [-10.0, 10.0],
+                "randX" : [20.0, 5.0],
                 "randY" : [0.0, 0.0],
-                "randZ" : [-10.0, 10.0]
+                "randZ" : [20.0, 5.0]
             },
 
             "Rotations" :
@@ -135,16 +135,16 @@
     {
         "Models" :
         {
-              "Poppy": "../3D/poppy.obj",
-              "Nocturne": "../3D/nocturne.obj",
-              "Lulu": "../3D/lulu.obj"
+              "Poppy": "3D/poppy.obj",
+              "Nocturne": "3D/nocturne.obj",
+              "Lulu": "3D/lulu.obj"
         },
 
         "Textures" :
         {
-              "Poppy": "../3D/poppy.png",
-              "Nocturne": "../3D/nocturne.png",
-              "Lulu": "../3D/lulu.png"
+              "Poppy": "3D/poppy.png",
+              "Nocturne": "3D/nocturne.png",
+              "Lulu": "3D/lulu.png"
         },
 
         "Objects" :
@@ -153,9 +153,9 @@
 
             "Positions" :
             {
-                "randX" : [-10.0, 10.0],
+                "randX" : [-20.0, 5.0],
                 "randY" : [0.0, 0.0],
-                "randZ" : [-10.0, 10.0]
+                "randZ" : [20.0, 5.0]
             },
 
             "Rotations" :
@@ -178,18 +178,18 @@
     {
         "Models" :
         {
-              "LeeSin": "../3D/ls.obj",
-              "Rengar": "../3D/rengar.obj",
-              "Morgana": "../3D/morgana.obj",
-              "Ryze": "../3D/ryze.obj"
+              "LeeSin": "3D/ls.obj",
+              "Rengar": "3D/rengar.obj",
+              "Morgana": "3D/morgana.obj",
+              "Ryze": "3D/ryze.obj"
         },
 
         "Textures" :
         {
-              "LeeSin": "../3D/ls.png",
-              "Rengar": "../3D/rengar.png",
-              "Morgana": "../3D/morgana.png",
-              "Ryze": "../3D/ryze.png"
+              "LeeSin": "3D/ls.png",
+              "Rengar": "3D/rengar.png",
+              "Morgana": "3D/morgana.png",
+              "Ryze": "3D/ryze.png"
         },
 
         "Objects" :
@@ -198,9 +198,9 @@
 
             "Positions" :
             {
-                "randX" : [-10.0, 10.0],
+                "randX" : [20.0, 5.0],
                 "randY" : [0.0, 0.0],
-                "randZ" : [-10.0, 10.0]
+                "randZ" : [-20.0, -5.0]
             },
 
             "Rotations" :

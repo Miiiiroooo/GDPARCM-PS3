@@ -25,7 +25,7 @@ grpc::Status SceneLoaderImpl::LoadModelsInScene(grpc::ServerContext* context, co
 	scenesProgressMap[request->value()].modelsMaxProgress = model_itr.GetObj().MemberCount();  
 	ServerSemaphore::sceneProgressSem.release(); 
 
-	std::cout << "LOADING MODELS ON " << sceneID_str << "\n";
+	std::cout << "STREAMING MODELS ON " << sceneID_str << "\n";
 	
 
 	// Loop through each models from JSON data
@@ -34,6 +34,7 @@ grpc::Status SceneLoaderImpl::LoadModelsInScene(grpc::ServerContext* context, co
 		// Check if server did not meet the deadline OR client suddenly disconnected
 		if (context->IsCancelled())
 		{
+			std::cout << "RPC Call has been CANCELLED on " << sceneID_str << "\n";
 			ResetSceneProgress(request->value());
 			return grpc::Status::CANCELLED;
 		}
@@ -50,7 +51,7 @@ grpc::Status SceneLoaderImpl::LoadModelsInScene(grpc::ServerContext* context, co
 		ServerSemaphore::sceneProgressSem.release(); 
 	}
 
-	std::cout << "STATUS OK ON " << sceneID_str << "\n";
+	std::cout << "STATUS OK WHEN STREAMING MODELS ON " << sceneID_str << "\n";
 
 	return grpc::Status::OK;
 }
@@ -69,7 +70,7 @@ grpc::Status SceneLoaderImpl::LoadTexturesInScene(grpc::ServerContext* context, 
 	scenesProgressMap[request->value()].texturesMaxProgress = maxTextures; 
 	ServerSemaphore::sceneProgressSem.release();
 
-	std::cout << "LOADING TEXTURES ON " << sceneID_str << "\n"; 
+	std::cout << "STREAMING TEXTURES ON " << sceneID_str << "\n"; 
 
 
 	// Loop through each textures from JSON data
@@ -78,6 +79,7 @@ grpc::Status SceneLoaderImpl::LoadTexturesInScene(grpc::ServerContext* context, 
 		// Check if server did not meet the deadline OR client suddenly disconnected
 		if (context->IsCancelled()) 
 		{
+			std::cout << "RPC Call has been CANCELLED on " << sceneID_str << "\n";
 			ResetSceneProgress(request->value()); 
 			return grpc::Status::CANCELLED; 
 		}
@@ -94,7 +96,7 @@ grpc::Status SceneLoaderImpl::LoadTexturesInScene(grpc::ServerContext* context, 
 		ServerSemaphore::sceneProgressSem.release();
 	}
 
-	std::cout << "STATUS OK ON " << sceneID_str << "\n";
+	std::cout << "STATUS OK WHEN STREAMING TEXTURES ON " << sceneID_str << "\n";
 
 	return grpc::Status::OK;
 }
@@ -140,7 +142,7 @@ grpc::Status SceneLoaderImpl::LoadObjectsInScene(grpc::ServerContext* context, c
 	float minRotZ = objDataPtr["Rotations"]["randZ"][0].GetFloat();
 	float maxRotZ = objDataPtr["Rotations"]["randZ"][1].GetFloat();
 
-	std::cout << "LOADING OBJECTS ON " << sceneID_str << "\n";
+	std::cout << "STREAMING OBJECTS ON " << sceneID_str << "\n";
 
 
 	// Initialize each object based on random values
@@ -149,6 +151,7 @@ grpc::Status SceneLoaderImpl::LoadObjectsInScene(grpc::ServerContext* context, c
 		// Check if server did not meet the deadline OR client suddenly disconnected
 		if (context->IsCancelled())
 		{
+			std::cout << "RPC Call has been CANCELLED on " << sceneID_str << "\n";
 			ResetSceneProgress(sceneID);
 			return grpc::Status::CANCELLED;
 		}
@@ -196,7 +199,7 @@ grpc::Status SceneLoaderImpl::LoadObjectsInScene(grpc::ServerContext* context, c
 		writer->Write(oData);
 	}
 
-	std::cout << "STATUS OK ON " << sceneID_str << "\n";
+	std::cout << "STATUS OK WHEN STREAMING OBJECTS ON " << sceneID_str << "\n";
 
 	return grpc::Status::OK; 
 }

@@ -101,18 +101,30 @@ void Scene::LoadAllResourcesToOpenGL()
 	this->loadingProgress = 90.f + ((float)loadedTotal / (float)resourcesTotal * 10.f);
 }
 
-void Scene::UnloadScene()
+void Scene::UnloadModels()
 {
-	for (size_t i = unloadedModelsList.size(); i >= unloadedModelsList.size(); i--)
+	for (int i = unloadedModelsList.size() - 1; i >= 0; i--) 
 	{
-		unloadedModelsList[i]->DeleteBufferObjects();
+		//unloadedModelsList[i]->DeleteBufferObjects(); 
 		delete unloadedModelsList[i]; 
 	}
 
 	unloadedModelsList.clear(); 
 	unloadedModelsList.shrink_to_fit(); 
 
-	for (size_t i = unloadedTexturesList.size(); i >= unloadedTexturesList.size(); i--)
+	for (int i = loadedModelsList.size() - 1; i >= 0; i--)
+	{
+		loadedModelsList[i]->DeleteBufferObjects();
+		delete loadedModelsList[i];
+	}
+
+	loadedModelsList.clear();
+	loadedModelsList.shrink_to_fit();
+}
+
+void Scene::UnloadTextures()
+{
+	for (int i = unloadedTexturesList.size() - 1; i >= 0; i--) 
 	{
 		delete unloadedTexturesList[i]; 
 	}
@@ -120,13 +132,31 @@ void Scene::UnloadScene()
 	unloadedTexturesList.clear(); 
 	unloadedTexturesList.shrink_to_fit(); 
 
-	for (size_t i = objectsList.size(); i >= objectsList.size(); i--) 
+	for (int i = loadedTexturesList.size() - 1; i >= 0; i--)
+	{
+		delete loadedTexturesList[i];
+	}
+
+	loadedTexturesList.clear();
+	loadedTexturesList.shrink_to_fit();
+}
+
+void Scene::UnloadObjects()
+{
+	for (int i = objectsList.size() - 1; i >= 0; i--) 
 	{
 		delete objectsList[i]; 
 	}
 
 	objectsList.clear(); 
 	objectsList.shrink_to_fit(); 
+}
+
+void Scene::UnloadScene()
+{
+	UnloadModels();
+	UnloadTextures();
+	UnloadObjects();
 
 	loadingProgress = 0.f;
 	areResourcesStreamed = false;

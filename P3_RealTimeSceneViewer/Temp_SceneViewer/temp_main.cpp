@@ -28,9 +28,6 @@
 #pragma region Global Variables
 // Shaders, Models, Textures, Lights, Cameras, the Skybox, and the Player
 std::vector<Shader*> shadersList;
-std::vector<ModelReference*> modelReferencesList;
-std::vector<Model3D*> modelsList;
-std::vector<Texture*> texturesList;
 std::vector<Light*> lightsList;
 std::vector<Camera*> camerasList;
 Camera* mainCamera;
@@ -50,9 +47,6 @@ const float height = 600;
 #pragma region Method Declarations
 bool InitializeOpenGL(GLFWwindow** window);
 void LoadShaders(const std::vector<std::pair<std::string, std::string>>& shaderPathsList);
-void LoadObjects(const std::vector<std::string>& objPathsList);
-void LoadTextures(const std::vector<std::pair<std::string, GLuint>>& textureInfoList);
-void CreateModels(const std::vector<std::pair<int, int>>& objTextureMap, const std::vector<glm::vec3>& modelsInfoList);
 void CreateLights(const std::vector<std::pair<glm::vec3, unsigned int>>& lightsInfoList);
 void CreateCameras(const std::vector<glm::vec3>& camerasInfoList);
 
@@ -78,8 +72,9 @@ int main(void)
     LoadShaders(shaderPathsList);
 
 
-    // THESE ARE THE IMPORTANT ONES
 
+    // THESE ARE THE IMPORTANT ONES
+    // vvvvvvvvvvvvvvvvvvvvvvvvvvvv
     std::vector<Scene*> scenesList = {
         new Scene(1),
         //new Scene(2),
@@ -98,56 +93,9 @@ int main(void)
         LoadSceneTask* task = new LoadSceneTask(scene->id, &client);
         ThreadPoolScheduler::GetInstance()->ScheduleTask(task);
     }    
-
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     // END
 
-
-    //std::vector<std::string> objPathsList = {
-    //    "../3D/amumu.obj",
-    //    "../3D/baron.obj",
-    //    "../3D/veigar.obj",
-    //    "../3D/khazix.obj"
-    //};
-    //LoadObjects(objPathsList);
-
-    //std::vector<std::pair<std::string, GLuint>> textureInfoList = {
-    //    {"../3D/amumu.png", GL_RGBA},
-    //    {"../3D/baron.png", GL_RGBA},
-    //    {"../3D/veigar.png", GL_RGBA},
-    //    {"../3D/khazix.png", GL_RGBA}
-    //};
-    //LoadTextures(textureInfoList);
-
-    //// Create new models
-    //std::vector<std::pair<int, int>> objTextureMap = {
-    //    {0, 0},      
-    //    {1, 1},
-    //    {2, 2},
-    //    {3, 3}
-    //};
-    //std::vector<glm::vec3> modelsInfoList = {
-    //    // Amumu
-    //    glm::vec3(0.f, 0.f, 15.f),
-    //    glm::vec3(0.f, 180.f, 0.f),
-    //    glm::vec3(0.03f, 0.03f, 0.03f),
-    //    glm::vec3(1.f, 1.f, 1.f),
-    //    // barorn
-    //    glm::vec3(5.f, 0.f, 15.f),
-    //    glm::vec3(0.f, 180.f, 0.f),
-    //    glm::vec3(0.02f, 0.02f, 0.02f), 
-    //    glm::vec3(1.f, 1.f, 1.f),        
-    //    // braum
-    //    glm::vec3(-5.f, 0.f, 15.f),
-    //    glm::vec3(0.f, 180.f, 0.f),
-    //    glm::vec3(0.02f, 0.02f, 0.02f),
-    //    glm::vec3(1.f, 1.f, 1.f),
-    //    // willump
-    //    glm::vec3(-10.f, 0.f, 15.f),
-    //    glm::vec3(0.f, 180.f, 0.f),
-    //    glm::vec3(0.015f, 0.015f, 0.015f),
-    //    glm::vec3(1.f, 1.f, 1.f),
-    //};
-    //CreateModels(objTextureMap, modelsInfoList);
 
 
     // Create Lights
@@ -188,6 +136,7 @@ int main(void)
             if (scene->isDirty)
             {
                 scene->LoadAllResourcesToOpenGL();
+                break;
             }
 
             for (Model3D* model : scene->objectsList) 
@@ -208,9 +157,12 @@ int main(void)
         glfwPollEvents();
     }
 
-    for (Model3D* model : modelsList)
+    for (auto scene : scenesList)
     {
-        model->objRef->DeleteBufferObjects();
+        for (auto model : scene->loadedModelsList)
+        {
+            model->DeleteBufferObjects();
+        }
     }
     glfwTerminate();
 
@@ -248,45 +200,6 @@ void LoadShaders(const std::vector<std::pair<std::string, std::string>>& shaderP
         Shader* shader = new Shader();
         shader->InitializeProgram(vert, frag);
         shadersList.push_back(shader);
-    }
-}
-
-void LoadObjects(const std::vector<std::string>& objPathsList)
-{
-    for (std::string path : objPathsList)
-    {
-        ModelReference* reference = new ModelReference("", path);
-        reference->LoadModel();
-        modelReferencesList.push_back(reference);
-    }
-}
-
-void LoadTextures(const std::vector<std::pair<std::string, GLuint>>& textureInfoList)
-{
-    for (std::pair<std::string, GLint> info : textureInfoList)
-    {
-        Texture* texture = new Texture("", info.first.c_str()); // pass in file path
-        texture->LoadTexture(info.second);                  // pass in image format
-        texturesList.push_back(texture);
-    }
-}
-
-void CreateModels(const std::vector<std::pair<int, int>>& objTextureMap, const std::vector<glm::vec3>& modelsInfoList)
-{
-    for (int i = 0; i < objTextureMap.size(); i++)
-    {
-        std::pair<int, int> pair = objTextureMap[i];     // first - index to obj ref, second - index to texture
-
-        ModelReference* objRef = modelReferencesList[pair.first];
-        Texture* texture = (pair.second != -1) ? texturesList[pair.second] : NULL;
-
-        Model3D* newModel = new Model3D(objRef, texture);
-        modelsList.push_back(newModel);
-
-        newModel->transform.position = modelsInfoList[i * 4 + 0];
-        newModel->transform.Rotate(modelsInfoList[i * 4 + 1]);
-        newModel->transform.scale = modelsInfoList[i * 4 + 2];
-        newModel->color = modelsInfoList[i * 4 + 3];
     }
 }
 
