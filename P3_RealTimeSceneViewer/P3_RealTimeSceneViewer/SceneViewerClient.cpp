@@ -60,17 +60,13 @@ void SceneViewerClient::LoadModelsInScene(int id)
             ref->InsertPartialData(modelData.vdataindex(), vertexData);
         }
 
-        if (currentScene->loadingProgress < 0.40f)
-        {
-            currentScene->loadingProgress += 0.000004f;
-        }
+        currentScene->SetLoadingProgress(modelData.sceneprogress());
      
     }
 
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
-        currentScene->loadingProgress = 0.40f;
         /*for (auto ref : currentScene->modelsList)
         {
             ref->LoadModelData();
@@ -145,10 +141,7 @@ void SceneViewerClient::LoadTexturesInScene(int id)
             textureColorChannels[name] = imageFormat;
         }
 
-        if (currentScene->loadingProgress < 0.90f)
-        {
-            currentScene->loadingProgress += 0.000004f;
-        }
+        currentScene->SetLoadingProgress(texData.sceneprogress());
     }
 
     grpc::Status status = reader->Finish();
@@ -207,17 +200,16 @@ void SceneViewerClient::LoadObjectsInScene(int id)
         modelGameObject->SetScale(glm::vec3(objData.scale().x(), objData.scale().y(), objData.scale().z()));
 
         modelGameObject->ProcessPartialVertexData();
-        /*modelGameObject->LoadModelData();
-        modelGameObject->LoadTextureData(GL_RGBA);*/
 
         currentScene->modelList.push_back(modelGameObject);
+        currentScene->SetLoadingProgress(objData.sceneprogress());
     }
 
     grpc::Status status = reader->Finish();
     if (status.ok())
     {
         currentScene->areResourcesStreamed = true;
-        currentScene->loadingProgress = 1.f;
+        currentScene->SetLoadingProgress(100);
         std::cout << "SUCCESS: OBJECTS CREATED ON SCENE" << std::to_string(id) << "\n";
     }
     else

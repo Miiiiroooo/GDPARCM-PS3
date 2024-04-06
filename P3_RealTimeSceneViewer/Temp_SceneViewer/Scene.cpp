@@ -99,6 +99,8 @@ void Scene::LoadAllResourcesToOpenGL()
 	int loadedTotal = loadedModelsList.size() + loadedTexturesList.size();
 	int resourcesTotal = unloadedModelsList.size() + loadedModelsList.size() + unloadedTexturesList.size() + loadedTexturesList.size();
 	this->loadingProgress = 90.f + ((float)loadedTotal / (float)resourcesTotal * 10.f);
+
+
 }
 
 void Scene::UnloadModels()
