@@ -18,6 +18,21 @@ MainMenuPanel::MainMenuPanel(std::string name) : AUIPanel::AUIPanel(name)
 
     GLuint scene5Thumbnail = loadTexture("../Sprites/scene5.png");
     sceneThumbnails.push_back(scene5Thumbnail);
+
+    GLuint scene1SelectedThumbnail = loadTexture("../Sprites/scene1_selected.png");
+    sceneSelectedThumbnails.push_back(scene1SelectedThumbnail);
+
+    GLuint scene2SelectedThumbnail = loadTexture("../Sprites/scene2_selected.png");
+    sceneSelectedThumbnails.push_back(scene2SelectedThumbnail);
+
+    GLuint scene3SelectedThumbnail = loadTexture("../Sprites/scene3_selected.png");
+    sceneSelectedThumbnails.push_back(scene3SelectedThumbnail);
+
+    GLuint scene4SelectedThumbnail = loadTexture("../Sprites/scene4_selected.png");
+    sceneSelectedThumbnails.push_back(scene4SelectedThumbnail);
+
+    GLuint scene5SelectedThumbnail = loadTexture("../Sprites/scene5_selected.png");
+    sceneSelectedThumbnails.push_back(scene5SelectedThumbnail);
 }
 
 void MainMenuPanel::draw()
@@ -33,7 +48,15 @@ void MainMenuPanel::draw()
         Scene* scene = SceneManager::getInstance()->GetSceneByID(i + 1);
 
         // Image
-        ImGui::Image((void*)sceneThumbnails[i], ImVec2(150, 100)); // Replace your_image_texture_id with your actual image texture ID
+        if (scene->isActive)
+        {
+            ImGui::Image((void*)sceneSelectedThumbnails[i], ImVec2(150, 100));
+        }
+        else
+        {
+            ImGui::Image((void*)sceneThumbnails[i], ImVec2(150, 100));
+        }
+       
 
         // Progress bar
         float progress = scene->loadingProgress; // i + 1 -> Scene IDs start at 1
