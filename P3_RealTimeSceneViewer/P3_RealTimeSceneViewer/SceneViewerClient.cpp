@@ -206,6 +206,10 @@ void SceneViewerClient::LoadObjectsInScene(int id)
         modelGameObject->SetPosition(glm::vec3(objData.position().x(), objData.position().y(), objData.position().z()));
         modelGameObject->SetScale(glm::vec3(objData.scale().x(), objData.scale().y(), objData.scale().z()));
 
+        modelGameObject->ProcessPartialVertexData();
+        /*modelGameObject->LoadModelData();
+        modelGameObject->LoadTextureData(GL_RGBA);*/
+
         currentScene->modelList.push_back(modelGameObject);
     }
 

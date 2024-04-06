@@ -145,11 +145,6 @@ void ModelObject::InsertPartialData(int index, std::vector<float> partialData)
 
 void ModelObject::LoadModelData()
 {
-    for (auto pair : partialVertexDataMap)
-    {
-        fullVertexData.insert(fullVertexData.end(), pair.second.begin(), pair.second.end());
-    }
-
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
@@ -159,7 +154,6 @@ void ModelObject::LoadModelData()
     glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * fullVertexData.size(), fullVertexData.data(), GL_DYNAMIC_DRAW);
 
     //Change 5 to 8. position XYZ, normal XYZ, UV = 8
-
 
     GLintptr normPtr = 3 * sizeof(GLfloat);
     GLintptr uvPtr = 6 * sizeof(GLfloat);
@@ -173,6 +167,15 @@ void ModelObject::LoadModelData()
     glEnableVertexAttribArray(2);
 
     loadedModel = true;
+
+}
+
+void ModelObject::ProcessPartialVertexData()
+{
+    for (auto pair : partialVertexDataMap)
+    {
+        fullVertexData.insert(fullVertexData.end(), pair.second.begin(), pair.second.end());
+    }
 
     partialVertexDataMap.clear();
 }

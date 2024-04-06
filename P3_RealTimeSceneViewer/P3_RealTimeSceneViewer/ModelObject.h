@@ -40,6 +40,7 @@ public:
 
     void InsertPartialData(int index, std::vector<float> partialData);
     void LoadModelData();
+    void ProcessPartialVertexData();
     void InsertPartialTextureData(float width, float height, int index, unsigned bytesPerPixel, unsigned int r, unsigned int g, unsigned int b, unsigned int a);
     void LoadTextureData(GLint imageFormat);
 
