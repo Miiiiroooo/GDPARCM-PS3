@@ -8,6 +8,9 @@ public:
 	Scene(int id);
 	~Scene();
 
+	float GetLoadingProgress();
+	void SetLoadingProgress(float value);
+
 	void LoadAllResourcesToOpenGL();
 	void UnloadScene();
 

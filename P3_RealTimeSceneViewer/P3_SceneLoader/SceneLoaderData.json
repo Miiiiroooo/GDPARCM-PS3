@@ -19,7 +19,7 @@
 
         "Objects" :
         {
-            "Number" : [4, 7],
+            "Number" : [5, 10],
 
             "Positions" :
             {
@@ -63,7 +63,7 @@
 
         "Objects" :
         {
-            "Number" : [3, 6],
+            "Number" : [5, 8],
 
             "Positions" :
             {
@@ -106,7 +106,7 @@
 
         "Objects" :
         {
-            "Number" : [3, 8],
+            "Number" : [4, 12],
 
             "Positions" :
             {
@@ -149,7 +149,7 @@
 
         "Objects" :
         {
-            "Number" : [3, 8],
+            "Number" : [6, 15],
 
             "Positions" :
             {
@@ -194,7 +194,7 @@
 
         "Objects" :
         {
-            "Number" : [3, 8],
+            "Number" : [5, 12],
 
             "Positions" :
             {

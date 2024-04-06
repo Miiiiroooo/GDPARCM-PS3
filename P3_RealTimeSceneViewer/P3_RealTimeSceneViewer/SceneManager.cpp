@@ -117,6 +117,7 @@ void SceneManager::UnloadAllScenes()
 	{
 		LoadSceneTask* task = new LoadSceneTask(scene->id, client);
 		ThreadPoolScheduler::GetInstance()->ScheduleTask(task);
+		scene->isLoading = true;
 	}
 }
 

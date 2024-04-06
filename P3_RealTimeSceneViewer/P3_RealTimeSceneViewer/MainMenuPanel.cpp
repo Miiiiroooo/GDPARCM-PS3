@@ -59,11 +59,10 @@ void MainMenuPanel::draw()
        
 
         // Progress bar
-        float progress = scene->loadingProgress; // i + 1 -> Scene IDs start at 1
-        int percentage = static_cast<int>(progress * 100);
+        int percentage = static_cast<int>(scene->GetLoadingProgress());
         std::string progressText = std::to_string(percentage) + "%";
 
-        ImGui::ProgressBar(progress, ImVec2(150, 15), progressText.c_str());
+        ImGui::ProgressBar(scene->GetLoadingProgress() / 100, ImVec2(150, 15), progressText.c_str());
 
         // Button
         if (ImGui::Button(("Select##" + std::to_string(i)).c_str(), ImVec2(150, 20))) {
@@ -151,7 +150,8 @@ void MainMenuPanel::draw()
             progress += savedScenes[i]->loadingProgress;
         }
         progress = progress / savedScenes.size();
-        int percentage = static_cast<int>(progress * 100);
+        int percentage = static_cast<int>(progress);
+        progress /= 100;
         std::string progressText = std::to_string(percentage) + "%";
 
         ImGui::ProgressBar(progress, ImVec2(280, 15), progressText.c_str());

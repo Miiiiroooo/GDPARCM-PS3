@@ -15,10 +15,20 @@ Scene::~Scene()
 
 }
 
+float Scene::GetLoadingProgress()
+{
+	float progress = loadingProgress;
+	return progress;
+}
+
+void Scene::SetLoadingProgress(float value)
+{
+	loadingProgress = value;
+}
+
 
 void Scene::LoadAllResourcesToOpenGL()
 {
-	std::cout << "Models: " << modelList.size() << std::endl;
 	for (auto model : modelList)
 	{
 		model->LoadModelData();
