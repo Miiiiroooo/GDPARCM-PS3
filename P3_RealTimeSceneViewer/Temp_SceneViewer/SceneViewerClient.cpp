@@ -46,11 +46,11 @@ void SceneViewerClient::LoadModelsInScene(int id)
 
         std::cout << "Model Name: " << modelData.modelname() << std::endl;
 
-        auto modelItr = std::find_if(currentScene->modelsList.begin(), currentScene->modelsList.end(), [&](ModelReference* x) {
+        auto modelItr = std::find_if(currentScene->modelRef.begin(), currentScene->modelRef.end(), [&](ModelReference* x) {
             return x->GetModelName() == modelData.modelname();
             });
         
-        if (modelItr != currentScene->modelsList.end())
+        if (modelItr != currentScene->modelRef.end())
         {
             ModelReference* ref = *modelItr;
             ref->InsertPartialData(modelData.vdataindex(), vertexData);
@@ -58,7 +58,7 @@ void SceneViewerClient::LoadModelsInScene(int id)
         else
         {
             ModelReference* ref = new ModelReference(modelData.modelname());
-            currentScene->modelsList.push_back(ref);
+            currentScene->modelRef.push_back(ref);
             ref->InsertPartialData(modelData.vdataindex(), vertexData); 
         }
     }
@@ -184,7 +184,7 @@ void SceneViewerClient::LoadObjectsInScene(int id)
     ObjectData objData;
     while (reader->Read(&objData))
     {
-        auto modelItr = std::find_if(currentScene->modelsList.begin(), currentScene->modelsList.end(), [&](ModelReference* x) {
+        auto modelItr = std::find_if(currentScene->modelRef.begin(), currentScene->modelRef.end(), [&](ModelReference* x) {
             return x->GetModelName() == objData.modelname();
             });
         ModelReference* model = *modelItr;

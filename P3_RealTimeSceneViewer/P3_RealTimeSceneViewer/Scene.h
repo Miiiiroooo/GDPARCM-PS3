@@ -21,6 +21,7 @@ public:
 	bool isActive;
 	bool isLoading;
 
-	std::vector<ModelObject*> modelsList;
+	std::vector<ModelObject*> modelRef;
+	std::vector<ModelObject*> modelList;
 
 };

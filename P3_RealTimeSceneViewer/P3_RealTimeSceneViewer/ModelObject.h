@@ -26,6 +26,7 @@ class ModelObject
 public:
     ModelObject();
     ModelObject(string name);
+    ModelObject(ModelObject* object);
 
     string GetModelName();
 

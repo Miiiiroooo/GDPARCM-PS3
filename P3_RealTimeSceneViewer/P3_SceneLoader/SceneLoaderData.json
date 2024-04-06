@@ -19,13 +19,13 @@
 
         "Objects" :
         {
-            "Number" : [10, 20],
+            "Number" : [4, 7],
 
             "Positions" :
             {
-                "randX" : [-15.0, 15.0],
+                "randX" : [-10.0, 10.0],
                 "randY" : [0.0, 0.0],
-                "randZ" : [10.0, 30.0]
+                "randZ" : [-10.0, 10.0]
             },
 
             "Rotations" :
@@ -49,25 +49,27 @@
     {
         "Models" :
         {
-            "Amumu" : "../3D/amumu.obj",
+            "Kata": "../3D/kata.obj",
+            "Akali" : "../3D/akali.obj",
             "Kaisa" : "../3D/kaisa.obj"
         },
 
         "Textures" :
         {
-            "Amumu" : "../3D/amumu.png",
+            "Kata" : "../3D/kata.png",
+            "Akali" : "../3D/akali.png",
             "Kaisa" : "../3D/kaisa.png"
         },
 
         "Objects" :
         {
-            "Number" : [12, 15],
+            "Number" : [3, 6],
 
             "Positions" :
             {
                 "randX" : [-10.0, 10.0],
-                "randY" : [-5.0, 5.0],
-                "randZ" : [15.0, 50.0]
+                "randY" : [0.0, 0.0],
+                "randZ" : [-10.0, 10.0]
             },
 
             "Rotations" :
@@ -79,8 +81,9 @@
 
             "Scalings" :
             {
-                "Amumu" : [0.03, 0.03, 0.03],
-                "Kaisa" : [0.02, 0.02, 0.02]
+                "Kata"  : [0.03, 0.03, 0.03],
+                "Akali" : [0.03, 0.03, 0.03],
+                "Kaisa" : [0.015, 0.015, 0.015]
             }
         }
     },

@@ -14,7 +14,7 @@ Scene::~Scene()
 
 void Scene::LoadAllResourcesToOpenGL()
 {
-	for (auto model : modelsList)
+	for (auto model : modelRef)
 	{
 		model->LoadModelData();
 	}
@@ -29,13 +29,13 @@ void Scene::LoadAllResourcesToOpenGL()
 
 void Scene::UnloadScene()
 {
-	for (size_t i = 0; i < modelsList.size(); i++) 
+	for (size_t i = 0; i < modelRef.size(); i++) 
 	{
-		delete modelsList[i]; 
+		delete modelRef[i]; 
 	}
 
-	modelsList.clear(); 
-	modelsList.shrink_to_fit(); 
+	modelRef.clear(); 
+	modelRef.shrink_to_fit(); 
 
 	for (size_t i = 0; i < texturesList.size(); i++) 
 	{

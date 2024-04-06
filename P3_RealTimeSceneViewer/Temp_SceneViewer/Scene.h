@@ -18,7 +18,7 @@ public:
 	bool isDirty;
 	float loadingProgress;
 
-	std::vector<ModelReference*> modelsList;
+	std::vector<ModelReference*> modelRef;
 	std::vector<Texture*> texturesList;
 	std::vector<Model3D*> objectsList;
 };

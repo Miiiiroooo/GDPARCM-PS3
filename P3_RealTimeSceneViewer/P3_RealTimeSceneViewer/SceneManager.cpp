@@ -136,10 +136,10 @@ void SceneManager::Draw(ShaderObject* shader, PerspectiveCameraObject camera, Li
 				scene->LoadAllResourcesToOpenGL();
 			}
 
-			for (int j = 0; j < scene->modelsList.size(); j++)
+			for (int j = 0; j < scene->modelList.size(); j++)
 			{
 				shader->UseShader();
-				scene->modelsList[j]->Draw(shader->GetShaderProgram(), camera, light);
+				scene->modelList[j]->Draw(shader->GetShaderProgram(), camera, light);
 			}
 		}
 	}

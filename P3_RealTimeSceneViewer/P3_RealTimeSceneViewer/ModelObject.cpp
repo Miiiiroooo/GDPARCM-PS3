@@ -15,6 +15,14 @@ ModelObject::ModelObject(string name)
     this->name = name;
 }
 
+ModelObject::ModelObject(ModelObject* object)
+{
+    this->partialVertexDataMap = object->partialVertexDataMap;
+    this->pixels = object->pixels;
+    this->width = object->width;
+    this->height = object->height;
+}
+
 string ModelObject::GetModelName()
 {
     return this->name;

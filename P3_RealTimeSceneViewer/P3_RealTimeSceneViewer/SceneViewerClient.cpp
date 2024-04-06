@@ -44,11 +44,11 @@ void SceneViewerClient::LoadModelsInScene(int id)
             modelData.vdata().v()
         };
 
-        auto modelItr = std::find_if(currentScene->modelsList.begin(), currentScene->modelsList.end(), [&](ModelObject* x) {
+        auto modelItr = std::find_if(currentScene->modelRef.begin(), currentScene->modelRef.end(), [&](ModelObject* x) {
             return x->GetModelName() == modelData.modelname();
             });
 
-        if (modelItr != currentScene->modelsList.end())
+        if (modelItr != currentScene->modelRef.end())
         {
             ModelObject* ref = *modelItr;
             ref->InsertPartialData(modelData.vdataindex(), vertexData);
@@ -56,7 +56,7 @@ void SceneViewerClient::LoadModelsInScene(int id)
         else
         {
             ModelObject* ref = new ModelObject(modelData.modelname());
-            currentScene->modelsList.push_back(ref);
+            currentScene->modelRef.push_back(ref);
             ref->InsertPartialData(modelData.vdataindex(), vertexData);
         }
 
@@ -119,12 +119,12 @@ void SceneViewerClient::LoadTexturesInScene(int id)
         unsigned bytePerPixel = texData.hasalpha() ? 4 : 3;
         int index = texData.pixelindex() * bytePerPixel;
 
-        auto textureItr = std::find_if(currentScene->modelsList.begin(), currentScene->modelsList.end(), [&](ModelObject* x) {
+        auto textureItr = std::find_if(currentScene->modelRef.begin(), currentScene->modelRef.end(), [&](ModelObject* x) {
             return x->GetModelName() == name;
             });
 
         ModelObject* ref = NULL;
-        if (textureItr != currentScene->modelsList.end())
+        if (textureItr != currentScene->modelRef.end())
         {
             ref = *textureItr;
         }
@@ -195,13 +195,18 @@ void SceneViewerClient::LoadObjectsInScene(int id)
     ObjectData objData;
     while (reader->Read(&objData))
     {
-        auto modelItr = std::find_if(currentScene->modelsList.begin(), currentScene->modelsList.end(), [&](ModelObject* x) {
+        auto modelItr = std::find_if(currentScene->modelRef.begin(), currentScene->modelRef.end(), [&](ModelObject* x) {
             return x->GetModelName() == objData.modelname();
             });
-        ModelObject* model = *modelItr;
 
-        model->SetPosition(glm::vec3(objData.position().x(), objData.position().y(), objData.position().z()));
-        model->SetScale(glm::vec3(objData.scale().x(), objData.scale().y(), objData.scale().z()));
+        ModelObject* model = *modelItr; //Ref
+
+        ModelObject* modelGameObject = new ModelObject(model);
+
+        modelGameObject->SetPosition(glm::vec3(objData.position().x(), objData.position().y(), objData.position().z()));
+        modelGameObject->SetScale(glm::vec3(objData.scale().x(), objData.scale().y(), objData.scale().z()));
+
+        currentScene->modelList.push_back(modelGameObject);
     }
 
     grpc::Status status = reader->Finish();

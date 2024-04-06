@@ -12,14 +12,14 @@ Scene::Scene(int id) : id(id)
 
 Scene::~Scene()
 {
-	UnloadScene();
+
 }
 
 
 void Scene::LoadAllResourcesToOpenGL()
 {
-
-	for (auto model : modelsList)
+	std::cout << "Models: " << modelList.size() << std::endl;
+	for (auto model : modelList)
 	{
 		model->LoadModelData();
 		model->LoadTextureData(GL_RGBA);
@@ -30,18 +30,30 @@ void Scene::LoadAllResourcesToOpenGL()
 
 void Scene::UnloadScene()
 {
-	for (size_t i = 0; i < modelsList.size(); i++)
+	for (size_t i = 0; i < modelList.size(); i++)
 	{
-		modelsList[i]->DeleteBuffers();
+		modelList[i]->DeleteBuffers();
 	}
 
-	for (size_t i = 0; i < modelsList.size(); i++)
+	for (size_t i = 0; i < modelRef.size(); i++)
 	{
-		delete modelsList[i];
+		modelRef[i]->DeleteBuffers();
 	}
 
-	modelsList.clear();
-	modelsList.shrink_to_fit();
+	for (size_t i = 0; i < modelList.size(); i++)
+	{
+		delete modelList[i];
+	}
+	for (size_t i = 0; i < modelRef.size(); i++)
+	{
+		delete modelRef[i];
+	}
+
+	modelList.clear();
+	modelList.shrink_to_fit();
+
+	modelRef.clear();
+	modelRef.shrink_to_fit();
 
 	loadingProgress = 0;
 	isActive = false;
